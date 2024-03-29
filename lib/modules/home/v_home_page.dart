@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
+import 'package:universe_rental/modules/_common/flutter_super_scaffold.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
 import 'package:universe_rental/modules/home/explore/v_explore_main_page.dart';
 import 'package:universe_rental/modules/home/sub_widgets/w_home_navi_bar.dart';
@@ -12,7 +13,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController());
-    return Scaffold(
+    return FlutterSuperScaffold(
+      isTopSafe: true,
+      isBotSafe: false,
+      superBarColor: SuperBarColor(
+        xTopIconWhite: false
+      ),
       body: SizedBox.expand(
         child: Stack(
           children: [
@@ -28,10 +34,12 @@ class HomePage extends StatelessWidget {
                     },
                     children: [
                       ExploreMainPage(),
-                      Placeholder(),
-                      Placeholder(),
-                      Placeholder(),
-                      Placeholder(),
+                      ...[Colors.red,Colors.blue,Colors.green,Colors.yellow].map((e) {
+                        return ColoredBox(
+                          color: Colors.white,
+                          child: Text(e.toString()),
+                        );
+                      }).toList()
                     ],
                   ),
                 ),

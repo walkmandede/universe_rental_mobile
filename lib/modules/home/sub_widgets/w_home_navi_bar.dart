@@ -36,7 +36,7 @@ class HomeNaviBar extends StatelessWidget {
                       return Expanded(
                         child: TextButton(
                           onPressed: () {
-                            controller.pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.linear);
+                            controller.pageController.animateToPage(index, duration: const Duration(milliseconds: 450), curve: Curves.linear);
                           },
                           child: Text(index.toString()),
                         ),

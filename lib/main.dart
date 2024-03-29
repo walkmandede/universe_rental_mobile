@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarBrightness: Brightness.light)
+    );
     return GetMaterialApp(
       // key: GlobalKey(),
       debugShowCheckedModeBanner: false,
@@ -86,7 +89,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const ScheduleBookingPage(),
       // home: const TestPage1(),
-      home: HomePage()
+      home: const HomePage()
       // home: StatusBarTestingPage1(),
     );
   }
