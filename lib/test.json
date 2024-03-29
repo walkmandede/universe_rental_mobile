@@ -1,0 +1,46 @@
+{
+  "id" : "",
+  "title" : "",
+  "shortDescription" : "",
+  "fullDescription" : "",
+  "owner" : {
+    "id" : "",
+    "name" : "",
+    "nrcNumber" : "",
+    "contact" : {
+      "phone" : "",
+      "email" : "",
+      "address" : ""
+    }
+  },
+  "propertyType" : "",
+  "pricePerNight" : "",
+  "sizeInSquareFeet" : 2000,
+  "images" : [],
+  "where" : {
+    "location" : "16.1256,96.125125",
+    "address" : "",
+    "story" : "",
+    "roomNumber" : "",
+    "instruction" : ""
+  },
+  "interiorStructure" : {
+    "bedRooms" : 2,
+    "bathRooms" : 2,
+    "kitchenRooms" : 2
+  },
+  "propertyType" : "apartment|house",
+  "propertyTags" : ["beach","quiet"],
+  "bannedAllowances" : [],
+  "amenities" : [],
+  "bookingSetting" : {
+    "minNightStay" : 2,
+    "maxGuestsAllowed" : 4,
+    "checkInTime" : "10:30",
+    "checkOutTime" : "10:00"
+  },
+  "housePolicy" : [
+    "Must be quiet between 1700 and 0630"
+  ]
+}
+

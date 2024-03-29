@@ -1,0 +1,26 @@
+- bookingDetailPageForEachBookingStatus
+- scheduleBooking
+
+//Allowances
+Pets
+Smoking
+Party
+
+//Amenities
+Parking
+AC
+Pool
+Minibar
+Wifi
+Elevator
+
+//PropertyType
+house
+apartment
+
+//PropertyTags
+beach
+cave
+hills
+urban
+
