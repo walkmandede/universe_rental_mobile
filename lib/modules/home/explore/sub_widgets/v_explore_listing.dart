@@ -27,8 +27,8 @@ class ExploreListing extends StatelessWidget {
             child: Column(
               children: [
                 ...List.generate(100, (index) {
-                  return TextButton(onPressed: () {
-                  }, child: Text(index.toString()));
+                  return TextButton(
+                      onPressed: () {}, child: Text(index.toString()));
                 })
               ],
             ),

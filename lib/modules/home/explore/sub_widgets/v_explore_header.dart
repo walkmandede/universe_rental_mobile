@@ -19,30 +19,26 @@ class ExploreHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: baseHeaderHeight,
-      decoration: const BoxDecoration(
-        color: Colors.white
-      ),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Column(
         children: [
-          Expanded(
-            child: LayoutBuilder(
-              builder: (c1, c2) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: c2.maxHeight *0.15,
-                    horizontal: c2.maxHeight * 0.15,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: whereToCard(),
-                      )
-                    ],
-                  ),
-                );
-              },
-            )
-          ),
+          Expanded(child: LayoutBuilder(
+            builder: (c1, c2) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: c2.maxHeight * 0.15,
+                  horizontal: c2.maxHeight * 0.15,
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: whereToCard(),
+                    )
+                  ],
+                ),
+              );
+            },
+          )),
           Expanded(
             child: Placeholder(),
           ),
@@ -51,14 +47,17 @@ class ExploreHeader extends StatelessWidget {
     );
   }
 
-  Widget whereToCard(){
+  Widget whereToCard() {
     return LayoutBuilder(
       builder: (c1, c2) {
         return Column(
           children: [
             GestureDetector(
               onTap: () {
-                Get.to(()=> const WhereToPage(),transition: Transition.noTransition,);
+                Get.to(
+                  () => const WhereToPage(),
+                  transition: Transition.noTransition,
+                );
               },
               child: Hero(
                 tag: "whereTo",
@@ -75,62 +74,57 @@ class ExploreHeader extends StatelessWidget {
                             blurRadius: 5,
                             spreadRadius: 5,
                           ),
-                        ]
-                    ),
+                        ]),
                     padding: EdgeInsets.symmetric(
-                      vertical: c2.maxHeight *0.15,
+                      vertical: c2.maxHeight * 0.15,
                       horizontal: c2.maxHeight * 0.2,
                     ),
                     child: Row(
                       children: [
                         const Icon(Icons.search),
-                        (c2.maxWidth*0.05).widthBox(),
+                        (c2.maxWidth * 0.05).widthBox(),
                         Expanded(
-                          child: LayoutBuilder(
-                              builder: (d1,d2) {
-
-                                return SizedBox(
-                                  width: d2.maxWidth,
-                                  height: d2.maxHeight,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Expanded(
-                                        flex: 11,
-                                        child: Row(
-                                          children: [
-                                            Flexible(
-                                              child: FittedBox(
-                                                child: Text(
-                                                  "Where to?",
-                                                  style: TextStyle(
-                                                      color: AppColors.black,
-                                                      fontSize: AppConstants.fontSizeXL,
-                                                      fontWeight: FontWeight.w800
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        flex: 10,
-                                        child: FittedBox(
-                                          child: Text(
-                                            "Anywhere . Any week . Add guests",
-                                            style: TextStyle(
-                                                color: AppColors.black,
-                                                fontSize: AppConstants.fontSizeXL
+                          child: LayoutBuilder(builder: (d1, d2) {
+                            return SizedBox(
+                              width: d2.maxWidth,
+                              height: d2.maxHeight,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Expanded(
+                                    flex: 11,
+                                    child: Row(
+                                      children: [
+                                        Flexible(
+                                          child: FittedBox(
+                                            child: Text(
+                                              "Where to?",
+                                              style: TextStyle(
+                                                  color: AppColors.black,
+                                                  fontSize:
+                                                      AppConstants.fontSizeXL,
+                                                  fontWeight: FontWeight.w800),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                );
-                              }
-                          ),
+                                  Expanded(
+                                    flex: 10,
+                                    child: FittedBox(
+                                      child: Text(
+                                        "Anywhere . Any week . Add guests",
+                                        style: TextStyle(
+                                            color: AppColors.black,
+                                            fontSize: AppConstants.fontSizeXL),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
                         )
                       ],
                     ),
@@ -142,7 +136,5 @@ class ExploreHeader extends StatelessWidget {
         );
       },
     );
-
   }
-
 }
