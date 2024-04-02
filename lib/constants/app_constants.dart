@@ -15,7 +15,7 @@ class AppConstants {
   static double basePadding = 20;
   static double baseBorderRadius = 10;
   static double baseBorderRadiusL = 16;
-  static double baseBorderRadiusXL = 16;
+  static double baseBorderRadiusXL = 20;
   static double baseButtonHeightM = 50;
   static double baseButtonHeightL = 60;
   static double baseButtonHeightS = 40;
@@ -27,7 +27,8 @@ class AppConstants {
   static double fontSizeS = 12;
   static double fontSizeXS = 10;
 
-  static double baseNaviBarHeight = Get.height * 0.125;
+  //
+  static double baseNaviBarHeight = Get.height * 0.1;
 
   static OutlineInputBorder baseOutlineInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius),

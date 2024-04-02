@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:universe_rental/modules/_common/widgets/w_fitted_widget.dart';
 import 'package:universe_rental/modules/where_to/c_where_to.dart';
 import 'package:universe_rental/services/others/extensions.dart';
@@ -16,56 +19,60 @@ class WhereToPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(WhereToController());
-    return WillPopScope(
-      onWillPop: () async{
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
         if(controller.card1Controller!=null){
           controller.card1Controller!.reverse();
         }
         if(controller.card2Controller!=null){
           controller.card2Controller!.reverse();
         }
-        await Future.delayed(Duration(milliseconds: (controller.animationDurationInMs*2).toInt()));
-        return true;
       },
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppColors.white,
-            elevation: 0,
-          ),
-          body: Column(
-            children: [
-              whereToCard(),
-              10.heightBox(),
-              AnimatedBuilder(
-                animation: controller.card1Controller!,
-                builder: (context, child) {
-                  final value = controller.card1Controller!.value;
-                  return Opacity(
-                    opacity: value,
-                    child: Transform.translate(
-                      offset: Offset(0, -1 * (AppConstants.baseButtonHeightS*1.5) *(1 - value)),
-                      child: eachCard(text: "When"),
-                    ),
-                  );
-                },
-              ),
-              10.heightBox(),
-              AnimatedBuilder(
-                animation: controller.card2Controller!,
-                builder: (context, child) {
-                  final value = controller.card2Controller!.value;
-                  return Opacity(
-                    opacity: value,
-                    child: Transform.translate(
-                      offset: Offset(0, -1 * (AppConstants.baseButtonHeightS*1.5) *(1 - value)),
-                      child: eachCard(text: "Who"),
-                    ),
-                  );
-                },
-              ),
-            ],
+        child: GlassContainer(
+          blur: 8,
+          color: Colors.white.withOpacity(0.1),
+          child: Scaffold(
+            backgroundColor: AppColors.white.withOpacity(0.3),
+            appBar: AppBar(
+              backgroundColor: AppColors.white,
+              elevation: 0,
+            ),
+            body: Column(
+              children: [
+                whereToCard(),
+                10.heightBox(),
+                AnimatedBuilder(
+                  animation: controller.card1Controller!,
+                  builder: (context, child) {
+                    final value = controller.card1Controller!.value;
+                    return Opacity(
+                      opacity: max(value,0.8),
+                      child: Transform.translate(
+                        offset: Offset(0, -1 * (AppConstants.baseButtonHeightS*1) *(1 - value)),
+                        child: eachCard(text: "When"),
+                      ),
+                    );
+                  },
+                ),
+                10.heightBox(),
+                AnimatedBuilder(
+                  animation: controller.card2Controller!,
+                  builder: (context, child) {
+                    final value = controller.card2Controller!.value;
+                    return Opacity(
+                      opacity: max(value,0.8),
+                      child: Transform.translate(
+                        offset: Offset(0, -1 * (AppConstants.baseButtonHeightS*1) *(1 - value)),
+                        child: eachCard(text: "Who"),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -79,12 +86,13 @@ class WhereToPage extends StatelessWidget {
         builder: (c1, c2) {
           return GestureDetector(
             onTap: () {
-              Get.to(()=> const WhereToPage(),transition: Transition.noTransition);
+              // Get.to(()=> const WhereToPage(),transition: Transition.noTransition);
             },
             child: Hero(
               tag: "whereTo",
               child: Material(
                   child: Card(
+                    color: AppColors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius),
                     ),

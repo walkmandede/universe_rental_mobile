@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                       controller.currentPage.notifyListeners();
                     },
                     children: [
-                      ExploreMainPage(),
+                      const ExploreMainPage(),
                       ...[Colors.red,Colors.blue,Colors.green,Colors.yellow].map((e) {
                         return ColoredBox(
                           color: Colors.white,
