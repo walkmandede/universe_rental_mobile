@@ -41,6 +41,8 @@ dependencies:
   table_calendar: ^3.1.0
   image_picker: ^1.0.7
   backdrop: ^0.9.1
+  glassmorphism_ui: ^0.3.0
+  anchor_scroll_controller: ^0.4.4
 #  vector_map_tiles: ^6.0.2
 
 

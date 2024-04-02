@@ -32,11 +32,12 @@ class HomeNaviBar extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(5, (index) {
+                    children: List.generate(4, (index) {
+                      //todo each Navi Bar Item
                       return Expanded(
                         child: TextButton(
                           onPressed: () {
-                            controller.pageController.animateToPage(index, duration: const Duration(milliseconds: 450), curve: Curves.linear);
+                            controller.pageController.animateToPage(index, duration: const Duration(milliseconds: 250), curve: Curves.linear);
                           },
                           child: Text(index.toString()),
                         ),

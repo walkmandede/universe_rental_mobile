@@ -9,6 +9,9 @@ import '../../../constants/app_functions.dart';
 
 class ExploreController extends GetxController with GetSingleTickerProviderStateMixin{
 
+  double listingPanelHeight = 0.95;
+  double headerBarHeight = 0.175;
+
   ValueNotifier<bool> xLoaded = ValueNotifier(false);
   HomeController homeController = Get.find();
   DraggableScrollableController draggableScrollableController = DraggableScrollableController();
@@ -42,5 +45,13 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
     xLoaded.notifyListeners();
     superPrint("initloaded");
   }
+
+  double getListingHeaderHeightPortion(){
+    return (headerBarHeight - (1-listingPanelHeight));
+  }
+
+  // double getListingHeaderHeight(){
+  //   return (headerBarHeight - (1-listingPanelHeight));
+  // }
 
 }

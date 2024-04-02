@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/flutter_super_scaffold.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
+import 'package:universe_rental/modules/home/chat/v_chat_page.dart';
 import 'package:universe_rental/modules/home/explore/v_explore_main_page.dart';
+import 'package:universe_rental/modules/home/favorite/v_favorites_page.dart';
 import 'package:universe_rental/modules/home/sub_widgets/w_home_navi_bar.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 
@@ -12,7 +15,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final controller = Get.put(HomeController());
+
     return FlutterSuperScaffold(
       isTopSafe: true,
       isBotSafe: false,
@@ -32,14 +37,11 @@ class HomePage extends StatelessWidget {
                       controller.currentPage.value = value;
                       controller.currentPage.notifyListeners();
                     },
-                    children: [
+                    children: const [
                       ExploreMainPage(),
-                      ...[Colors.red,Colors.blue,Colors.green,Colors.yellow].map((e) {
-                        return ColoredBox(
-                          color: Colors.white,
-                          child: Text(e.toString()),
-                        );
-                      }).toList()
+                      ChatPage(),
+                      ListsPage(),
+                      ChatPage()
                     ],
                   ),
                 ),

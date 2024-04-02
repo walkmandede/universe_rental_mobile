@@ -10,10 +10,6 @@ class HomeController extends GetxController{
 
   @override
   void onInit() {
-    // TODO: implement onInit
-    naviBarAnimatedValue.addListener(() {
-      superPrint(naviBarAnimatedValue.value,title: "Navibar / y");
-    });
     super.onInit();
   }
 
