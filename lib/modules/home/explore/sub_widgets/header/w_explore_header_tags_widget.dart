@@ -60,7 +60,7 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: double.infinity,
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   // horizontal: AppConstants.basePadding
                 ),
                 child: Row(

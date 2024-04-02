@@ -40,7 +40,6 @@ class ExploreHeaderController extends GetxController{
 
   Future<void> initLoad() async{
     await Future.delayed(const Duration(milliseconds: 10));
-    superPrint(eachTagSize);
     double totalTagsLineSize = 0;
     for (var element in eachTagSize.values) {
       totalTagsLineSize = totalTagsLineSize+element.width;
