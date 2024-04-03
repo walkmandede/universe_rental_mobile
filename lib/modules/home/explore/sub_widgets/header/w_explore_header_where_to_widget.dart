@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:universe_rental/constants/app_strings.dart';
+import 'package:universe_rental/modules/_common/widgets/w_circle_profile_widget.dart';
 
 import '../../../../../constants/app_constants.dart';
 
@@ -139,10 +140,7 @@ class ExploreHeaderWhereToWidget extends StatelessWidget {
                 },
                 icon: const Icon(TablerIcons.adjustments_horizontal),
               ),
-              CircleAvatar(
-                backgroundImage:
-                    Image.asset('assets/dummy_images/profile.png').image,
-              )
+              const CircleProfileWidget()
             ],
           ),
         );

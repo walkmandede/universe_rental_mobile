@@ -22,6 +22,7 @@ class AppConstants {
 
   static double fontSizeL = 18;
   static double fontSizeXL = 20;
+  static double fontSizeXXL = 22;
   static double fontSizeM = 16;
   static double fontSizeMS = 14;
   static double fontSizeS = 12;
@@ -32,6 +33,8 @@ class AppConstants {
   static double paddingM = 12;
   static double paddingL = 14;
   static double paddingXL = 16;
+  static double paddingXXL = 18;
+  static double paddingXXXL = 20;
 
   //
   static double baseNaviBarHeight = Get.height * 0.1;

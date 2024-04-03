@@ -28,8 +28,8 @@ class HomeNaviBar extends StatelessWidget {
                   height:
                       AppConstants.baseNaviBarHeight * (naviBarAnimatedValue),
                   decoration: BoxDecoration(
-                    color: AppColors.red,
-                  ),
+                      // color: AppColors.red,
+                      ),
                   alignment: Alignment.center,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,23 +37,36 @@ class HomeNaviBar extends StatelessWidget {
                       //todo each Navi Bar Item
                       return Expanded(
                         child: TextButton(
-                          onPressed: () {
-                            controller.pageController.animateToPage(index,
-                                duration: const Duration(milliseconds: 250),
-                                curve: Curves.linear);
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                controller.naviIcon[index],
+                            onPressed: () {
+                              controller.pageController.animateToPage(index,
+                                  duration: const Duration(milliseconds: 250),
+                                  curve: Curves.linear);
+                              controller.currentPage.value = index;
+                              controller.currentPage.notifyListeners();
+                            },
+                            child: ValueListenableBuilder(
+                              valueListenable: controller.currentPage,
+                              builder: (context, value, child) => Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    controller.naviIcon[index],
+                                    color: index == controller.currentPage.value
+                                        ? Colors.black
+                                        : AppColors.iconGrey,
+                                  ),
+                                  Text(
+                                    controller.naviLabel[index],
+                                    style: TextStyle(
+                                      color:
+                                          index == controller.currentPage.value
+                                              ? Colors.black
+                                              : AppColors.iconGrey,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                controller.naviLabel[index],
-                              ),
-                            ],
-                          ),
-                        ),
+                            )),
                       );
                     }),
                   ),
