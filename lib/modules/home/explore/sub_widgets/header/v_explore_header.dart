@@ -15,48 +15,40 @@ import '../../../../../constants/app_colors.dart';
 
 class ExploreHeader extends StatelessWidget {
   final Size baseSize;
-  const ExploreHeader({super.key,required this.baseSize});
+  const ExploreHeader({super.key, required this.baseSize});
 
   @override
   Widget build(BuildContext context) {
     ExploreController controller = Get.find();
-    return LayoutBuilder(
-      builder: (c1,c2) {
-        final baseHeaderHeight = baseSize.height * controller.headerBarHeight;
-        return Card(
-          margin: EdgeInsets.zero,
-          elevation: 2,
-          shadowColor: AppColors.grey.withOpacity(0.4),
-          child: Container(
-            width: double.infinity,
-            height: baseHeaderHeight,
-            decoration: const BoxDecoration(
-              color: Colors.white
-            ),
-            child: const Column(
-              children: [
-                Expanded(
-                  flex: 5,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ExploreHeaderWhereToWidget(),
-                      )
-                    ],
-                  )
+    return LayoutBuilder(builder: (c1, c2) {
+      final baseHeaderHeight = baseSize.height * controller.headerBarHeight;
+      return Card(
+        margin: EdgeInsets.zero,
+        elevation: 2,
+        shadowColor: AppColors.grey.withOpacity(0.4),
+        child: Container(
+          width: double.infinity,
+          height: baseHeaderHeight,
+          decoration: const BoxDecoration(color: Colors.white),
+          child: Column(
+            children: [
+              const Expanded(flex: 5, child: ExploreHeaderWhereToWidget()),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Divider(
+                  color: AppColors.grey.withOpacity(0.4),
+                  // height: 1,
+                  thickness: 2,
                 ),
-                Expanded(
-                  flex: 4,
-                  child: ExploreHeaderTagsWidget(),
-                ),
-              ],
-            ),
+              ),
+              const Expanded(
+                flex: 4,
+                child: ExploreHeaderTagsWidget(),
+              ),
+            ],
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
-
-
-
 }

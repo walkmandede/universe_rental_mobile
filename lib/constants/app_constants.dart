@@ -27,6 +27,12 @@ class AppConstants {
   static double fontSizeS = 12;
   static double fontSizeXS = 10;
 
+  static double paddingXS = 8;
+  static double paddingS = 10;
+  static double paddingM = 12;
+  static double paddingL = 14;
+  static double paddingXL = 16;
+
   //
   static double baseNaviBarHeight = Get.height * 0.1;
 
@@ -41,5 +47,4 @@ class AppConstants {
   static double authBgTopImageRatio = 616 / 932;
 
   static int bsAnimateDurationInMs = 550;
-
 }

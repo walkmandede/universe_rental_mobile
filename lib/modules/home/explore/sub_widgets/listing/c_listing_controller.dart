@@ -1,15 +1,19 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:io';
 
-class ListingController extends GetxController{
+import 'package:universe_rental/modules/home/explore/sub_widgets/listing/m_listing_model.dart';
 
+class ListingController extends GetxController {
   ValueNotifier<bool> xListFetching = ValueNotifier(false);
-  ValueNotifier<List<dynamic>> shownData = ValueNotifier([]);
+  ValueNotifier<List<DummyPlaces>> shownData = ValueNotifier([]);
 
   @override
   void onInit() {
-    // TODO: implement onInit
+    readJsonFile();
     super.onInit();
   }
 
@@ -19,22 +23,26 @@ class ListingController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {}
 
-  }
-
-  Future<void> updateListingData() async{
+  Future<void> updateListingData() async {
     xListFetching.value = true;
     xListFetching.notifyListeners();
-    try{
+    try {
       //todo apicall
-    }
-    catch(e){
-
-    }
+    } catch (e) {}
     xListFetching.value = false;
     xListFetching.notifyListeners();
-
   }
 
+  Future<void> readJsonFile() async {
+    final String response = await rootBundle.loadString('assets/places.json');
+    final data = await json.decode(response);
+    print(data);
+    for (var v in data['data']) {
+      shownData.value.add(DummyPlaces.fromJson(v));
+    }
+    print(shownData.value);
+    shownData.notifyListeners();
+  }
 }

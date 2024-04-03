@@ -1,0 +1,34 @@
+{
+    "data": [
+        {
+            "images": [
+                "assets/dummy_images/image1.png"
+            ],
+            "popular": true,
+            "isFav": false,
+            "name": "Khet Din Daeng, Thailand",
+            "type": "Garden and pool views",
+            "date": "13-23 Mar",
+            "price": "$115 night",
+            "rating": "4.9",
+            "review": "15 reviews",
+            "other info": "8 guests  4 bedrooms 6 beds 1 bath",
+            "about": "About this space Location is Huahin soi 88. Hua Hin vacation home style minimalist. private  Suitable for guests who are couples up to 4 couples   and can also sleep up to 8-12 persons (Maximum 12  persons)"
+        },
+        {
+            "images": [
+                "assets/dummy_images/image2.png"
+            ],
+            "popular": false,
+            "isFav": false,
+            "name": "Khet Din Daeng, Thailand",
+            "type": "Garden and pool views",
+            "date": "13-23 Mar",
+            "price": "$115 night",
+            "rating": "4.9",
+            "review": "15 reviews",
+            "other info": "8 guests  4 bedrooms 6 beds 1 bath",
+            "about": "About this space Location is Huahin soi 88. Hua Hin vacation home style minimalist. private  Suitable for guests who are couples up to 4 couples   and can also sleep up to 8-12 persons (Maximum 12  persons)"
+        }
+    ]
+}

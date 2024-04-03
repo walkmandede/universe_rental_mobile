@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter/material.dart';
@@ -32,25 +33,49 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
               controller: controller.scrollController,
               padding: EdgeInsets.zero,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: controller.tags.map((e) {
+                  int _currentIndex = controller.tags.indexOf(e);
                   return SizeReportingWidget(
                     onSizeChanged: (p0) {
                       controller.eachTagSize[e] = p0;
                     },
-                    child: Container(
-                      height: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Icon(Icons.telegram),
-                          Text(
-                            e,
+                    child: ValueListenableBuilder(
+                      valueListenable: controller.currentTabIndex,
+                      builder: (context, value, child) {
+                        return InkWell(
+                          onTap: () {
+                            controller.currentTabIndex.value = _currentIndex;
+                            controller.currentTabIndex.notifyListeners();
+                          },
+                          child: Container(
+                            height: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                // const Icon(Icons.telegram),
+                                Icon(
+                                  controller.icons.elementAt(_currentIndex),
+                                  color: controller.currentTabIndex.value ==
+                                          _currentIndex
+                                      ? AppColors.bgBlack
+                                      : AppColors.iconGrey,
+                                ),
+                                Text(
+                                  e,
+                                  style: TextStyle(
+                                      color: controller.currentTabIndex.value ==
+                                              _currentIndex
+                                          ? AppColors.bgBlack
+                                          : AppColors.iconGrey),
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   );
                 }).toList(),
@@ -61,8 +86,8 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 margin: const EdgeInsets.symmetric(
-                  // horizontal: AppConstants.basePadding
-                ),
+                    // horizontal: AppConstants.basePadding
+                    ),
                 child: Row(
                   children: [
                     Flexible(
@@ -71,9 +96,11 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
                           return ValueListenableBuilder(
                             valueListenable: controller.scrollPositionInPotion,
                             builder: (context, scrollPositionInPotion, child) {
-                              final xOffset = (d2.maxWidth * scrollPositionInPotion)-(40*scrollPositionInPotion);
+                              final xOffset =
+                                  (d2.maxWidth * scrollPositionInPotion) -
+                                      (40 * scrollPositionInPotion);
                               return Transform.translate(
-                                offset: Offset(xOffset,0),
+                                offset: Offset(xOffset, 0),
                                 child: Container(
                                   // width: max(0,(d2.maxWidth * scrollPositionInPotion)-40),
                                   width: 30,

@@ -16,7 +16,7 @@ class HomeNaviBar extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: controller.naviBarAnimatedValue,
       builder: (context, naviBarAnimatedValue, child) {
-        if(naviBarAnimatedValue>0){
+        if (naviBarAnimatedValue > 0) {
           return Container(
             color: Colors.white,
             height: AppConstants.baseNaviBarHeight * (naviBarAnimatedValue),
@@ -25,7 +25,8 @@ class HomeNaviBar extends StatelessWidget {
               child: FittedBox(
                 child: Container(
                   width: Get.width,
-                  height: AppConstants.baseNaviBarHeight * (naviBarAnimatedValue),
+                  height:
+                      AppConstants.baseNaviBarHeight * (naviBarAnimatedValue),
                   decoration: BoxDecoration(
                     color: AppColors.red,
                   ),
@@ -37,9 +38,21 @@ class HomeNaviBar extends StatelessWidget {
                       return Expanded(
                         child: TextButton(
                           onPressed: () {
-                            controller.pageController.animateToPage(index, duration: const Duration(milliseconds: 250), curve: Curves.linear);
+                            controller.pageController.animateToPage(index,
+                                duration: const Duration(milliseconds: 250),
+                                curve: Curves.linear);
                           },
-                          child: Text(index.toString()),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                controller.naviIcon[index],
+                              ),
+                              Text(
+                                controller.naviLabel[index],
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     }),
@@ -48,8 +61,7 @@ class HomeNaviBar extends StatelessWidget {
               ),
             ),
           );
-        }
-        else{
+        } else {
           return const SizedBox.shrink();
         }
       },

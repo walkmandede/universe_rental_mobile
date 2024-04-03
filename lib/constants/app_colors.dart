@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppColors{
-
+class AppColors {
   static Color primary = const Color(0xffDB2C27);
   static Color white = const Color(0xffffffff);
   static Color buttonBg = const Color(0xffffffff).withOpacity(0.1);
@@ -23,5 +22,4 @@ class AppColors{
   static Color bgHardGrey = const Color(0xff282828);
   static Color bgSoftGrey = const Color(0xff3e3e3e);
   static Color disableBlack = const Color(0xff181818);
-
 }
