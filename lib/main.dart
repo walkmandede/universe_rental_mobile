@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
         ),
         // home: const ScheduleBookingPage(),
         // home: const TestPage1(),
-        home: const DetailPage()
+        home:const HomePage()
         // home: StatusBarTestingPage1(),
         );
   }

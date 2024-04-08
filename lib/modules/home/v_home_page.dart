@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/flutter_super_scaffold.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
 import 'package:universe_rental/modules/home/chat/v_chat_page.dart';
@@ -15,15 +14,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(HomeController());
 
     return FlutterSuperScaffold(
       isTopSafe: true,
       isBotSafe: false,
-      superBarColor: SuperBarColor(
-        xTopIconWhite: false
-      ),
+      superBarColor: SuperBarColor(xTopIconWhite: false),
       body: SizedBox.expand(
         child: Stack(
           children: [
@@ -48,10 +44,9 @@ class HomePage extends StatelessWidget {
                 ValueListenableBuilder(
                   valueListenable: controller.currentPage,
                   builder: (context, currentPage, child) {
-                    if(currentPage!=0){
+                    if (currentPage != 0) {
                       return (AppConstants.baseNaviBarHeight).heightBox();
-                    }
-                    else{
+                    } else {
                       return const SizedBox.shrink();
                     }
                   },

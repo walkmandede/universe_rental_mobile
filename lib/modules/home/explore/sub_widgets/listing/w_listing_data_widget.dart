@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/modules/home/explore/c_explore_controller.dart';
+import 'package:universe_rental/modules/home/explore/sub_widgets/detail/v_detail_page.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/c_listing_controller.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/m_listing_model.dart';
 import 'package:universe_rental/services/others/extensions.dart';
@@ -26,24 +27,19 @@ class ListingDataWidget extends StatelessWidget {
         ValueListenableBuilder(
             valueListenable: listingController.shownData,
             builder: (context, data, widget) {
-              if (listingController.shownData.value.isEmpty) {
-                return Column(
-                  children: [
-                    ...List.generate(100, (index) {
-                      return TextButton(
-                          onPressed: () {}, child: Text(index.toString()));
-                    })
-                  ],
-                );
-              }
               return ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: listingController.shownData.value.length,
                   itemBuilder: (context, index) {
-                    return EachPlaceWidget(
-                        baseSize: baseSize,
-                        place: listingController.shownData.value[index]);
+                    return GestureDetector(
+                      onTap: () {
+                        Get.to(() => DetailPage());
+                      },
+                      child: EachPlaceWidget(
+                          baseSize: baseSize,
+                          place: listingController.shownData.value[index]),
+                    );
                   });
             }),
         AppConstants.baseNaviBarHeight.heightBox()
