@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universe_rental/services/network_services/api_response.dart';
 import '../../constants/app_functions.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -8,10 +9,10 @@ import '../overlays_services/dialog/dialog_service.dart';
 
 class ApiService {
   ///staging
-  String baseUrl = "https://api.nutjobs.xsphere.co/api/";
+  // String baseUrl = "https://api.nutjobs.xsphere.co/api/";
 
   ///local-XspherIT-2024
-  // String baseUrl = "http://192.168.100.93:3000/api/"; //staging
+  String baseUrl = "http://192.168.86.188:8080/api/"; //staging
 
   // final dioClient = dio.Dio(
   //   dio.BaseOptions(
@@ -26,9 +27,11 @@ class ApiService {
     return ApiService().baseUrl.replaceAll("api/", "api")+orgPath;
   }
 
-  Future<Response?> get({required String endPoint,
+  Future<Response?> get({
+      required String endPoint,
       bool xNeedToken = false,
-      bool xBaseUrlIncluded = true}) async {
+      bool xBaseUrlIncluded = true
+  }) async {
     DataController dataController = Get.find();
     final response = await getClient.get(
       xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
@@ -51,6 +54,23 @@ class ApiService {
     final response = await getClient.post(
       xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
       data,
+      headers: {
+        "accept": "*/*",
+        "Content-Type": "application/json",
+        if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+      },
+    );
+    return response;
+  }
+
+  Future<Response?> delete({
+    required String endPoint,
+    bool xNeedToken = false,
+    bool xBaseUrlIncluded = true
+  }) async {
+    DataController dataController = Get.find();
+    final response = await getClient.delete(
+      xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
       headers: {
         "accept": "*/*",
         "Content-Type": "application/json",
@@ -132,11 +152,10 @@ class ApiService {
     return response;
   }
 
-  Future<void> validateResponse({
+  ApiResponse validateResponse({
     required Response? response,
-    required Function(Map<String, dynamic> data) onSuccess,
-    required Function(Map<String, dynamic> data, String errorMessage) onFailure,
-  }) async {
+  }) {
+    ApiResponse apiResponse = ApiResponse.getInstance();
     if (response == null) {
       // Get.off(()=> const LoginMainPage());
       DialogService().showSnack(
@@ -145,66 +164,23 @@ class ApiService {
     }
     else {
       try {
+        apiResponse.bodyString = response.bodyString;
+        apiResponse.bodyData = response.body;
+        apiResponse.statusCode = response.statusCode??0;
         if (response.statusCode! < 200 || response.statusCode! > 299) {
-          if (response.body["_metadata"]["message"]
-                  .toString()
-                  .replaceAll(" ", "")
-                  .toLowerCase() ==
-              "invalidtoken") {
-            //invalidToken
-            if (Get.currentRoute == "/LoginPhonePage") {
-              return;
-            } else {
-              SharedPreferences sharedPreferences =
-                  await SharedPreferences.getInstance();
-              sharedPreferences.clear();
-              // Get.offAll(() => const LoginGreetingPage());
-              DialogService().showSnack(
-                  title: "Something went wrong",
-                  message:
-                      "Unable to use the system now.Please contact the development team.");
-              return;
-            }
-          } else {
-            //failure
-            await onFailure(response.body,
-                response.body["_metadata"]["message"].toString());
-            return;
-          }
-        } else if (response!.body["_metadata"]["statusCode"] >= 200 &&
-            response!.body["_metadata"]["statusCode"] <= 299) {
-          //success
-          await onSuccess(response.body);
-          return;
-        } else {
-          superPrint(response.body);
-          if (response.body["_metadata"]["message"]
-                  .toString()
-                  .replaceAll(" ", "")
-                  .toLowerCase() ==
-              "invalidtoken") {
-            //invalidToken
-            if (Get.currentRoute == "/LoginPhonePage") {
-              return;
-            } else {
-              SharedPreferences sharedPreferences =
-                  await SharedPreferences.getInstance();
-              sharedPreferences.clear();
-              // Get.offAll(() => const GatewayPage());
-              DialogService().showSnack(
-                  title: "Something went wrong",
-                  message:
-                      "Unable to use the system now.Please contact the development team.");
-              return;
-            }
-          } else {
-            //failure
-            await onFailure(response.body,
-                response.body["_metadata"]["message"].toString());
-            return;
-          }
+          apiResponse.xSuccess = false;
         }
+        else if (response.body["_metadata"]["statusCode"] >= 200 &&
+            response.body["_metadata"]["statusCode"] <= 299) {
+          //success
+          apiResponse.xSuccess = true;
+        }
+        else {
+          apiResponse.xSuccess = false;
+        }
+        apiResponse.message = response.body["message"]??"";
       } catch (e) {
+        apiResponse.message = e.toString();
         if(response.statusCode == null){
           // Get.off(()=> const LoginGreetingPage());
           DialogService().showSnack(title: "Connection Time Out", message: "Unable to use the system now.Please contact the development team.");
@@ -214,5 +190,7 @@ class ApiService {
         }
       }
     }
+
+    return apiResponse;
   }
 }

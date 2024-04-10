@@ -12,4 +12,13 @@ class ApiEndPoints {
   static String blog = 'blog';
   static String blogAll = "blog/all";
   static String dummy = "___";
+
+  //web_data_entry
+  static String dataEntryTag = "tag";
+  static String dataEntryOffer = "offer";
+  static String dataEntryCurrency = "currency";
+  static String dataEntryPlace = "place";
+  static String dataEntryAttribute = "attribute";
+  static String dummy2 = "___";
+
 }
