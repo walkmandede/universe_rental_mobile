@@ -23,6 +23,8 @@ class _AnlTypeWidgetState extends State<AnlTypeWidget> {
         GetBuilder<DataEntryDataController>(
           builder: (dedController) {
             return Wrap(
+              spacing: 10,
+              runSpacing: 10,
               children: dedController.allTypes.value.map((e) {
                 return ValueListenableBuilder(
                   valueListenable: controller.listingType,

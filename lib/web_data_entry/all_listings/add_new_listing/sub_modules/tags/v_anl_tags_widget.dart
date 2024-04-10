@@ -23,6 +23,8 @@ class _AnlTagsWidgetState extends State<AnlTagsWidget> {
         GetBuilder<DataEntryDataController>(
           builder: (dedController) {
             return Wrap(
+              spacing: 10,
+              runSpacing: 10,
               children: dedController.allTags.value.map((e) {
                 return ValueListenableBuilder(
                   valueListenable: controller.listingTags,

@@ -40,6 +40,7 @@ class AddNewListingController extends GetxController{
   ValueNotifier<List<ListingOffer>> listingOffers = ValueNotifier([]);
   ValueNotifier<Map<ListingAttribute,int>> listingAttributesMap = ValueNotifier({});
   ValueNotifier<Map<ListingPlace,List<String>>> listingPlacesMap = ValueNotifier({});
+  ValueNotifier<List<File>> listingImages = ValueNotifier([]);
 
   //-----------------------------------------------------
 
