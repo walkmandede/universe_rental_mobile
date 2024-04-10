@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 void dismissKeyboard(){
   FocusManager.instance.primaryFocus?.unfocus();
@@ -272,6 +274,20 @@ class AppFunctions {
     };
 
     return data[weekdayIndex]??"";
+  }
+
+  Future<File?> pickImage() async{
+    File? result;
+    try{
+      final data = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(data!=null){
+        result = File(data.path);
+      }
+    }
+    catch(e){
+      superPrint(e);
+    }
+    return result;
   }
 
 

@@ -23,6 +23,8 @@ class _AnlOffersWidgetState extends State<AnlOffersWidget> {
         GetBuilder<DataEntryDataController>(
           builder: (dedController) {
             return Wrap(
+              runSpacing: 10,
+              spacing: 10,
               children: dedController.allOffers.value.map((e) {
                 return ValueListenableBuilder(
                   valueListenable: controller.listingOffers,
