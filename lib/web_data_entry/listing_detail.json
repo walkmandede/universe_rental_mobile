@@ -1,0 +1,97 @@
+{
+  "predefinedData": [
+    "listingAttributes",
+    "listingPlace",
+    "offers",
+    "currency",
+    "listingTag",
+    "listingType"
+  ],
+  "data": {
+    "title": "Her huahun pool villa",
+    "subTitle": "entire villa in....",
+    "about": "Location in hahin soi 88. ...",
+    "listingType": {
+      "id": "1",
+      "name": "Entire House"
+    },
+    "listingTags": [
+      {
+        "id": "1",
+        "name": "Beach House",
+        "iconSvg": "<svg></svg>"
+      }
+    ],
+    "listingImages": [],
+    "listingAttributes": [
+      {
+        "listingAttribute": {
+          "id": "1",
+          "name": "guests"
+        },
+        "listingQty": 2
+      }
+    ],
+    "host": {
+      "id" : "",
+      "image" : "",
+      "name" : ""
+    },
+    "ratingData": {
+      "averageRating": 4.5,
+      "reviewData": [
+        {
+          "reviewedBy": {},
+          "reviewContent": "Very Good",
+          "rating": 5.0
+        }
+      ]
+    },
+    "listingPlacesData": [
+      {
+        "listingPlace": {
+          "id": "1",
+          "name": "Living Room"
+        },
+        "listingPlaceImages": []
+      }
+    ],
+    "offerLists": [
+      {
+        "id": "1",
+        "name": "wifi",
+        "iconSvg": "<svg></svg>"
+      }
+    ],
+    "locationData": {
+      "location": "16.2154,96.125",
+      "fullAddress": "No.15 , Mya Road, Bahan Tsp, Yangon",
+      "remark": "Nearby .... "
+    },
+    "nightData": [
+      {
+        "date": "2024-04-05",
+        "price": [
+          {
+            "perNightFee": 200,
+            "currency": {
+              "id": "1",
+              "currencyName": "US Dollar",
+              "sign": "$",
+              "abbr": "USD"
+            }
+          },
+          {
+            "perNightFee": 650000,
+            "currency": {
+              "id": "2",
+              "currencyName": "Myanmar Kyat",
+              "sign": "Ks",
+              "abbr": "MMK"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:universe_rental/modules/home/explore/sub_widgets/detail/v_detail_page.dart';
+import 'package:universe_rental/modules/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/modules/home/v_home_page.dart';
+import 'package:universe_rental/web_data_entry/web_data_entry_home_page.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_constants.dart';
 import 'modules/_common/flutter_super_scaffold.dart';
@@ -85,11 +89,48 @@ class MyApp extends StatelessWidget {
             titleSmall: AppConstants.defaultTextStyle,
           ),
           useMaterial3: false,
-        ),
-        // home: const ScheduleBookingPage(),
-        // home: const TestPage1(),
-        home:const HomePage()
-        // home: StatusBarTestingPage1(),
-        );
+        ));
+    // datePickerTheme: DatePickerThemeData(
+    //   shape: RoundedRectangleBorder(
+    //     borderRadius: BorderRadius.circular(15),
+    //   ),
+    //   headerBackgroundColor: AppColors.black,
+    //   backgroundColor: AppColors.white,
+    //   dayStyle: TextStyle(color: AppColors.white),
+    //   weekdayStyle: TextStyle(
+    //     color: AppColors.grey,
+    //     fontWeight: FontWeight.w700
+    //   ),
+    //   yearStyle: TextStyle(
+    //     color: AppColors.white
+    //   ),
+    //   headerHelpStyle: TextStyle(
+    //     color: AppColors.white
+    //   ),
+    //   headerHeadlineStyle: TextStyle(
+    //     color: AppColors.white,
+    //   ),
+    //   rangePickerHeaderHelpStyle: TextStyle(
+    //     color: AppColors.white
+    //   ),
+    //   todayForegroundColor: MaterialStateColor.resolveWith((states) => AppColors.primary),
+    //   yearForegroundColor: MaterialStateColor.resolveWith((states) => AppColors.white),
+    //   dayForegroundColor: MaterialStateColor.resolveWith((states) => AppColors.white),
+    // ),
+
+    //   // home: const ScheduleBookingPage(),
+    //   // home: const TestPage1(),
+    //   home: homeWidget()
+    //   // home: StatusBarTestingPage1(),
+    // );
+  }
+
+  Widget homeWidget() {
+    if (Platform.isMacOS || kIsWeb) {
+      Get.put(DataController());
+      return const WebDataEntryHomePage();
+    } else {
+      return const HomePage();
+    }
   }
 }
