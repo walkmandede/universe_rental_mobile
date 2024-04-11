@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 void dismissKeyboard(){
   FocusManager.instance.primaryFocus?.unfocus();
@@ -174,7 +175,58 @@ class AppFunctions {
     return result;
   }
 
-  List<int?> getCalendarData({required DateTime dateTime}){
+
+  ///if xStartWithMonday is false, the result will be started in Sunday
+  List<int?> getCalendarData({required DateTime dateTime,bool xStartWithMonday = false}){
+    if(xStartWithMonday){
+      return _getCalendarDataWithMondayStart(dateTime: dateTime);
+    }
+    else{
+      return _getCalendarDataWithSundayStart(dateTime: dateTime);
+    }
+  }
+
+  List<int?> _getCalendarDataWithSundayStart({required DateTime dateTime}) {
+
+    int startWeekDay = 7;
+
+    //toIncreaseNextWeek
+    int endWeekDay = {
+      1 : 7,
+      2 : 1,
+      3 : 2,
+      4 : 3,
+      5 : 4,
+      6 : 5,
+      7 : 6,
+    }[startWeekDay]!;
+
+    //1=Monday, 7=Sunday
+    DateTimeRange dateTimeRange = AppFunctions().getCurrentMonth(dateTime: dateTime);
+    final start = dateTimeRange.start;
+    final end = dateTimeRange.end;
+    int currentDay = 1;
+    int currentWeek = 1;
+    List<int?> data = List.generate(42, (index) => null);
+    do{
+      DateTime thatDay = start.copyWith(day: currentDay);
+      int weekday = (thatDay.weekday);
+      int rowIndex = (startWeekDay + weekday)%7;
+      final currentWeekIndex = currentWeek-1;
+      int index = rowIndex + (currentWeekIndex*7);
+
+      data[index] = currentDay;
+      currentDay++;
+      if(weekday==endWeekDay){
+        //sunday
+        currentWeek++;
+      }
+    }
+    while(currentDay <= end.day);
+    return data;
+  }
+
+  List<int?> _getCalendarDataWithMondayStart({required DateTime dateTime}) {
     //1=Monday, 7=Sunday
     DateTimeRange dateTimeRange = AppFunctions().getCurrentMonth(dateTime: dateTime);
     final start = dateTimeRange.start;
@@ -196,7 +248,6 @@ class AppFunctions {
     while(currentDay <= end.day);
     return data;
   }
-
 
   DateTimeRange getCurrentMonth({required DateTime dateTime}){
     DateTime start = DateTime.now();

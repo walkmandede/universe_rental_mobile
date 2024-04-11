@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,65 +24,66 @@ class _AnlListingPlacesWidgetState extends State<AnlListingPlacesWidget> {
       children: [
         const Text("Listing Places (* Double Tap To Remove)",style: TextStyle(fontSize: 15),),
         10.heightBox(),
-        ValueListenableBuilder(
-          valueListenable: controller.listingImages,
-          builder: (context, listingImages, child) {
-            return Wrap(
-              runSpacing: 10,
-              children: [
-                ...listingImages.map((e) {
-                  return GestureDetector(
-                    onDoubleTap: () {
-                      controller.listingImages.value.remove(e);
-                      controller.listingImages.notifyListeners();
-                    },
-                    child: Container(
-                      width: 200,
-                      height: 200,
-                      margin: const EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all()
-                      ),
-                      child: Image.file(
-                        e,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(Icons.error),
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                }).toList(),
-                GestureDetector(
-                  onTap: () async{
-                    superPrint('start');
-                    final result = await AppFunctions().pickImage();
-                    if(result!=null){
-                      try{
-                        controller.listingImages.value.add(result);
-                        controller.listingImages.notifyListeners();
-                      }
-                      catch(e){
-                        null;
-                      }
-                    }
-                    superPrint(result);
-                  },
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    margin: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: Colors.transparent
-                    ),
-                    alignment: Alignment.center,
-                    child: const Icon(Icons.add),
-                  ),
-                )
-              ],
+        GetBuilder<DataEntryDataController>(
+          builder: (dataEntryDataController) {
+            return ValueListenableBuilder(
+              valueListenable: controller.listingPlacesMap,
+              builder: (context, listingPlacesMap, child) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: dataEntryDataController.allPlaces.value.map((e) {
+                    List<File> thatPlaceImages = listingPlacesMap[e]??[];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                                e.name
+                            ),
+                            10.widthBox(),
+                            IconButton(onPressed: () async{
+                              final result = await AppFunctions().pickImage();
+                              if(result!=null){
+                                thatPlaceImages.add(result);
+                                controller.listingPlacesMap.value[e] = thatPlaceImages;
+                                controller.listingPlacesMap.notifyListeners();
+                              }
+                            }, icon: const Icon(Icons.add))
+                          ],
+                        ),
+                        Wrap(
+                          runSpacing: 10,
+                          spacing: 10,
+                          children: thatPlaceImages.map((eachImage) {
+                            return GestureDetector(
+                              onDoubleTap: () {
+                                thatPlaceImages.remove(eachImage);
+                                controller.listingPlacesMap.value[e] = thatPlaceImages;
+                                controller.listingPlacesMap.notifyListeners();
+                              },
+                              child: Container(
+                                width: 200,
+                                height: 200,
+                                decoration: BoxDecoration(
+                                  border: Border.all()
+                                ),
+                                child: Image.file(
+                                  eachImage,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Center(child: Icon(Icons.error),);
+                                  },
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        )
+                      ],
+                    );
+                  }).toList(),
+                );
+              },
             );
           },
         )

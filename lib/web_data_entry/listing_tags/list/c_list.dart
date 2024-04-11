@@ -35,6 +35,8 @@ class ListingTagsListController extends GetxController{
       endPoint: ApiEndPoints.dataEntryTag,
     );
 
+    superPrint(response!.body,title: "List Tag Response");
+
     final apiResponse = ApiService().validateResponse(response: response);
 
     if(apiResponse.xSuccess){

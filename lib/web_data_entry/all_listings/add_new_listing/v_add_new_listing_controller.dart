@@ -7,8 +7,10 @@ import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/c_ad
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/address/v_anl_address_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/attributes/v_anl_attributes_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/data_info/v_anl_data_info_widget.dart';
+import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/host/v_anl_host_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/listing_images/v_anl_listing_images_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/listing_places/v_anl_listing_places_widget.dart';
+import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/night_data/v_anl_night_data_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/offers/v_anl_offers_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/tags/v_anl_tags_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/type/v_anl_type_widget.dart';
@@ -55,6 +57,8 @@ class _AddNewListingPageState extends State<AddNewListingPage> {
             divider(),
             const AnlAddressWidget(),
             divider(),
+            const AnlHostWidget(),
+            divider(),
             const AnlTypeWidget(),
             divider(),
             const AnlTagsWidget(),
@@ -67,7 +71,8 @@ class _AddNewListingPageState extends State<AddNewListingPage> {
             divider(),
             const AnlListingPlacesWidget(),
             divider(),
-            calendarWidget()
+            const AnlNightDataWidget(),
+            divider(),
           ],
         ),
       ),
@@ -80,33 +85,6 @@ class _AddNewListingPageState extends State<AddNewListingPage> {
         vertical: AppConstants.basePadding
       ),
       child: const Divider(),
-    );
-  }
-  
-  Widget calendarWidget(){
-    List<int?> data = AppFunctions().getCalendarData(dateTime: DateTime(2025,3,1));
-    return Container(
-      child: Column(
-        children: List.generate(6, (ci) {
-          return Row(
-            children: [
-              ...List.generate(7, (ri) {
-                String dayString = "-";
-                int index = (ci*7) + ri;
-
-                dayString = (data[index]??"-").toString();
-
-                return Container(
-                  width: 30,
-                  height: 30,
-                  alignment: Alignment.center,
-                  child: Text(dayString),
-                );
-              })
-            ],
-          );
-        }),
-      )
     );
   }
 

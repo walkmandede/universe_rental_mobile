@@ -17,8 +17,8 @@ class ApiEndPoints {
   static String dataEntryTag = "tag";
   static String dataEntryOffer = "offer";
   static String dataEntryCurrency = "currency";
-  static String dataEntryPlace = "place";
-  static String dataEntryAttribute = "attribute";
+  static String dataEntryPlace = "listPlace";
+  static String dataEntryAttribute = "list-attribute";
   static String dummy2 = "___";
 
 }
