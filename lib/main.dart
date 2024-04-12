@@ -15,6 +15,8 @@ import 'constants/app_constants.dart';
 import 'modules/_common/flutter_super_scaffold.dart';
 
 void main() async {
+  superPrint('content');
+
   try{
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);

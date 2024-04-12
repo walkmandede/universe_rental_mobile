@@ -1,18 +1,12 @@
 // ignore_for_file: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
 
 import 'dart:developer';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/widgets/w_fitted_widget.dart';
-
 import '../../constants/app_colors.dart';
 import 'c_my_calendar.dart';
 
@@ -65,7 +59,7 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
 
     dateRangeAnimation = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200)
+      duration: const Duration(milliseconds: 400)
     );
 
     calendarChangeAnimation.forward();
@@ -128,7 +122,7 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
   void animateDateRange(){
     dateRangeAnimation.reset();
     dateRangeAnimation.forward();
-  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -281,6 +275,28 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
 
                                                             return Stack(
                                                               children: [
+                                                                if(xIncluded)LayoutBuilder(
+                                                                  builder: (b1, c1) {
+                                                                    final cardWidth = c1.maxWidth;
+                                                                    double occupiedAmount = controller.getEachCardOccupiedAmount(
+                                                                        av: dateRangeAnimatedValue,
+                                                                        thatDate: thatDate,
+                                                                        dateRange: DateTimeRange(
+                                                                            start: startDate.value!,
+                                                                            end: endDate.value!
+                                                                        )
+                                                                    );
+
+                                                                    return Container(
+                                                                      width: cardWidth * occupiedAmount,
+                                                                      height: double.infinity,
+                                                                      decoration: BoxDecoration(
+                                                                        color: AppColors.grey.withOpacity(0.4),
+                                                                      ),
+                                                                      alignment: Alignment.center,
+                                                                    );
+                                                                  },
+                                                                ),
                                                                 Builder(
                                                                   builder: (context) {
                                                                     if(xStartDate && xEndDate){
@@ -345,7 +361,7 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
                                                                       return Container(
                                                                         alignment: Alignment.center,
                                                                         decoration: BoxDecoration(
-                                                                            color: xIncluded?AppColors.grey.withOpacity(0.5):Colors.transparent
+                                                                            color: Colors.transparent
                                                                         ),
                                                                         child: FittedWidget(
                                                                           mainAxisAlignment: MainAxisAlignment.center,
@@ -360,34 +376,6 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
                                                                     }
                                                                   },
                                                                 ),
-                                                                if(xIncluded)LayoutBuilder(
-                                                                  builder: (b1, c1) {
-                                                                    final cardWidth = c1.maxWidth;
-                                                                    double occupiedAmount = 0;
-
-                                                                    final dateList = AppFunctions().getBetweenDates(dtr: DateTimeRange(
-                                                                      start: startDate.value!,
-                                                                      end: endDate.value!
-                                                                    ));
-                                                                    final betweenDates = dateList.map((e) => e.toString().substring(0,10)).toList();
-                                                                    final index = betweenDates.indexOf(thatDate.toString().substring(0,10));
-                                                                    final indexPosition = index/betweenDates.length;
-
-                                                                    if(dateRangeAnimatedValue>=indexPosition){
-                                                                      occupiedAmount = indexPosition/(dateRangeAnimatedValue/betweenDates.length);
-                                                                    }
-
-
-                                                                    return Container(
-                                                                      width: cardWidth * occupiedAmount,
-                                                                      height: double.infinity,
-                                                                      decoration: BoxDecoration(
-                                                                        color: Colors.red.withOpacity(0.5),
-                                                                      ),
-                                                                      alignment: Alignment.center,
-                                                                    );
-                                                                  },
-                                                                )
                                                               ],
                                                             );
                                                           },
@@ -421,3 +409,15 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
     );
   }
 }
+
+
+// I am about to draw linear animation with following data;
+//
+// animatedValue = [0,0.125,0.25,0.375,0.5,0.625,0.75,0.875,1];
+//
+// index0 = [0,0.5,1,1,1,1,1,1,1];
+// index1 = [0,0,0,0.5,1,1,1,1,1];
+// index2 = [0,0,0,0,0,0.5,1,1,1];
+// index3 = [0,0,0,0,0,0,0,0.5,1];
+//
+// can you give me linear equation for n index

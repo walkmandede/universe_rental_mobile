@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universe_rental/services/network_services/api_response.dart';
@@ -13,7 +15,8 @@ class ApiService {
   // String baseUrl = "https://api.nutjobs.xsphere.co/api/";
 
   ///local-XspherIT-2024
-  String baseUrl = "http://192.168.86.188:8080/api/"; //staging
+  String baseUrl = "http://test.api.universerental.com/api/"; //staging
+  // String baseUrl = "http://192.168.86.188:8080/api/"; //staging
 
   // final dioClient = dio.Dio(
   //   dio.BaseOptions(
@@ -28,14 +31,24 @@ class ApiService {
     return ApiService().baseUrl.replaceAll("api/", "api")+orgPath;
   }
 
+  Response convertHttpResponseToGetResponse({required http.Response response}){
+    return Response(
+      statusCode: response.statusCode,
+      body: jsonDecode(response.body),
+      bodyString: response.body,
+      headers: response.headers,
+    );
+  }
+
   Future<Response?> get({
       required String endPoint,
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true
   }) async {
     DataController dataController = Get.find();
-    final response = await getClient.get(
-      xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
+
+    final response = await http.get(
+      Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
       headers: {
         "accept": "*/*",
         "Content-Type": "application/json",
@@ -43,7 +56,18 @@ class ApiService {
       },
     );
 
-    return response;
+    return convertHttpResponseToGetResponse(response: response);
+
+    // final response = await getClient.get(
+    //   xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
+    //   headers: {
+    //     "accept": "*/*",
+    //     "Content-Type": "application/json",
+    //     if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+    //   },
+    // );
+
+    // return response;
   }
 
   Future<Response?> post(
@@ -53,16 +77,28 @@ class ApiService {
       bool xBaseUrlIncluded = true}) async {
     DataController dataController = Get.find();
 
-    final response = await getClient.post(
-      xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
-      data,
+    final response = await http.post(
+      Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+      body: jsonEncode(data),
       headers: {
         "accept": "*/*",
         "Content-Type": "application/json",
         if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
       },
     );
-    return response;
+
+    return convertHttpResponseToGetResponse(response: response);
+
+    // final response = await getClient.post(
+    //   xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
+    //   jsonEncode(data),
+    //   headers: {
+    //     "accept": "*/*",
+    //     "Content-Type": "application/json",
+    //     if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+    //   },
+    // );
+    // return response;
   }
 
   Future<Response?> delete({
@@ -71,19 +107,31 @@ class ApiService {
     bool xBaseUrlIncluded = true
   }) async {
     DataController dataController = Get.find();
-    final response = await getClient.delete(
-      xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
+
+    final response = await http.delete(
+      Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
       headers: {
         "accept": "*/*",
         "Content-Type": "application/json",
         if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
       },
     );
-    return response;
+
+    return convertHttpResponseToGetResponse(response: response);
+
+    // final response = await getClient.delete(
+    //   xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
+    //   headers: {
+    //     "accept": "*/*",
+    //     "Content-Type": "application/json",
+    //     if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+    //   },
+    // );
+    // return response;
   }
 
-  Future<Response?> put(
-      {required String endPoint,
+  Future<Response?> put({
+    required String endPoint,
       Map<String, dynamic> data = const {},
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
