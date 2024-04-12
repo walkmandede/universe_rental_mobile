@@ -183,9 +183,9 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
             child: AnimatedBuilder(
               animation: calendarChangeAnimation,
               builder: (context, child) {
-                final animatedValue = calendarChangeAnimation.value;
+                final calendarAnimatedValue = calendarChangeAnimation.value;
                 return Opacity(
-                  opacity: 0.5 + (animatedValue*0.5),
+                  opacity: 0.5 + (calendarAnimatedValue*0.5),
                   child: ValueListenableBuilder(
                     valueListenable: focusedDate,
                     builder: (context, fd, child) {
@@ -275,91 +275,120 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin{
                                                         child: AnimatedBuilder(
                                                           animation: dateRangeAnimation,
                                                           builder: (context, child) {
-                                                            final animationValue = dateRangeAnimation.value;
+                                                            final dateRangeAnimatedValue = dateRangeAnimation.value;
 
                                                             BoxDecoration boxDecoration = BoxDecoration();
 
-                                                            return Opacity(
-                                                              opacity: animationValue,
-                                                              child: Builder(
-                                                                builder: (context) {
-                                                                  if(xStartDate && xEndDate){
-                                                                    return Container(
-                                                                      alignment: Alignment.center,
-                                                                      decoration: BoxDecoration(
-                                                                          color: AppColors.black,
-                                                                          borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius)
-                                                                      ),
-                                                                      child: FittedWidget(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        child: Text(
-                                                                          dayString,
-                                                                          style: TextStyle(
-                                                                              color: AppColors.white
+                                                            return Stack(
+                                                              children: [
+                                                                Builder(
+                                                                  builder: (context) {
+                                                                    if(xStartDate && xEndDate){
+                                                                      return Container(
+                                                                        alignment: Alignment.center,
+                                                                        decoration: BoxDecoration(
+                                                                            color: AppColors.black,
+                                                                            borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius)
+                                                                        ),
+                                                                        child: FittedWidget(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          child: Text(
+                                                                            dayString,
+                                                                            style: TextStyle(
+                                                                                color: AppColors.white
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  else if(xStartDate){
-                                                                    return Container(
-                                                                      alignment: Alignment.center,
-                                                                      decoration: BoxDecoration(
-                                                                          color: AppColors.black,
-                                                                          borderRadius: BorderRadius.horizontal(
-                                                                              left: Radius.circular(AppConstants.baseBorderRadius)
-                                                                          )
-                                                                      ),
-                                                                      child: FittedWidget(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        child: Text(
-                                                                          dayString,
-                                                                          style: TextStyle(
-                                                                              color: AppColors.white
+                                                                      );
+                                                                    }
+                                                                    else if(xStartDate){
+                                                                      return Container(
+                                                                        alignment: Alignment.center,
+                                                                        decoration: BoxDecoration(
+                                                                            color: AppColors.black,
+                                                                            borderRadius: BorderRadius.horizontal(
+                                                                                left: Radius.circular(AppConstants.baseBorderRadius)
+                                                                            )
+                                                                        ),
+                                                                        child: FittedWidget(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          child: Text(
+                                                                            dayString,
+                                                                            style: TextStyle(
+                                                                                color: AppColors.white
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  else if(xEndDate){
-                                                                    return Container(
-                                                                      alignment: Alignment.center,
-                                                                      decoration: BoxDecoration(
-                                                                          color: AppColors.black,
-                                                                          borderRadius: BorderRadius.horizontal(
-                                                                              right: Radius.circular(AppConstants.baseBorderRadius)
-                                                                          )
-                                                                      ),
-                                                                      child: FittedWidget(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        child: Text(
-                                                                          dayString,
-                                                                          style: TextStyle(
-                                                                              color: AppColors.white
+                                                                      );
+                                                                    }
+                                                                    else if(xEndDate){
+                                                                      return Container(
+                                                                        alignment: Alignment.center,
+                                                                        decoration: BoxDecoration(
+                                                                            color: AppColors.black,
+                                                                            borderRadius: BorderRadius.horizontal(
+                                                                                right: Radius.circular(AppConstants.baseBorderRadius)
+                                                                            )
+                                                                        ),
+                                                                        child: FittedWidget(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          child: Text(
+                                                                            dayString,
+                                                                            style: TextStyle(
+                                                                                color: AppColors.white
+                                                                            ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                    );
-                                                                  }
-                                                                  else{
-                                                                    return Container(
-                                                                      alignment: Alignment.center,
-                                                                      decoration: BoxDecoration(
-                                                                          color: xIncluded?AppColors.grey.withOpacity(0.5):Colors.transparent
-                                                                      ),
-                                                                      child: FittedWidget(
-                                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                                        child: Text(
-                                                                          dayString,
-                                                                          style: TextStyle(
-                                                                              color: dayString=="-"?AppColors.white:AppColors.black
+                                                                      );
+                                                                    }
+                                                                    else{
+                                                                      return Container(
+                                                                        alignment: Alignment.center,
+                                                                        decoration: BoxDecoration(
+                                                                            color: xIncluded?AppColors.grey.withOpacity(0.5):Colors.transparent
+                                                                        ),
+                                                                        child: FittedWidget(
+                                                                          mainAxisAlignment: MainAxisAlignment.center,
+                                                                          child: Text(
+                                                                            dayString,
+                                                                            style: TextStyle(
+                                                                                color: dayString=="-"?AppColors.white:AppColors.black
+                                                                            ),
                                                                           ),
                                                                         ),
+                                                                      );
+                                                                    }
+                                                                  },
+                                                                ),
+                                                                if(xIncluded)LayoutBuilder(
+                                                                  builder: (b1, c1) {
+                                                                    final cardWidth = c1.maxWidth;
+                                                                    double occupiedAmount = 0;
+
+                                                                    final dateList = AppFunctions().getBetweenDates(dtr: DateTimeRange(
+                                                                      start: startDate.value!,
+                                                                      end: endDate.value!
+                                                                    ));
+                                                                    final betweenDates = dateList.map((e) => e.toString().substring(0,10)).toList();
+                                                                    final index = betweenDates.indexOf(thatDate.toString().substring(0,10));
+                                                                    final indexPosition = index/betweenDates.length;
+
+                                                                    if(dateRangeAnimatedValue>=indexPosition){
+                                                                      occupiedAmount = indexPosition/(dateRangeAnimatedValue/betweenDates.length);
+                                                                    }
+
+
+                                                                    return Container(
+                                                                      width: cardWidth * occupiedAmount,
+                                                                      height: double.infinity,
+                                                                      decoration: BoxDecoration(
+                                                                        color: Colors.red.withOpacity(0.5),
                                                                       ),
+                                                                      alignment: Alignment.center,
                                                                     );
-                                                                  }
-                                                                },
-                                                              ),
+                                                                  },
+                                                                )
+                                                              ],
                                                             );
                                                           },
                                                         )
