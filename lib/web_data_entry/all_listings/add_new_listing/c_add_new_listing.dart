@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class AddNewListingController extends GetxController {
   ValueNotifier<List<ListingOffer>> listingOffers = ValueNotifier([]);
   ValueNotifier<Map<ListingAttribute, int>> listingAttributesMap =
       ValueNotifier({});
-  ValueNotifier<Map<ListingPlace, List<String>>> listingPlacesMap =
+  ValueNotifier<Map<ListingPlace, List<File>>> listingPlacesMap =
       ValueNotifier({});
   ValueNotifier<List<File>> listingImages = ValueNotifier([]);
 
@@ -49,8 +50,8 @@ class AddNewListingController extends GetxController {
   //others
 
   //nightData
-  ValueNotifier<Map<DateTime, NightFeeModel>> dailyNightFeesMap =
-      ValueNotifier({});
+  ValueNotifier<SplayTreeMap<String, List<NightFeeModel>>> dailyNightFeesMap =
+      ValueNotifier(SplayTreeMap.from({}));
 
   DataEntryDataController dataEntryDataController = Get.find();
 

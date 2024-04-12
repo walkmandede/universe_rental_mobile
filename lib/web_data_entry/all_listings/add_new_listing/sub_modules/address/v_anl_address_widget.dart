@@ -38,58 +38,56 @@ class _AnlAddressWidgetState extends State<AnlAddressWidget> {
         ValueListenableBuilder(
           valueListenable: controller.addressLocation,
           builder: (context, addressLocation, child) {
-            return Center(
-              child: Container(
-                width: Get.width * 0.5,
-                height: Get.width * 0.4 * 0.8,
-                decoration: BoxDecoration(
-                  border: Border.all()
+            return Container(
+              width: Get.width * 0.5,
+              height: Get.width * 0.4 * 0.8,
+              decoration: BoxDecoration(
+                border: Border.all()
+              ),
+              child: FlutterMap(
+                options: MapOptions(
+                  onTap: (tapPosition, point) {
+                    controller.addressLocation.value = point;
+                    controller.addressLocation.notifyListeners();
+                  },
+                  initialCenter: const LatLng(16.813451759154145, 96.13404351529357),
+                  initialZoom: 17.5,
+                  interactionOptions: const InteractionOptions(enableMultiFingerGestureRace: true),
+                  maxZoom: 20,
                 ),
-                child: FlutterMap(
-                  options: MapOptions(
-                    onTap: (tapPosition, point) {
-                      controller.addressLocation.value = point;
-                      controller.addressLocation.notifyListeners();
-                    },
-                    initialCenter: const LatLng(16.813451759154145, 96.13404351529357),
-                    initialZoom: 17.5,
-                    interactionOptions: const InteractionOptions(enableMultiFingerGestureRace: true),
-                    maxZoom: 20,
+                children: [
+                  TileLayer(
+                    urlTemplate: "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
                   ),
-                  children: [
-                    TileLayer(
-                      urlTemplate: "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-                    ),
-                    MarkerLayer(
-                      markers: [
-                        Marker(
-                          point: addressLocation,
-                          width: 25,
-                          height: 25,
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        point: addressLocation,
+                        width: 25,
+                        height: 25,
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle
+                          ),
+                          padding: const EdgeInsets.all(4),
                           child: Container(
                             width: double.infinity,
                             height: double.infinity,
                             decoration: const BoxDecoration(
-                              color: Colors.red,
+                              color: Colors.white,
                               shape: BoxShape.circle
                             ),
-                            padding: const EdgeInsets.all(4),
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle
-                              ),
-                              alignment: Alignment.center,
-                              child: const FittedBox(child: Icon(Icons.pin_drop)),
-                            ),
-                          )
+                            alignment: Alignment.center,
+                            child: const FittedBox(child: Icon(Icons.pin_drop)),
+                          ),
                         )
-                      ],
-                    )
-                  ],
-                ),
+                      )
+                    ],
+                  )
+                ],
               ),
             );
           },

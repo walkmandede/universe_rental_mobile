@@ -6,6 +6,7 @@ import 'package:dio/dio.dart' as dio;
 
 import '../../modules/_common/controllers/c_data_controller.dart';
 import '../overlays_services/dialog/dialog_service.dart';
+import 'package:http/http.dart' as http;
 
 class ApiService {
   ///staging
@@ -41,6 +42,7 @@ class ApiService {
         if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
       },
     );
+
     return response;
   }
 

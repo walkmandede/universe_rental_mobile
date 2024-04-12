@@ -4,17 +4,24 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/modules/home/v_home_page.dart';
+import 'package:universe_rental/modules/my_calendar/_my_calendar_test_page.dart';
+import 'package:universe_rental/modules/my_calendar/w_my_calendar_widget.dart';
 import 'package:universe_rental/web_data_entry/web_data_entry_home_page.dart';
 import 'constants/app_colors.dart';
 import 'constants/app_constants.dart';
 import 'modules/_common/flutter_super_scaffold.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  await Future.delayed(const Duration(seconds: 1));
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    await Future.delayed(const Duration(seconds: 1));
+  } catch (e) {
+    null;
+  }
   runApp(const MyApp());
   // runApp(const RestartAppWidget(child: MyApp()));
 }
@@ -128,11 +135,15 @@ class MyApp extends StatelessWidget {
   }
 
   Widget homeWidget() {
-    if (Platform.isMacOS || kIsWeb) {
+    if (kIsWeb) {
+      Get.put(DataController());
+      return const WebDataEntryHomePage();
+    } else if (Platform.isMacOS) {
       Get.put(DataController());
       return const WebDataEntryHomePage();
     } else {
-      return const HomePage();
+      return const MyCalendarTestPage();
+      // return const HomePage();
     }
   }
 }
