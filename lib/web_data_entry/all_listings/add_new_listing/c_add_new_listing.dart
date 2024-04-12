@@ -13,8 +13,7 @@ import 'package:universe_rental/web_data_entry/listing_tags/m_listing_tag.dart';
 import '../../_common/models/m_night_fee_model.dart';
 import '../../listing_type/m_listing_type.dart';
 
-class AddNewListingController extends GetxController{
-
+class AddNewListingController extends GetxController {
   //inputData
 
   //dataInfo
@@ -25,7 +24,8 @@ class AddNewListingController extends GetxController{
   //location
   TextEditingController txtFullAddress = TextEditingController(text: "");
   TextEditingController txtAddressRemark = TextEditingController(text: "");
-  ValueNotifier<LatLng> addressLocation = ValueNotifier(const LatLng(16.88, 96.24));
+  ValueNotifier<LatLng> addressLocation =
+      ValueNotifier(const LatLng(16.88, 96.24));
 
   //hosting
   ValueNotifier<File> hostImage = ValueNotifier(File(""));
@@ -38,8 +38,10 @@ class AddNewListingController extends GetxController{
   ValueNotifier<ListingType?> listingType = ValueNotifier(null);
   ValueNotifier<List<ListingTag>> listingTags = ValueNotifier([]);
   ValueNotifier<List<ListingOffer>> listingOffers = ValueNotifier([]);
-  ValueNotifier<Map<ListingAttribute,int>> listingAttributesMap = ValueNotifier({});
-  ValueNotifier<Map<ListingPlace,List<String>>> listingPlacesMap = ValueNotifier({});
+  ValueNotifier<Map<ListingAttribute, int>> listingAttributesMap =
+      ValueNotifier({});
+  ValueNotifier<Map<ListingPlace, List<String>>> listingPlacesMap =
+      ValueNotifier({});
   ValueNotifier<List<File>> listingImages = ValueNotifier([]);
 
   //-----------------------------------------------------
@@ -47,7 +49,8 @@ class AddNewListingController extends GetxController{
   //others
 
   //nightData
-  ValueNotifier<Map<DateTime,NightFeeModel>> dailyNightFeesMap = ValueNotifier({});
+  ValueNotifier<Map<DateTime, NightFeeModel>> dailyNightFeesMap =
+      ValueNotifier({});
 
   DataEntryDataController dataEntryDataController = Get.find();
 
@@ -63,8 +66,5 @@ class AddNewListingController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
-
-  }
-
+  Future<void> initLoad() async {}
 }
