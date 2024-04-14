@@ -1,0 +1,48 @@
+{
+  "id" : "",
+  "isp" : "MPT|YTP",
+  "type" : "installation|maintenance",
+  "status" : "received|assigned|accepted|going|operating|siteFinished|completed|customerRejected|systemRejected",
+  "team" : {
+    "leader" : {},
+    "members" : []
+  },
+  "ticket" : "",
+  "customerData" : {
+    "customerId" : "",
+    "name" : "",
+    "phone" : [],
+    "address" : "",
+    "location" : "",
+    "type" : "home|business",
+    "buildingType" : "single|floor"
+  },
+  "dateTime" : {
+    "receivedDateTime" : "",
+    "siteFinishedDateTime" : "",
+    "operatingStartTime" : "",
+    "operatingEndTime" : ""
+  },
+  "others" : {
+    "startMeter" : "",
+    "endMeter" : "",
+    "dnSnData" : {
+      "dnSn" : {
+
+      },
+      "port" : ""
+    },
+    "accessories" : [
+      {
+        "id" : "",
+        "name" : "",
+        "type" : "",
+        "qty" : ""
+      }
+    ],
+    "photo" : {
+      "ssr" : "",
+      "sitePhoto" : ""
+    }
+  }
+}
