@@ -105,8 +105,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: const ScheduleBookingPage(),
       // home: const TestPage1(),
-      home: const ImageUploadTestPage()
-      // home: homeWidget()
+      // home: const ImageUploadTestPage()
+      home: homeWidget()
       // home: StatusBarTestingPage1(),
     );
   }
@@ -121,8 +121,8 @@ class MyApp extends StatelessWidget {
       return const WebDataEntryHomePage();
     }
     else{
-      return const MyCalendarTestPage();
-      // return const HomePage();
+      // return const MyCalendarTestPage();
+      return const HomePage();
     }
   }
 }
