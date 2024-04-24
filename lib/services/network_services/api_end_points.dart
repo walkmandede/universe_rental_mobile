@@ -16,9 +16,11 @@ class ApiEndPoints {
   //web_data_entry
   static String dataEntryTag = "tag";
   static String dataEntryOffer = "offer";
+
   static String dataEntryCurrency = "/v1/currency";
-  static String dataDeleteCurrency = '/v1/currency';
+
   static String dataEntryPlace = "listPlace";
-  static String dataEntryAttribute = "list-attribute";
+
+  static String dataEntryAttribute = "/v1/listing-attribute";
   static String dummy2 = "___";
 }

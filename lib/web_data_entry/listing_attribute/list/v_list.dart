@@ -15,7 +15,8 @@ class ListingAttributeListPage extends StatefulWidget {
   const ListingAttributeListPage({super.key});
 
   @override
-  State<ListingAttributeListPage> createState() => _ListingAttributeListPageState();
+  State<ListingAttributeListPage> createState() =>
+      _ListingAttributeListPageState();
 }
 
 class _ListingAttributeListPageState extends State<ListingAttributeListPage> {
@@ -36,60 +37,62 @@ class _ListingAttributeListPageState extends State<ListingAttributeListPage> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Listing Attribute List Page"),
-          actions: [
-            IconButton(onPressed: () {
-              Get.to(()=> const ListingAttributeAddPage());
-            }, icon: const Icon(Icons.add))
-          ],
-        ),
-        body: ValueListenableBuilder(
-          valueListenable: controller.shownData,
-          builder: (context, shownData, child) {
-            return ListView.builder(
-              itemCount: shownData.length,
-              itemBuilder: (context, index) {
-                final eachData = shownData[index];
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(AppConstants.basePadding),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: AppConstants.basePadding,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                eachData.name,
-                              ),
-                              Text(
-                                eachData.id,
-                              ),
-                            ],
+          appBar: AppBar(
+            title: const Text("Listing Attribute List Page"),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.to(() => const ListingAttributeAddPage());
+                  },
+                  icon: const Icon(Icons.add))
+            ],
+          ),
+          body: ValueListenableBuilder(
+            valueListenable: controller.shownData,
+            builder: (context, shownData, child) {
+              return ListView.builder(
+                itemCount: shownData.length,
+                itemBuilder: (context, index) {
+                  final eachData = shownData[index];
+                  return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(AppConstants.basePadding),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppConstants.basePadding,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  eachData.name,
+                                ),
+                                Text(
+                                  eachData.description,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          controller.deleteData(data: eachData);
-                        },
-                        icon: const Icon(Icons.delete),
-                      )
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-        )
-      ),
+                        IconButton(
+                          onPressed: () {
+                            controller.deleteData(data: eachData);
+                          },
+                          icon: const Icon(Icons.delete),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          )),
     );
   }
 }

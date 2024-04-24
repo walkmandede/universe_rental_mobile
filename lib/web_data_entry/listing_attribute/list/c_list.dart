@@ -6,10 +6,8 @@ import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/listing_attribute/m_listing_attribute.dart';
-import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 
-class ListingAttributeListController extends GetxController{
-
+class ListingAttributeListController extends GetxController {
   ValueNotifier<List<ListingAttribute>> shownData = ValueNotifier([]);
 
   @override
@@ -24,37 +22,33 @@ class ListingAttributeListController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {
     updateData();
   }
 
-  Future<void> updateData() async{
-
+  Future<void> updateData() async {
     Response? response = await ApiService().get(
       endPoint: ApiEndPoints.dataEntryAttribute,
     );
 
     final apiResponse = ApiService().validateResponse(response: response);
 
-    if(apiResponse.xSuccess){
+    if (apiResponse.xSuccess) {
       shownData.value.clear();
       final data = apiResponse.bodyData;
-      Iterable iterable = data["_data"]??[];
+      Iterable iterable = data["_data"] ?? [];
       superPrint(iterable);
-      for(final each in iterable){
+      for (final each in iterable) {
         shownData.value.add(ListingAttribute.fromApi(data: each));
       }
       superPrint(shownData.value);
       shownData.notifyListeners();
-    }
-    else{
+    } else {
       DialogService().showTransactionDialog(text: "Something went wrong");
     }
-
   }
 
-  Future<void> deleteData({required ListingAttribute data}) async{
-
+  Future<void> deleteData({required ListingAttribute data}) async {
     DialogService().showLoadingDialog();
 
     Response? response = await ApiService().delete(
@@ -67,13 +61,11 @@ class ListingAttributeListController extends GetxController{
 
     final apiResponse = ApiService().validateResponse(response: response);
 
-    if(apiResponse.xSuccess){
+    if (apiResponse.xSuccess) {
       updateData();
       DialogService().showTransactionDialog(text: "Deletion success");
-    }
-    else{
+    } else {
       DialogService().showTransactionDialog(text: "Something went wrong");
     }
   }
-
 }

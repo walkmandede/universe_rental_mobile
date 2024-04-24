@@ -53,7 +53,7 @@ class CurrencyListController extends GetxController {
     DialogService().showLoadingDialog();
 
     Response? response = await ApiService().delete(
-      endPoint: "${ApiEndPoints.dataDeleteCurrency}/${data.id}",
+      endPoint: "${ApiEndPoints.dataEntryCurrency}/${data.id}",
     );
 
     superPrint(response!.body);

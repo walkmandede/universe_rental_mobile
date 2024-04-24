@@ -16,7 +16,8 @@ class ListingAttributeAddPage extends StatefulWidget {
   const ListingAttributeAddPage({super.key});
 
   @override
-  State<ListingAttributeAddPage> createState() => _ListingAttributeAddPageState();
+  State<ListingAttributeAddPage> createState() =>
+      _ListingAttributeAddPageState();
 }
 
 class _ListingAttributeAddPageState extends State<ListingAttributeAddPage> {
@@ -37,12 +38,11 @@ class _ListingAttributeAddPageState extends State<ListingAttributeAddPage> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Listing Attribute Add Page"
-          ),
+          title: const Text("Listing Attribute Add Page"),
           actions: [
             IconButton(
               onPressed: () {
@@ -62,6 +62,12 @@ class _ListingAttributeAddPageState extends State<ListingAttributeAddPage> {
                   controller: controller.txtName,
                   decoration: const InputDecoration(
                     labelText: "Name",
+                  ),
+                ),
+                TextField(
+                  controller: controller.txtDescription,
+                  decoration: const InputDecoration(
+                    labelText: "Description",
                   ),
                 ),
               ],

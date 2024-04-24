@@ -10,9 +10,9 @@ import 'package:universe_rental/web_data_entry/listing_offers/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_place/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_tags/list/c_list.dart';
 
-class ListingAttributeAddController extends GetxController{
-
+class ListingAttributeAddController extends GetxController {
   TextEditingController txtName = TextEditingController(text: "");
+  TextEditingController txtDescription = TextEditingController();
 
   @override
   void onInit() {
@@ -26,37 +26,28 @@ class ListingAttributeAddController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {}
 
-  }
-
-  Future<void> onClickSave() async{
-    if(txtName.text.isEmpty){
+  Future<void> onClickSave() async {
+    if (txtName.text.isEmpty || txtDescription.text.isEmpty) {
       DialogService().showSnack(title: "Error", message: "Fill all data");
-    }
-    else{
+    } else {
       DialogService().showLoadingDialog();
       Response? response = await ApiService().post(
-        endPoint: ApiEndPoints.dataEntryAttribute,
-        data: {
-          "name": txtName.text,
-        }
-      );
+          endPoint: ApiEndPoints.dataEntryAttribute,
+          data: {"name": txtName.text, "description": txtDescription.text});
       DialogService().dismissDialog();
       final apiResponse = ApiService().validateResponse(
-          response: response,
+        response: response,
       );
 
-      if(apiResponse.xSuccess){
+      if (apiResponse.xSuccess) {
         Get.back();
         ListingAttributeListController controller = Get.find();
         controller.updateData();
-      }
-      else{
+      } else {
         DialogService().showTransactionDialog(text: apiResponse.message);
       }
-
     }
   }
-
 }
