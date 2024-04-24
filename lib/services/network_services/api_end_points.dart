@@ -16,7 +16,7 @@ class ApiEndPoints {
   //web_data_entry
   static String dataEntryTag = "/v1/listing-tag";
 
-  static String dataEntryOffer = "offer";
+  static String dataEntryOffer = "/v1/listing-offer";
 
   static String dataEntryCurrency = "/v1/currency";
 
