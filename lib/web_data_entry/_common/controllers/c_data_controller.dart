@@ -4,15 +4,15 @@ import 'package:get/get.dart';
 import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 
+import '../../all_listings/m_listing_model.dart';
 import '../../listing_attribute/m_listing_attribute.dart';
 import '../../listing_offers/m_listing_tag.dart';
 import '../../listing_tags/m_listing_tag.dart';
-import '../../listing_type/m_listing_type.dart';
 
 class DataEntryDataController extends GetxController{
 
   //fetchedData
-  ValueNotifier<List<ListingType>> allTypes = ValueNotifier([]);
+  ValueNotifier<List<EnumListingType>> allTypes = ValueNotifier([]);
   ValueNotifier<List<ListingTag>> allTags = ValueNotifier([]);
   ValueNotifier<List<ListingOffer>> allOffers = ValueNotifier([]);
   ValueNotifier<List<ListingAttribute>> allAttributes = ValueNotifier([]);
@@ -39,22 +39,12 @@ class DataEntryDataController extends GetxController{
 
   Future<void> fetchAllData() async{
     await Future.wait([
-      fetchTypes(),
       fetchTags(),
       fetchOffers(),
       fetchAttributes(),
       fetchPlaces(),
       fetchCurrencies(),
     ]);
-  }
-
-  Future<void> fetchTypes() async{
-    allTypes.value = [
-      ListingType(id: "", name: "Room"),
-      ListingType(id: "", name: "Entire House"),
-      ListingType(id: "", name: "Apartment"),
-    ];
-    allTypes.notifyListeners();
   }
 
   Future<void> fetchTags() async{

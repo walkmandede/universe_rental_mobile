@@ -4,8 +4,12 @@ import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/m_listing_tag.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 import 'package:universe_rental/web_data_entry/listing_tags/m_listing_tag.dart';
-import 'package:universe_rental/web_data_entry/listing_type/m_listing_type.dart';
 import '../listing_attribute/m_listing_attribute.dart';
+
+enum EnumListingType{
+  room,
+  entireHome,
+}
 
 class ListingModel{
   String id;
@@ -14,7 +18,7 @@ class ListingModel{
   String about;
   String hostName;
 
-  ListingType listingType;
+  EnumListingType listingType;
   List<ListingTag> listingTags;
   Map<ListingAttribute,int> listingAttributesQty;
   Map<ListingPlace,List<String>> listingPlacesImages;

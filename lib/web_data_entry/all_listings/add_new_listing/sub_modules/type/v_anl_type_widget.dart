@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 import 'package:universe_rental/web_data_entry/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/c_add_new_listing.dart';
+import 'package:universe_rental/web_data_entry/all_listings/m_listing_model.dart';
 
 class AnlTypeWidget extends StatefulWidget {
   const AnlTypeWidget({super.key});
@@ -25,7 +26,7 @@ class _AnlTypeWidgetState extends State<AnlTypeWidget> {
             return Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: dedController.allTypes.value.map((e) {
+              children: EnumListingType.values.map((e) {
                 return ValueListenableBuilder(
                   valueListenable: controller.listingType,
                   builder: (context, listingType, child) {

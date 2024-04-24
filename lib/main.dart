@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:universe_rental/_test/v_image_upload_test.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/modules/home/v_home_page.dart';
@@ -104,7 +105,8 @@ class MyApp extends StatelessWidget {
       ),
       // home: const ScheduleBookingPage(),
       // home: const TestPage1(),
-      home: homeWidget()
+      home: const ImageUploadTestPage()
+      // home: homeWidget()
       // home: StatusBarTestingPage1(),
     );
   }

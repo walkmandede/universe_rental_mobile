@@ -15,8 +15,8 @@ class ApiService {
   // String baseUrl = "https://api.nutjobs.xsphere.co/api/";
 
   ///local-XspherIT-2024
-  String baseUrl = "http://test.api.universerental.com/api/"; //staging
-  // String baseUrl = "http://192.168.86.188:8080/api/"; //staging
+  // String baseUrl = "http://test.api.universerental.com/api/"; //staging
+  String baseUrl = "http://192.168.86.176:3000/api/v1/"; //staging
 
   // final dioClient = dio.Dio(
   //   dio.BaseOptions(
@@ -32,12 +32,22 @@ class ApiService {
   }
 
   Response convertHttpResponseToGetResponse({required http.Response response}){
-    return Response(
-      statusCode: response.statusCode,
-      body: jsonDecode(response.body),
-      bodyString: response.body,
-      headers: response.headers,
-    );
+    try{
+      return Response(
+        statusCode: response.statusCode,
+        body: jsonDecode(response.body),
+        bodyString: response.body,
+        headers: response.headers,
+      );
+    }
+    catch(e){
+      return Response(
+        statusCode: response.statusCode,
+        body: null,
+        bodyString: response.body,
+        headers: response.headers,
+      );
+    }
   }
 
   Future<Response?> get({

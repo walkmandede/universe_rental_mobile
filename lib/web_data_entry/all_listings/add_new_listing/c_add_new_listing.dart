@@ -12,7 +12,7 @@ import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dar
 import 'package:universe_rental/web_data_entry/listing_tags/m_listing_tag.dart';
 
 import '../../_common/models/m_night_fee_model.dart';
-import '../../listing_type/m_listing_type.dart';
+import '../m_listing_model.dart';
 
 class AddNewListingController extends GetxController{
 
@@ -36,7 +36,7 @@ class AddNewListingController extends GetxController{
 
   //listingData
 
-  ValueNotifier<ListingType?> listingType = ValueNotifier(null);
+  ValueNotifier<EnumListingType?> listingType = ValueNotifier(null);
   ValueNotifier<List<ListingTag>> listingTags = ValueNotifier([]);
   ValueNotifier<List<ListingOffer>> listingOffers = ValueNotifier([]);
   ValueNotifier<Map<ListingAttribute,int>> listingAttributesMap = ValueNotifier({});
