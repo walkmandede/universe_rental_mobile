@@ -8,8 +8,7 @@ import 'package:universe_rental/web_data_entry/currency/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_tags/list/c_list.dart';
 
-class CurrencyAddController extends GetxController{
-
+class CurrencyAddController extends GetxController {
   TextEditingController txtName = TextEditingController(text: "");
   TextEditingController txtSign = TextEditingController(text: "");
   TextEditingController txtAbbr = TextEditingController(text: "");
@@ -26,39 +25,32 @@ class CurrencyAddController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {}
 
-  }
-
-  Future<void> onClickSave() async{
-    if(txtName.text.isEmpty || txtSign.text.isEmpty || txtAbbr.text.isEmpty){
+  Future<void> onClickSave() async {
+    if (txtName.text.isEmpty || txtSign.text.isEmpty || txtAbbr.text.isEmpty) {
       DialogService().showSnack(title: "Error", message: "Fill all data");
-    }
-    else{
+    } else {
       DialogService().showLoadingDialog();
       Response? response = await ApiService().post(
-        endPoint: ApiEndPoints.dataEntryCurrency,
-        data: {
-          "name": txtName.text,
-          "sign": txtSign.text,
-          "abbr" : txtAbbr.text
-        }
-      );
+          endPoint: ApiEndPoints.dataEntryCurrency,
+          data: {
+            "name": txtName.text,
+            "sign": txtSign.text,
+            "abbr": txtAbbr.text
+          });
       DialogService().dismissDialog();
       final apiResponse = ApiService().validateResponse(
-          response: response,
+        response: response,
       );
 
-      if(apiResponse.xSuccess){
+      if (apiResponse.xSuccess) {
         Get.back();
         CurrencyListController controller = Get.find();
         controller.updateData();
-      }
-      else{
+      } else {
         DialogService().showTransactionDialog(text: apiResponse.message);
       }
-
     }
   }
-
 }

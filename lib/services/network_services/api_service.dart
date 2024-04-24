@@ -16,7 +16,8 @@ class ApiService {
 
   ///local-XspherIT-2024
   // String baseUrl = "http://test.api.universerental.com/api/"; //staging
-  String baseUrl = "http://192.168.86.176:3000/api/v1/"; //staging
+  String baseUrl = "https://test.api.universerental.com/api";
+  //"http://192.168.86.176:3000/api/v1/"; //staging
 
   // final dioClient = dio.Dio(
   //   dio.BaseOptions(
@@ -27,20 +28,19 @@ class ApiService {
     timeout: const Duration(seconds: 40),
   );
 
-  String convertNetworkImage({required String orgPath}){
-    return ApiService().baseUrl.replaceAll("api/", "api")+orgPath;
+  String convertNetworkImage({required String orgPath}) {
+    return ApiService().baseUrl.replaceAll("api/", "api") + orgPath;
   }
 
-  Response convertHttpResponseToGetResponse({required http.Response response}){
-    try{
+  Response convertHttpResponseToGetResponse({required http.Response response}) {
+    try {
       return Response(
         statusCode: response.statusCode,
         body: jsonDecode(response.body),
         bodyString: response.body,
         headers: response.headers,
       );
-    }
-    catch(e){
+    } catch (e) {
       return Response(
         statusCode: response.statusCode,
         body: null,
@@ -50,11 +50,10 @@ class ApiService {
     }
   }
 
-  Future<Response?> get({
-      required String endPoint,
+  Future<Response?> get(
+      {required String endPoint,
       bool xNeedToken = false,
-      bool xBaseUrlIncluded = true
-  }) async {
+      bool xBaseUrlIncluded = true}) async {
     DataController dataController = Get.find();
 
     final response = await http.get(
@@ -111,11 +110,10 @@ class ApiService {
     // return response;
   }
 
-  Future<Response?> delete({
-    required String endPoint,
-    bool xNeedToken = false,
-    bool xBaseUrlIncluded = true
-  }) async {
+  Future<Response?> delete(
+      {required String endPoint,
+      bool xNeedToken = false,
+      bool xBaseUrlIncluded = true}) async {
     DataController dataController = Get.find();
 
     final response = await http.delete(
@@ -140,8 +138,8 @@ class ApiService {
     // return response;
   }
 
-  Future<Response?> put({
-    required String endPoint,
+  Future<Response?> put(
+      {required String endPoint,
       Map<String, dynamic> data = const {},
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
@@ -191,21 +189,16 @@ class ApiService {
       }
     } catch (error) {
       if (error is dio.DioException) {
-        try{
+        try {
           superPrint(error.response!.data, title: error.response!.statusCode);
           response = Response(
               statusCode: error.response!.statusCode,
               body: error.response!.data,
-              bodyString: error.response!.data.toString()
-          );
-        }
-        catch(e){
+              bodyString: error.response!.data.toString());
+        } catch (e) {
           superPrint(error.toString());
           response = const Response(
-            statusCode: 0,
-            body: {},
-            bodyString: "Something went wrong!"
-          );
+              statusCode: 0, body: {}, bodyString: "Something went wrong!");
         }
       }
     }
@@ -220,33 +213,36 @@ class ApiService {
       // Get.off(()=> const LoginMainPage());
       DialogService().showSnack(
           title: "Something went wrong",
-          message: "Unable to use the system now.Please contact the development team.");
-    }
-    else {
+          message:
+              "Unable to use the system now.Please contact the development team.");
+    } else {
       try {
         apiResponse.bodyString = response.bodyString;
         apiResponse.bodyData = response.body;
-        apiResponse.statusCode = response.statusCode??0;
+        apiResponse.statusCode = response.statusCode ?? 0;
         if (response.statusCode! < 200 || response.statusCode! > 299) {
           apiResponse.xSuccess = false;
-        }
-        else if (response.body["_metadata"]["statusCode"] >= 200 &&
+        } else if (response.body["_metadata"]["statusCode"] >= 200 &&
             response.body["_metadata"]["statusCode"] <= 299) {
           //success
           apiResponse.xSuccess = true;
-        }
-        else {
+        } else {
           apiResponse.xSuccess = false;
         }
-        apiResponse.message = response.body["message"]??"";
+        apiResponse.message = response.body["message"] ?? "";
       } catch (e) {
         apiResponse.message = e.toString();
-        if(response.statusCode == null){
+        if (response.statusCode == null) {
           // Get.off(()=> const LoginGreetingPage());
-          DialogService().showSnack(title: "Connection Time Out", message: "Unable to use the system now.Please contact the development team.");
-        }
-        else{
-          DialogService().showSnack(title: "Something went wrong", message: "Unable to use the system now.Please contact the development team.");
+          DialogService().showSnack(
+              title: "Connection Time Out",
+              message:
+                  "Unable to use the system now.Please contact the development team.");
+        } else {
+          DialogService().showSnack(
+              title: "Something went wrong",
+              message:
+                  "Unable to use the system now.Please contact the development team.");
         }
       }
     }

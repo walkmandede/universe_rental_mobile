@@ -8,8 +8,7 @@ import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 
-class CurrencyListController extends GetxController{
-
+class CurrencyListController extends GetxController {
   ValueNotifier<List<CurrencyModel>> shownData = ValueNotifier([]);
 
   @override
@@ -24,41 +23,37 @@ class CurrencyListController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {
     updateData();
   }
 
-  Future<void> updateData() async{
-
+  Future<void> updateData() async {
     Response? response = await ApiService().get(
       endPoint: ApiEndPoints.dataEntryCurrency,
     );
 
     final apiResponse = ApiService().validateResponse(response: response);
 
-    if(apiResponse.xSuccess){
+    if (apiResponse.xSuccess) {
       shownData.value.clear();
       final data = apiResponse.bodyData;
-      Iterable iterable = data["_data"]??[];
+      Iterable iterable = data["_data"] ?? [];
       superPrint(iterable);
-      for(final each in iterable){
+      for (final each in iterable) {
         shownData.value.add(CurrencyModel.fromApi(data: each));
       }
       superPrint(shownData.value);
       shownData.notifyListeners();
-    }
-    else{
+    } else {
       DialogService().showTransactionDialog(text: "Something went wrong");
     }
-
   }
 
-  Future<void> deleteData({required CurrencyModel data}) async{
-
+  Future<void> deleteData({required CurrencyModel data}) async {
     DialogService().showLoadingDialog();
 
     Response? response = await ApiService().delete(
-      endPoint: "${ApiEndPoints.dataEntryCurrency}/${data.id}",
+      endPoint: "${ApiEndPoints.dataDeleteCurrency}/${data.id}",
     );
 
     superPrint(response!.body);
@@ -67,13 +62,11 @@ class CurrencyListController extends GetxController{
 
     final apiResponse = ApiService().validateResponse(response: response);
 
-    if(apiResponse.xSuccess){
+    if (apiResponse.xSuccess) {
       updateData();
       DialogService().showTransactionDialog(text: "Deletion success");
-    }
-    else{
+    } else {
       DialogService().showTransactionDialog(text: "Something went wrong");
     }
   }
-
 }
