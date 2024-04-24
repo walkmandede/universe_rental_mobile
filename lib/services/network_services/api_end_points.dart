@@ -14,7 +14,8 @@ class ApiEndPoints {
   static String dummy = "___";
 
   //web_data_entry
-  static String dataEntryTag = "tag";
+  static String dataEntryTag = "/v1/listing-tag";
+
   static String dataEntryOffer = "offer";
 
   static String dataEntryCurrency = "/v1/currency";
