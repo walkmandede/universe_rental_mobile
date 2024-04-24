@@ -20,7 +20,7 @@ class ApiEndPoints {
 
   static String dataEntryCurrency = "/v1/currency";
 
-  static String dataEntryPlace = "listPlace";
+  static String dataEntryPlace = "/v1/listing-place";
 
   static String dataEntryAttribute = "/v1/listing-attribute";
   static String dummy2 = "___";
