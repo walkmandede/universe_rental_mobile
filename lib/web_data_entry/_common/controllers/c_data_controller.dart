@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universe_rental/constants/app_enum.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
@@ -9,7 +10,7 @@ import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dar
 
 import '../../all_listings/m_listing_model.dart';
 import '../../listing_attribute/m_listing_attribute.dart';
-import '../../listing_offers/m_listing_tag.dart';
+import '../../listing_offers/m_listing_offer.dart';
 import '../../listing_tags/m_listing_tag.dart';
 
 class DataEntryDataController extends GetxController {

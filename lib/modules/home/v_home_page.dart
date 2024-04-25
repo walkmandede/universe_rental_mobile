@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
       superBarColor: SuperBarColor(
         xTopIconWhite: false
       ),
+      isResizeToAvoidBottomInset: false,
       body: SizedBox.expand(
         child: ValueListenableBuilder(
           valueListenable: controller.xLoading,

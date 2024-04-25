@@ -22,6 +22,18 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
             return ValueListenableBuilder(
               valueListenable: dataController.allListingTags,
               builder: (context, allListingTags, child) {
+
+                if(allListingTags.isEmpty){
+                  return Center(
+                    child: Text(
+                      "There is no tag available",
+                      style: TextStyle(
+                        color: AppColors.grey
+                      ),
+                    ),
+                  );
+                }
+
                 return SingleChildScrollView(
                   // physics: const ClampingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
@@ -43,7 +55,7 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
                               height: double.infinity,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10,
-                                  vertical: c1.maxHeight * 0.1
+                                  vertical: c1.maxHeight * 0.2
                               ),
                               decoration: const BoxDecoration(
                                   color: Colors.transparent

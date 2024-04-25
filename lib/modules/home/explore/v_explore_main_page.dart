@@ -14,7 +14,6 @@ class ExploreMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =  Get.put(ExploreController());
     return LayoutBuilder(
       builder: (c1, c2) {
         final baseSize = Size(c2.maxWidth, c2.maxHeight);

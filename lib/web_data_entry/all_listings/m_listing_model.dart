@@ -1,11 +1,10 @@
 import 'package:latlong2/latlong.dart';
+import 'package:universe_rental/constants/app_enum.dart';
 import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/m_listing_tag.dart';
+import 'package:universe_rental/web_data_entry/listing_offers/m_listing_offer.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 import 'package:universe_rental/web_data_entry/listing_tags/m_listing_tag.dart';
 import '../listing_attribute/m_listing_attribute.dart';
-
-enum EnumListingType { room, entirePlace, shareRoom }
 
 class ListingModel {
   String id;

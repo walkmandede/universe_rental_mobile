@@ -38,11 +38,12 @@ class HomeController extends GetxController{
     xLoading.value = true;
     xLoading.notifyListeners();
     try{
-      final exploreController = Get.put(ExploreHeaderController());
+      final exploreHeaderController = Get.put(ExploreHeaderController());
       DataController dataController  = Get.find();
       await dataController.fetchListingTags();
+      Get.put(ExploreController());
       if(dataController.allListingTags.value.isNotEmpty){
-        exploreController.updateSelectedTag(listingTag: dataController.allListingTags.value.first);
+        exploreHeaderController.updateSelectedTag(listingTag: dataController.allListingTags.value.first);
       }
     }
     catch(e){

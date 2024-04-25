@@ -36,7 +36,7 @@ class ExploreHeader extends StatelessWidget {
             child: const Column(
               children: [
                 Expanded(
-                  flex: 5,
+                  flex: 4,
                   child: Row(
                     children: [
                       Expanded(
@@ -46,7 +46,7 @@ class ExploreHeader extends StatelessWidget {
                   )
                 ),
                 Expanded(
-                  flex: 4,
+                  flex: 5,
                   child: ExploreHeaderTagsWidget(),
                 ),
               ],

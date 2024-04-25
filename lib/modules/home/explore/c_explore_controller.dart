@@ -7,8 +7,10 @@ import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
+import 'package:universe_rental/modules/home/explore/sub_widgets/header/c_explore_header_controller.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
+import 'package:universe_rental/services/others/extensions.dart';
 
 import '../../../constants/app_functions.dart';
 
@@ -56,11 +58,22 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
     xUpdatingShownList.value = true;
     xUpdatingShownList.notifyListeners();
     try{
+      ExploreHeaderController exploreHeaderController = Get.find();
       final response = await ApiService().get(
-        endPoint: "${ApiEndPoints.getTags}"
+        endPoint: "${ApiEndPoints.getShownList}"
+            "?tagId=${exploreHeaderController.selectedTag.value!.id}"
+            "&startDate=${exploreHeaderController.selectedDateRange.value.start.getDateKey()}"
+            "&endDate=${exploreHeaderController.selectedDateRange.value.end.getDateKey()}"
+        ,
+        xNeedToken: false,
       );
+
+      Iterable iterable = response!.body["_data"]??[];
+      superPrint(iterable.first);
+
     }
     catch(e){
+      superPrint(e);
       null;
     }
     xUpdatingShownList.value = false;
