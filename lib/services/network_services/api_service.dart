@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,23 +12,20 @@ import '../overlays_services/dialog/dialog_service.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  ///staging
-  // String baseUrl = "https://api.nutjobs.xsphere.co/api/";
 
-  ///local-XspherIT-2024
-  // String baseUrl = "http://test.api.universerental.com/api/"; //staging
   String baseUrl = "https://test.api.universerental.com/api";
-  // 'http://192.168.86.250:3000/api';
-  //"http://192.168.86.176:3000/api/v1/"; //staging
 
-  // final dioClient = dio.Dio(
-  //   dio.BaseOptions(
-  //     connectTimeout: const Duration(seconds: 120),
-  //   )
-  // );
-  final getClient = GetConnect(
-    timeout: const Duration(seconds: 40),
-  );
+  Future<bool> checkInternet() async{
+    try {
+      final result = await InternetAddress.lookup('example.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        return true;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+    return false;
+  }
 
   String convertNetworkImage({required String orgPath}) {
     return ApiService().baseUrl.replaceAll("api/", "api") + orgPath;
@@ -51,92 +49,85 @@ class ApiService {
     }
   }
 
-  Future<Response?> get(
-      {required String endPoint,
-      bool xNeedToken = false,
-      bool xBaseUrlIncluded = true}) async {
-    DataController dataController = Get.find();
+  Future<Response?> get({
+    required String endPoint,
+    bool xNeedToken = false,
+    bool xBaseUrlIncluded = true
+  }) async {
 
-    final response = await http.get(
-      Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
-      headers: {
-        "accept": "*/*",
-        "Content-Type": "application/json",
-        if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-      },
-    );
+    final xHasInternet = await checkInternet();
 
-    return convertHttpResponseToGetResponse(response: response);
+    if(xHasInternet){
+      DataController dataController = Get.find();
+      final response = await http.get(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        headers: {
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
 
-    // final response = await getClient.get(
-    //   xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
-    //   headers: {
-    //     "accept": "*/*",
-    //     "Content-Type": "application/json",
-    //     if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-    //   },
-    // );
-
-    // return response;
+      return convertHttpResponseToGetResponse(response: response);
+    }
+    else{
+      return null;
+    }
   }
 
-  Future<Response?> post(
-      {required String endPoint,
-      Map<String, dynamic> data = const {},
-      bool xNeedToken = false,
-      bool xBaseUrlIncluded = true}) async {
-    DataController dataController = Get.find();
+  Future<Response?> post({
+    required String endPoint,
+    Map<String, dynamic> data = const {},
+    bool xNeedToken = false,
+    bool xBaseUrlIncluded = true
+  }) async {
 
-    final response = await http.post(
-      Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
-      body: jsonEncode(data),
-      headers: {
-        "accept": "*/*",
-        "Content-Type": "application/json",
-        if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-      },
-    );
+    final xHasInternet = await checkInternet();
 
-    return convertHttpResponseToGetResponse(response: response);
+    if(xHasInternet){
+      DataController dataController = Get.find();
 
-    // final response = await getClient.post(
-    //   xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
-    //   jsonEncode(data),
-    //   headers: {
-    //     "accept": "*/*",
-    //     "Content-Type": "application/json",
-    //     if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-    //   },
-    // );
-    // return response;
+      final response = await http.post(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        body: jsonEncode(data),
+        headers: {
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
+
+      return convertHttpResponseToGetResponse(response: response);
+    }
+    else{
+      return null;
+    }
+
   }
 
-  Future<Response?> delete(
-      {required String endPoint,
+  Future<Response?> delete({required String endPoint,
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
-    DataController dataController = Get.find();
 
-    final response = await http.delete(
-      Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
-      headers: {
-        "accept": "*/*",
-        "Content-Type": "application/json",
-        if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-      },
-    );
+    final xHasInternet = await checkInternet();
+    if(xHasInternet){
+      DataController dataController = Get.find();
 
-    return convertHttpResponseToGetResponse(response: response);
+      final response = await http.delete(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        headers: {
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
 
-    // final response = await getClient.delete(
-    //   xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
-    //   headers: {
-    //     "accept": "*/*",
-    //     "Content-Type": "application/json",
-    //     if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-    //   },
-    // );
-    // return response;
+      return convertHttpResponseToGetResponse(response: response);
+    }
+    else{
+      return null;
+    }
+
   }
 
   Future<Response?> put(
@@ -144,17 +135,25 @@ class ApiService {
       Map<String, dynamic> data = const {},
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
-    DataController dataController = Get.find();
-    final response = await getClient.put(
-      xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
-      data,
-      headers: {
-        "accept": "*/*",
-        "Content-Type": "application/json",
-        if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-      },
-    );
-    return response;
+
+    final xHasInternet = await checkInternet();
+
+    if(xHasInternet){
+      DataController dataController = Get.find();
+      final response = await http.put(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        body: data,
+        headers: {
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
+      return convertHttpResponseToGetResponse(response: response);
+    }
+    else{
+      return null;
+    }
   }
 
   Future<Response?> formDataPost(
@@ -163,47 +162,57 @@ class ApiService {
       Map<String, dio.MultipartFile> files = const {},
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
-    Response? response;
-    try {
-      dio.Dio dioClient = dio.Dio();
-      dio.FormData formData = dio.FormData.fromMap({...data, ...files});
-      DataController dataController = Get.find();
-      var dioResponse = await dioClient.post(
-          xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
-          options: dio.Options(
-            contentType: 'text/html; charset=utf-8',
-            headers: <String, String>{
-              "accept": "*/*",
-              "Content-Type": "application/json",
-              if (xNeedToken)
-                "Authorization": "Bearer ${dataController.apiToken}",
-            },
-          ),
-          data: formData);
-      if (dioResponse.statusCode == 201) {
-        response = Response(
-          statusCode: 201,
-          headers: {},
-          body: dioResponse.data,
-          statusText: "",
-        );
-      }
-    } catch (error) {
-      if (error is dio.DioException) {
-        try {
-          superPrint(error.response!.data, title: error.response!.statusCode);
+
+    final xHasInternet = await checkInternet();
+
+    if(xHasInternet){
+
+
+      Response? response;
+      try {
+        dio.Dio dioClient = dio.Dio();
+        dio.FormData formData = dio.FormData.fromMap({...data, ...files});
+        DataController dataController = Get.find();
+        var dioResponse = await dioClient.post(
+            xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint,
+            options: dio.Options(
+              contentType: 'text/html; charset=utf-8',
+              headers: <String, String>{
+                "accept": "*/*",
+                "Content-Type": "application/json",
+                if (xNeedToken)
+                  "Authorization": "Bearer ${dataController.apiToken}",
+              },
+            ),
+            data: formData);
+        if (dioResponse.statusCode == 201) {
           response = Response(
-              statusCode: error.response!.statusCode,
-              body: error.response!.data,
-              bodyString: error.response!.data.toString());
-        } catch (e) {
-          superPrint(error.toString());
-          response = const Response(
-              statusCode: 0, body: {}, bodyString: "Something went wrong!");
+            statusCode: 201,
+            headers: {},
+            body: dioResponse.data,
+            statusText: "",
+          );
+        }
+      } catch (error) {
+        if (error is dio.DioException) {
+          try {
+            superPrint(error.response!.data, title: error.response!.statusCode);
+            response = Response(
+                statusCode: error.response!.statusCode,
+                body: error.response!.data,
+                bodyString: error.response!.data.toString());
+          } catch (e) {
+            superPrint(error.toString());
+            response = const Response(
+                statusCode: 0, body: {}, bodyString: "Something went wrong!");
+          }
         }
       }
+      return response;
     }
-    return response;
+    else{
+      return null;
+    }
   }
 
   ApiResponse validateResponse({
@@ -212,10 +221,7 @@ class ApiService {
     ApiResponse apiResponse = ApiResponse.getInstance();
     if (response == null) {
       // Get.off(()=> const LoginMainPage());
-      DialogService().showSnack(
-          title: "Something went wrong",
-          message:
-              "Unable to use the system now.Please contact the development team.");
+      DialogService().showTransactionDialog(text: "Unable to connect to the server!\nPlease try again later!");
     } else {
       try {
         apiResponse.bodyString = response.bodyString;

@@ -1,0 +1,134 @@
+{
+  "_metadata": {
+    "message": "Fetch success",
+    "statusCode": 200
+  },
+  "_data": {
+    "id": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+    "title": "သရဲအိမ်",
+    "subTitle": "သရဲအိမ်ကြီး",
+    "description": "သိတယ် မပြောပြဘူး",
+    "listingType": "ROOM",
+    "imageList": [],
+    "hostName": "min thu",
+    "createdAt": "2024-04-23T18:21:48.268Z",
+    "updatedAt": "2024-04-23T18:21:48.268Z",
+    "listingLocation": {
+      "id": "271e5d0c-1f87-4383-8097-6ed247e34ad6",
+      "listingId": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+      "lat": 16.83249487272465,
+      "lng": 96.22229942777852,
+      "fullAddress": "earth",
+      "remark": "house on earth",
+      "createdAt": "2024-04-23T18:21:48.268Z",
+      "updatedAt": "2024-04-23T18:21:48.268Z"
+    },
+    "listingOffers": [
+      {
+        "id": "4b49e7cd-4569-4665-a545-f749f9866cf0",
+        "name": "Air Con",
+        "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-accessible\" width=\"44\" height=\"44\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\">  <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/>  <path d=\"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\" />  <path d=\"M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1\" />  <circle cx=\"12\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" /></svg>",
+        "createdAt": "2024-04-23T16:34:39.163Z",
+        "updatedAt": "2024-04-24T05:08:43.295Z"
+      },
+      {
+        "id": "68265a53-6cec-42bf-8937-768175ce52aa",
+        "name": "Bath Tub",
+        "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon icon-tabler icon-tabler-accessible\" width=\"44\" height=\"44\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" fill=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\">  <path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/>  <path d=\"M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0\" />  <path d=\"M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1\" />  <circle cx=\"12\" cy=\"7.5\" r=\".5\" fill=\"currentColor\" /></svg>",
+        "createdAt": "2024-04-23T16:35:28.246Z",
+        "updatedAt": "2024-04-24T05:08:43.295Z"
+      }
+    ],
+    "listingOnPlace": [
+      {
+        "id": "143cfe4c-38dd-4a04-a9a7-db4d17abf0cf",
+        "listingId": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+        "placeId": "8a04f31d-bfdf-46cd-b239-53972f4a36e6",
+        "imageList": [],
+        "createdAt": "2024-04-23T18:21:48.268Z",
+        "updatedAt": "2024-04-23T18:21:48.268Z",
+        "listingPlace": {
+          "id": "8a04f31d-bfdf-46cd-b239-53972f4a36e6",
+          "name": "Living Rooms",
+          "createdAt": "2024-04-23T16:15:09.058Z",
+          "updatedAt": "2024-04-23T16:15:09.058Z"
+        }
+      }
+    ],
+    "listingOnAttribute": [
+      {
+        "id": "6c4d2a71-3229-4df0-93f4-8d1f37b45540",
+        "listingId": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+        "attributeId": "0ffeba80-2d2b-4799-8ae7-8cecafff51e4",
+        "quantity": 2,
+        "createdAt": "2024-04-23T18:21:48.268Z",
+        "updatedAt": "2024-04-23T18:21:48.268Z",
+        "listingAttribute": {
+          "id": "0ffeba80-2d2b-4799-8ae7-8cecafff51e4",
+          "name": "Bedrooms",
+          "description": "To sleep",
+          "createdAt": "2024-04-23T18:00:04.544Z",
+          "updatedAt": "2024-04-23T18:00:04.544Z"
+        }
+      },
+      {
+        "id": "b0474049-842e-4c90-8f48-4a65cce3afff",
+        "listingId": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+        "attributeId": "6f6fc017-c579-43ba-b681-c73102a73a69",
+        "quantity": 4,
+        "createdAt": "2024-04-23T18:21:48.268Z",
+        "updatedAt": "2024-04-23T18:21:48.268Z",
+        "listingAttribute": {
+          "id": "6f6fc017-c579-43ba-b681-c73102a73a69",
+          "name": "Guests",
+          "description": "Extra human",
+          "createdAt": "2024-04-23T17:59:41.865Z",
+          "updatedAt": "2024-04-23T17:59:41.865Z"
+        }
+      }
+    ],
+    "listingOnTag": [
+      {
+        "id": "5dd6b314-19a1-4501-a945-46ecf3b1ae86",
+        "listingId": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+        "tagId": "171282af-d57d-4621-8c6c-0ef497cd3543",
+        "createdAt": "2024-04-23T18:21:48.268Z",
+        "updatedAt": "2024-04-23T18:21:48.268Z",
+        "listingTag": {
+          "id": "171282af-d57d-4621-8c6c-0ef497cd3543",
+          "name": "Islands",
+          "icon": "",
+          "createdAt": "2024-04-23T16:10:56.868Z",
+          "updatedAt": "2024-04-23T16:10:56.868Z"
+        }
+      }
+    ],
+    "nightData": [
+      {
+        "id": "e85b441f-ce03-4f16-85c4-3384cfec1b67",
+        "listingId": "d92be061-d074-4652-84ca-7ab30ea1a88e",
+        "date": "2024-04-23T00:00:00.000Z",
+        "createdAt": "2024-04-23T18:21:48.268Z",
+        "updatedAt": "2024-04-23T18:21:48.268Z",
+        "listingPrice": [
+          {
+            "id": "c420f31c-013b-457a-b8c5-6a70035ea09a",
+            "nightDataId": "e85b441f-ce03-4f16-85c4-3384cfec1b67",
+            "currrencyId": "39b58dbf-f9ed-4887-81e1-50712a1a461c",
+            "amount": 900,
+            "createdAt": "2024-04-23T18:21:48.268Z",
+            "updatedAt": "2024-04-23T18:21:48.268Z",
+            "currency": {
+              "id": "39b58dbf-f9ed-4887-81e1-50712a1a461c",
+              "name": "Myanmar Kyat",
+              "abbr": "MMK",
+              "sign": "ks",
+              "createdAt": "2024-04-23T15:58:09.469Z",
+              "updatedAt": "2024-04-23T15:58:09.469Z"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

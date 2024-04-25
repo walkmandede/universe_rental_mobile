@@ -1,3 +1,6 @@
+// ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+
+
 import 'dart:math';
 
 import 'package:backdrop/backdrop.dart';
@@ -43,15 +46,10 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
     });
     xLoaded.value = true;
     xLoaded.notifyListeners();
-    superPrint("initloaded");
   }
 
   double getListingHeaderHeightPortion(){
     return (headerBarHeight - (1-listingPanelHeight));
   }
-
-  // double getListingHeaderHeight(){
-  //   return (headerBarHeight - (1-listingPanelHeight));
-  // }
 
 }
