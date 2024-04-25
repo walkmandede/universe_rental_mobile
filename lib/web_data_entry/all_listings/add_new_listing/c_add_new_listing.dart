@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -129,12 +130,14 @@ class AddNewListingController extends GetxController {
                   "listingPrices": nightData.value
                       .map((nightPrice) => {
                             "currencyID": nightPrice.currencyModel.id,
-                            "amount": 100
+                            "amount": nightPrice.perNightFee
                           })
                       .toList()
                 })
             .toList()
       };
+      jsonEncode(_data);
+      log(jsonEncode(_data));
       DialogService().showLoadingDialog();
 
       Response? response = await ApiService()

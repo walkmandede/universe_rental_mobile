@@ -12,10 +12,10 @@ import '../overlays_services/dialog/dialog_service.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-
+  String domain = "https://test.api.universerental.com";
   String baseUrl = "https://test.api.universerental.com/api/v1/";
 
-  Future<bool> checkInternet() async{
+  Future<bool> checkInternet() async {
     try {
       final result = await InternetAddress.lookup('example.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -49,15 +49,13 @@ class ApiService {
     }
   }
 
-  Future<Response?> get({
-    required String endPoint,
-    bool xNeedToken = false,
-    bool xBaseUrlIncluded = true
-  }) async {
-
+  Future<Response?> get(
+      {required String endPoint,
+      bool xNeedToken = false,
+      bool xBaseUrlIncluded = true}) async {
     final xHasInternet = await checkInternet();
 
-    if(xHasInternet){
+    if (xHasInternet) {
       DataController dataController = Get.find();
       final response = await http.get(
         Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
@@ -69,22 +67,19 @@ class ApiService {
       );
 
       return convertHttpResponseToGetResponse(response: response);
-    }
-    else{
+    } else {
       return null;
     }
   }
 
-  Future<Response?> post({
-    required String endPoint,
-    Map<String, dynamic> data = const {},
-    bool xNeedToken = false,
-    bool xBaseUrlIncluded = true
-  }) async {
-
+  Future<Response?> post(
+      {required String endPoint,
+      Map<String, dynamic> data = const {},
+      bool xNeedToken = false,
+      bool xBaseUrlIncluded = true}) async {
     final xHasInternet = await checkInternet();
 
-    if(xHasInternet){
+    if (xHasInternet) {
       DataController dataController = Get.find();
 
       final response = await http.post(
@@ -98,19 +93,17 @@ class ApiService {
       );
 
       return convertHttpResponseToGetResponse(response: response);
-    }
-    else{
+    } else {
       return null;
     }
-
   }
 
-  Future<Response?> delete({required String endPoint,
+  Future<Response?> delete(
+      {required String endPoint,
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
-
     final xHasInternet = await checkInternet();
-    if(xHasInternet){
+    if (xHasInternet) {
       DataController dataController = Get.find();
 
       final response = await http.delete(
@@ -123,11 +116,9 @@ class ApiService {
       );
 
       return convertHttpResponseToGetResponse(response: response);
-    }
-    else{
+    } else {
       return null;
     }
-
   }
 
   Future<Response?> put(
@@ -135,10 +126,9 @@ class ApiService {
       Map<String, dynamic> data = const {},
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
-
     final xHasInternet = await checkInternet();
 
-    if(xHasInternet){
+    if (xHasInternet) {
       DataController dataController = Get.find();
       final response = await http.put(
         Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
@@ -150,8 +140,7 @@ class ApiService {
         },
       );
       return convertHttpResponseToGetResponse(response: response);
-    }
-    else{
+    } else {
       return null;
     }
   }
@@ -162,12 +151,9 @@ class ApiService {
       Map<String, dio.MultipartFile> files = const {},
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
-
     final xHasInternet = await checkInternet();
 
-    if(xHasInternet){
-
-
+    if (xHasInternet) {
       Response? response;
       try {
         dio.Dio dioClient = dio.Dio();
@@ -209,8 +195,7 @@ class ApiService {
         }
       }
       return response;
-    }
-    else{
+    } else {
       return null;
     }
   }
@@ -221,7 +206,8 @@ class ApiService {
     ApiResponse apiResponse = ApiResponse.getInstance();
     if (response == null) {
       // Get.off(()=> const LoginMainPage());
-      DialogService().showTransactionDialog(text: "Unable to connect to the server!\nPlease try again later!");
+      DialogService().showTransactionDialog(
+          text: "Unable to connect to the server!\nPlease try again later!");
     } else {
       try {
         apiResponse.bodyString = response.bodyString;
