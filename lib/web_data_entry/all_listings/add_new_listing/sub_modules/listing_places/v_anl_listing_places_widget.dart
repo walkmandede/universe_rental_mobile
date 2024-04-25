@@ -22,7 +22,10 @@ class _AnlListingPlacesWidgetState extends State<AnlListingPlacesWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Listing Places (* Double Tap To Remove)",style: TextStyle(fontSize: 15),),
+        const Text(
+          "Listing Places (* Double Tap To Remove)",
+          style: TextStyle(fontSize: 15),
+        ),
         10.heightBox(),
         GetBuilder<DataEntryDataController>(
           builder: (dataEntryDataController) {
@@ -32,24 +35,27 @@ class _AnlListingPlacesWidgetState extends State<AnlListingPlacesWidget> {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: dataEntryDataController.allPlaces.value.map((e) {
-                    List<File> thatPlaceImages = listingPlacesMap[e]??[];
+                    List<File> thatPlaceImages = listingPlacesMap[e] ?? [];
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            Text(
-                                e.name
-                            ),
+                            Text(e.name),
                             10.widthBox(),
-                            IconButton(onPressed: () async{
-                              final result = await AppFunctions().pickImage();
-                              if(result!=null){
-                                thatPlaceImages.add(result);
-                                controller.listingPlacesMap.value[e] = thatPlaceImages;
-                                controller.listingPlacesMap.notifyListeners();
-                              }
-                            }, icon: const Icon(Icons.add))
+                            IconButton(
+                                onPressed: () async {
+                                  final result =
+                                      await AppFunctions().pickImage();
+                                  if (result != null) {
+                                    thatPlaceImages.add(result);
+                                    controller.listingPlacesMap.value[e] =
+                                        thatPlaceImages;
+                                    controller.listingPlacesMap
+                                        .notifyListeners();
+                                  }
+                                },
+                                icon: const Icon(Icons.add))
                           ],
                         ),
                         Wrap(
@@ -59,20 +65,21 @@ class _AnlListingPlacesWidgetState extends State<AnlListingPlacesWidget> {
                             return GestureDetector(
                               onDoubleTap: () {
                                 thatPlaceImages.remove(eachImage);
-                                controller.listingPlacesMap.value[e] = thatPlaceImages;
+                                controller.listingPlacesMap.value[e] =
+                                    thatPlaceImages;
                                 controller.listingPlacesMap.notifyListeners();
                               },
                               child: Container(
                                 width: 200,
                                 height: 200,
-                                decoration: BoxDecoration(
-                                  border: Border.all()
-                                ),
+                                decoration: BoxDecoration(border: Border.all()),
                                 child: Image.file(
                                   eachImage,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
-                                    return const Center(child: Icon(Icons.error),);
+                                    return const Center(
+                                      child: Icon(Icons.error),
+                                    );
                                   },
                                 ),
                               ),

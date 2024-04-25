@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universe_rental/constants/app_functions.dart';
+import 'package:universe_rental/services/network_services/api_end_points.dart';
+import 'package:universe_rental/services/network_services/api_service.dart';
+import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 
@@ -46,59 +50,148 @@ class DataEntryDataController extends GetxController {
   }
 
   Future<void> fetchTags() async {
-    allTags.value = [
-      ListingTag(id: "", name: "Beach House", icon: dummySvg),
-      ListingTag(id: "", name: "Mountain View", icon: dummySvg),
-      ListingTag(id: "", name: "Urban Area", icon: dummySvg),
-      ListingTag(id: "", name: "Pool Party", icon: dummySvg),
-      ListingTag(id: "", name: "Shelly", icon: dummySvg),
-    ];
-    allTags.notifyListeners();
+    Response? response = await ApiService().get(
+      endPoint: ApiEndPoints.dataEntryTag,
+    );
+
+    superPrint(response!.body, title: "List Tag Response");
+
+    final apiResponse = ApiService().validateResponse(response: response);
+
+    if (apiResponse.xSuccess) {
+      allTags.value.clear();
+      final data = apiResponse.bodyData;
+      Iterable iterable = data["_data"] ?? [];
+      superPrint(iterable);
+      for (final each in iterable) {
+        allTags.value.add(ListingTag.fromApi(data: each));
+      }
+      superPrint(allTags.value);
+      allTags.notifyListeners();
+    } else {
+      DialogService().showTransactionDialog(text: "Something went wrong");
+    }
   }
 
   Future<void> fetchOffers() async {
-    allOffers.value = [
-      ListingOffer(id: "", name: "Air Con", icon: dummySvg),
-      ListingOffer(id: "", name: "Mini Bar", icon: dummySvg),
-      ListingOffer(id: "", name: "Hair Dryer", icon: dummySvg),
-      ListingOffer(id: "", name: "Bath Tub", icon: dummySvg),
-      ListingOffer(id: "", name: "Water Heater", icon: dummySvg),
-      ListingOffer(id: "", name: "Car Park Lots", icon: dummySvg),
-    ];
-    allOffers.notifyListeners();
+    Response? response = await ApiService().get(
+      endPoint: ApiEndPoints.dataEntryOffer,
+    );
+
+    final apiResponse = ApiService().validateResponse(response: response);
+
+    if (apiResponse.xSuccess) {
+      allOffers.value.clear();
+      final data = apiResponse.bodyData;
+      Iterable iterable = data["_data"] ?? [];
+      superPrint(iterable);
+      for (final each in iterable) {
+        allOffers.value.add(ListingOffer.fromApi(data: each));
+      }
+      superPrint(allOffers.value);
+      allOffers.notifyListeners();
+    } else {
+      DialogService().showTransactionDialog(text: "Something went wrong");
+    }
+    // allOffers.value = [
+    //   ListingOffer(id: "", name: "Air Con", icon: dummySvg),
+    //   ListingOffer(id: "", name: "Mini Bar", icon: dummySvg),
+    //   ListingOffer(id: "", name: "Hair Dryer", icon: dummySvg),
+    //   ListingOffer(id: "", name: "Bath Tub", icon: dummySvg),
+    //   ListingOffer(id: "", name: "Water Heater", icon: dummySvg),
+    //   ListingOffer(id: "", name: "Car Park Lots", icon: dummySvg),
+    // ];
+    // allOffers.notifyListeners();
   }
 
   Future<void> fetchAttributes() async {
-    // allAttributes.value = [
-    //   ListingAttribute(id: "", name: "Guests"),
-    //   ListingAttribute(id: "", name: "Bedrooms"),
-    //   ListingAttribute(id: "", name: "Beds"),
-    //   ListingAttribute(id: "", name: "Bathrooms"),
-    //   ListingAttribute(id: "", name: "Kitchen"),
-    //   ListingAttribute(id: "", name: "Study"),
-    // ];
-    allAttributes.notifyListeners();
+    Response? response = await ApiService().get(
+      endPoint: ApiEndPoints.dataEntryAttribute,
+    );
+
+    final apiResponse = ApiService().validateResponse(response: response);
+
+    if (apiResponse.xSuccess) {
+      allAttributes.value.clear();
+      final data = apiResponse.bodyData;
+      Iterable iterable = data["_data"] ?? [];
+      superPrint(iterable);
+      for (final each in iterable) {
+        allAttributes.value.add(ListingAttribute.fromApi(data: each));
+      }
+      superPrint(allAttributes.value);
+      allAttributes.notifyListeners();
+    } else {
+      DialogService().showTransactionDialog(text: "Something went wrong");
+    }
+    // // allAttributes.value = [
+    // //   ListingAttribute(id: "", name: "Guests"),
+    // //   ListingAttribute(id: "", name: "Bedrooms"),
+    // //   ListingAttribute(id: "", name: "Beds"),
+    // //   ListingAttribute(id: "", name: "Bathrooms"),
+    // //   ListingAttribute(id: "", name: "Kitchen"),
+    // //   ListingAttribute(id: "", name: "Study"),
+    // // ];
+    // allAttributes.notifyListeners();
   }
 
   Future<void> fetchPlaces() async {
-    allPlaces.value = [
-      ListingPlace(id: "", name: "Kitchen"),
-      ListingPlace(id: "", name: "Bedrooms"),
-      ListingPlace(id: "", name: "Living Rooms"),
-      ListingPlace(id: "", name: "Garden"),
-      ListingPlace(id: "", name: "Parking Lot"),
-    ];
-    allPlaces.notifyListeners();
+    Response? response = await ApiService().get(
+      endPoint: ApiEndPoints.dataEntryPlace,
+    );
+
+    final apiResponse = ApiService().validateResponse(response: response);
+
+    if (apiResponse.xSuccess) {
+      allPlaces.value.clear();
+      final data = apiResponse.bodyData;
+      Iterable iterable = data["_data"] ?? [];
+      superPrint(iterable);
+      for (final each in iterable) {
+        allPlaces.value.add(ListingPlace.fromApi(data: each));
+      }
+      superPrint(allPlaces.value);
+      allPlaces.notifyListeners();
+    } else {
+      DialogService().showTransactionDialog(text: "Something went wrong");
+    }
+    // allPlaces.value = [
+    //   ListingPlace(id: "", name: "Kitchen"),
+    //   ListingPlace(id: "", name: "Bedrooms"),
+    //   ListingPlace(id: "", name: "Living Rooms"),
+    //   ListingPlace(id: "", name: "Garden"),
+    //   ListingPlace(id: "", name: "Parking Lot"),
+    // ];
+    // allPlaces.notifyListeners();
   }
 
   Future<void> fetchCurrencies() async {
-    // allCurrency.value = [
-    //   CurrencyModel(
-    //       id: "", name: "United State Dollar", abbr: "USD", sign: "\$"),
-    //   CurrencyModel(id: "", name: "Chinese Wan", abbr: "CHW", sign: "\W"),
-    //   CurrencyModel(id: "", name: "Myanmar Kyats", abbr: "MMK", sign: "\Ks"),
-    //   CurrencyModel(id: "", name: "Thai Baht", abbr: "THB", sign: "\BHT"),
-    // ];
-    allCurrency.notifyListeners();
+    Response? response = await ApiService().get(
+      endPoint: ApiEndPoints.dataEntryCurrency,
+    );
+
+    final apiResponse = ApiService().validateResponse(response: response);
+
+    if (apiResponse.xSuccess) {
+      allCurrency.value.clear();
+      final data = apiResponse.bodyData;
+      Iterable iterable = data["_data"] ?? [];
+      superPrint(iterable);
+      for (final each in iterable) {
+        allCurrency.value.add(CurrencyModel.fromApi(data: each));
+      }
+      superPrint(allCurrency.value);
+      allCurrency.notifyListeners();
+    } else {
+      DialogService().showTransactionDialog(text: "Something went wrong");
+    }
+    // // allCurrency.value = [
+    // //   CurrencyModel(
+    // //       id: "", name: "United State Dollar", abbr: "USD", sign: "\$"),
+    // //   CurrencyModel(id: "", name: "Chinese Wan", abbr: "CHW", sign: "\W"),
+    // //   CurrencyModel(id: "", name: "Myanmar Kyats", abbr: "MMK", sign: "\Ks"),
+    // //   CurrencyModel(id: "", name: "Thai Baht", abbr: "THB", sign: "\BHT"),
+    // // ];
+    // allCurrency.notifyListeners();
   }
 }

@@ -39,12 +39,20 @@ class _AddNewListingPageState extends State<AddNewListingPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Add New Listing Page"),
+          actions: [
+            IconButton(
+              onPressed: () {
+                controller.onClickSave();
+              },
+              icon: const Icon(Icons.save),
+            )
+          ],
         ),
         body: ListView(
           padding: EdgeInsets.only(
@@ -79,13 +87,10 @@ class _AddNewListingPageState extends State<AddNewListingPage> {
     );
   }
 
-  Widget divider(){
+  Widget divider() {
     return Padding(
-      padding: EdgeInsets.symmetric(
-        vertical: AppConstants.basePadding
-      ),
+      padding: EdgeInsets.symmetric(vertical: AppConstants.basePadding),
       child: const Divider(),
     );
   }
-
 }

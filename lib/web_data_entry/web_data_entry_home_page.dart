@@ -19,7 +19,6 @@ class WebDataEntryHomePage extends StatefulWidget {
 }
 
 class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
-
   ValueNotifier<bool> xLoaded = ValueNotifier(false);
 
   @override
@@ -34,15 +33,12 @@ class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
     super.dispose();
   }
 
-  Future<void> initLoad() async{
-
+  Future<void> initLoad() async {
     final controller = Get.put(DataEntryDataController());
     await controller.fetchAllData();
 
     xLoaded.value = true;
-
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -50,27 +46,29 @@ class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Get.to(()=> const AllListingPage());
+          Get.to(() => const AllListingPage());
         },
         label: const Text("All Listings Page"),
       ),
       body: ValueListenableBuilder(
         valueListenable: xLoaded,
         builder: (context, xLoaded, child) {
-          if(!xLoaded){
+          if (!xLoaded) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          }
-          else{
+          } else {
             return ListView(
               padding: EdgeInsets.all(AppConstants.basePadding),
               children: [
-                ["Currency List Page",const CurrencyListPage()],
-                ["Listing Attribute List Page",const ListingAttributeListPage()],
-                ["Listing Tags List Page",const ListingTagsListPage()],
-                ["Listing Offer List Page",const ListingOfferListPage()],
-                ["Listing Place List Page",const ListingPlaceListPage()],
+                ["Currency List Page", const CurrencyListPage()],
+                [
+                  "Listing Attribute List Page",
+                  const ListingAttributeListPage()
+                ],
+                ["Listing Tags List Page", const ListingTagsListPage()],
+                ["Listing Offer List Page", const ListingOfferListPage()],
+                ["Listing Place List Page", const ListingPlaceListPage()],
               ].map((e) {
                 String label = e.first.toString();
                 Widget page = e.last as Widget;
@@ -79,7 +77,7 @@ class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
                   padding: const EdgeInsets.all(8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.to(()=> page);
+                      Get.to(() => page);
                     },
                     child: Text(label),
                   ),

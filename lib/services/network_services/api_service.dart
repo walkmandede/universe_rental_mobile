@@ -17,6 +17,7 @@ class ApiService {
   ///local-XspherIT-2024
   // String baseUrl = "http://test.api.universerental.com/api/"; //staging
   String baseUrl = "https://test.api.universerental.com/api";
+  // 'http://192.168.86.250:3000/api';
   //"http://192.168.86.176:3000/api/v1/"; //staging
 
   // final dioClient = dio.Dio(

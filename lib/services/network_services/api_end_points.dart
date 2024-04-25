@@ -23,5 +23,8 @@ class ApiEndPoints {
   static String dataEntryPlace = "/v1/listing-place";
 
   static String dataEntryAttribute = "/v1/listing-attribute";
+
+  static String dataEntryListing = '/v1/listing';
+
   static String dummy2 = "___";
 }
