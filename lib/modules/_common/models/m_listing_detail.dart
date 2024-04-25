@@ -54,8 +54,12 @@ class ListingDetail{
     Iterable listingOffers = data["listingOffers"]??[];
     //listingOnPlace
     Iterable listingOnPlace = data["listingOnPlace"]??[];
-
-
+    //listingOnAttribute
+    Iterable listingOnAttribute = data["listingOnAttribute"]??[];
+    //listingOnTag
+    Iterable listingOnTag = data["listingOnTag"]??[];
+    //nightData
+    Iterable nightData = data["nightData"]??[];
 
     return ListingDetail(
       id: data["id"].toString(),
@@ -67,7 +71,10 @@ class ListingDetail{
       hostName: data["hostName"].toString(),
       listingLocation: ListingLocation.fromMap(data: data["listingLocation"]),
       listingOffers: listingOffers.map((e) => ListingOffer.fromApi(data: e)).toList(),
-      listingOnPlaces: listingOnPlace.map((e) => ListingOnPlace.fromApi(data: e)).toList(),
+      listingOnPlaces: listingOnPlace.map((e) => ListingOnPlace.fromMap(data: e)).toList(),
+      listingOnAttributes: listingOnAttribute.map((e) => ListingOnAttribute.fromMap(data: e)).toList(),
+      listingTags: listingOnTag.map((e) => ListingTag.fromMap(data: e)).toList(),
+      nightData: nightData.map((e) => NightData.fromMap(data: e)).toList(),
     );
   }
 
