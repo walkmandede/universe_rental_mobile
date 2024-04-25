@@ -7,7 +7,7 @@ import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 
-import '../m_listing_tag.dart';
+import '../m_listing_offer.dart';
 
 class ListingOfferListController extends GetxController{
 

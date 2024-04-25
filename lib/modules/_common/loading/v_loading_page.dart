@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:universe_rental/constants/app_constants.dart';
 import '../../../constants/app_assets.dart';
 import '../../../constants/app_colors.dart';
 import '../flutter_super_scaffold.dart';
@@ -47,21 +48,23 @@ class _LoadingPageState extends State<LoadingPage> with SingleTickerProviderStat
       isBotSafe: false,
       superBarColor: SuperBarColor(
         xTopIconWhite: true,
-        topBarColor: AppColors.black,
+        topBarColor: AppColors.white,
         xBotIconWhite: true,
-        botBarColor: AppColors.black
+        botBarColor: AppColors.white
       ),
-      backgroundColor: AppColors.black,
+      backgroundColor: AppColors.white,
       body: Center(
         child: ValueListenableBuilder(
           valueListenable: animationValue,
           builder: (context, value, child) {
             return Opacity(
               opacity: value,
-              child: Image.asset(
-                AppAssets.logo,
-                width: Get.width * 0.45,
-              ),
+              child: Text(
+                "UNIVERSE RENTAL",
+                style: TextStyle(
+                  fontSize: AppConstants.fontSizeXL
+                ),
+              )
             );
           },
         ),

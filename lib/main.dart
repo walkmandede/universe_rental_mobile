@@ -16,8 +16,6 @@ import 'constants/app_constants.dart';
 import 'modules/_common/flutter_super_scaffold.dart';
 
 void main() async {
-  superPrint('content');
-
   try{
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -112,12 +110,11 @@ class MyApp extends StatelessWidget {
   }
 
   Widget homeWidget(){
+    Get.put(DataController());
     if(kIsWeb){
-      Get.put(DataController());
       return const WebDataEntryHomePage();
     }
     else if(Platform.isMacOS){
-      Get.put(DataController());
       return const WebDataEntryHomePage();
     }
     else{

@@ -68,3 +68,11 @@ extension CustomBox2 on int {
     );
   }
 }
+
+extension CustomDateTime on DateTime{
+
+  String getDateKey(){
+    return toString().substring(0,10);
+  }
+
+}

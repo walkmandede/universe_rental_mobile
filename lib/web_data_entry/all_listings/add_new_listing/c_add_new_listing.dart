@@ -7,14 +7,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:universe_rental/constants/app_functions.dart';
+import 'package:universe_rental/constants/app_enum.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/listing_list/c_all_listing_controller.dart';
 import 'package:universe_rental/web_data_entry/listing_attribute/m_listing_attribute.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/m_listing_tag.dart';
+import 'package:universe_rental/web_data_entry/listing_offers/m_listing_offer.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 import 'package:universe_rental/web_data_entry/listing_tags/m_listing_tag.dart';
 

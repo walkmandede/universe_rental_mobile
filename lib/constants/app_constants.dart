@@ -28,7 +28,7 @@ class AppConstants {
   static double fontSizeXS = 10;
 
   //
-  static double baseNaviBarHeight = Get.height * 0.1;
+  static double baseNaviBarHeight = Get.height * 0.115;
 
   static OutlineInputBorder baseOutlineInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius),
