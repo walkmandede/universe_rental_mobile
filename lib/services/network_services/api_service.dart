@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
 
-  String baseUrl = "https://test.api.universerental.com/api";
+  String baseUrl = "https://test.api.universerental.com/api/v1/";
 
   Future<bool> checkInternet() async{
     try {

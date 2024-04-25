@@ -7,6 +7,8 @@ import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
+import 'package:universe_rental/services/network_services/api_end_points.dart';
+import 'package:universe_rental/services/network_services/api_service.dart';
 
 import '../../../constants/app_functions.dart';
 
@@ -15,7 +17,7 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
   double listingPanelHeight = 0.95;
   double headerBarHeight = 0.175;
 
-  ValueNotifier<bool> xLoaded = ValueNotifier(false);
+  ValueNotifier<bool> xUpdatingShownList = ValueNotifier(false);
   HomeController homeController = Get.find();
   DraggableScrollableController draggableScrollableController = DraggableScrollableController();
 
@@ -44,12 +46,25 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
       final y = (1.6667*size) - 0.16667;
       homeController.naviBarAnimatedValue.value = min(1, y);
     });
-    xLoaded.value = true;
-    xLoaded.notifyListeners();
   }
 
   double getListingHeaderHeightPortion(){
     return (headerBarHeight - (1-listingPanelHeight));
+  }
+
+  Future<void> updateShownListing() async{
+    xUpdatingShownList.value = true;
+    xUpdatingShownList.notifyListeners();
+    try{
+      final response = await ApiService().get(
+        endPoint: "${ApiEndPoints.getTags}"
+      );
+    }
+    catch(e){
+      null;
+    }
+    xUpdatingShownList.value = false;
+    xUpdatingShownList.notifyListeners();
   }
 
 }

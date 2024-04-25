@@ -15,29 +15,19 @@ class ExploreMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller =  Get.put(ExploreController());
-    return ValueListenableBuilder(
-      valueListenable: controller.xLoaded,
-      builder: (context, xLoaded, child) {
-        if(!xLoaded){
-          return Container();
-        }
-        else{
-          return LayoutBuilder(
-            builder: (c1, c2) {
-              final baseSize = Size(c2.maxWidth, c2.maxHeight);
-              return Stack(
-                children: [
-                  ExploreMap(baseSize: baseSize,),
-                  ExploreListing(baseSize: baseSize,),
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: ExploreHeader(baseSize: baseSize,),
-                  ),
-                ],
-              );
-            },
-          );
-        }
+    return LayoutBuilder(
+      builder: (c1, c2) {
+        final baseSize = Size(c2.maxWidth, c2.maxHeight);
+        return Stack(
+          children: [
+            ExploreMap(baseSize: baseSize,),
+            ExploreListing(baseSize: baseSize,),
+            Align(
+              alignment: Alignment.topCenter,
+              child: ExploreHeader(baseSize: baseSize,),
+            ),
+          ],
+        );
       },
     );
   }
