@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/c_explore_header_controller.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
@@ -22,6 +23,7 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
   ValueNotifier<bool> xUpdatingShownList = ValueNotifier(false);
   HomeController homeController = Get.find();
   DraggableScrollableController draggableScrollableController = DraggableScrollableController();
+  ValueNotifier<List<ListingDetail>> shownListing = ValueNotifier([]);
 
   @override
   void onInit() {
@@ -57,6 +59,8 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
   Future<void> updateShownListing() async{
     xUpdatingShownList.value = true;
     xUpdatingShownList.notifyListeners();
+    shownListing.value.clear();
+    shownListing.notifyListeners();
     try{
       ExploreHeaderController exploreHeaderController = Get.find();
       final response = await ApiService().get(
@@ -69,6 +73,12 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
       );
 
       Iterable iterable = response!.body["_data"]??[];
+
+      for(final each in iterable){
+        final listingDetail = ListingDetail.fromMap(data: each);
+        shownListing.value.add(listingDetail);
+      }
+
       superPrint(iterable.first);
 
     }
@@ -76,6 +86,7 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
       superPrint(e);
       null;
     }
+    shownListing.notifyListeners();
     xUpdatingShownList.value = false;
     xUpdatingShownList.notifyListeners();
   }
