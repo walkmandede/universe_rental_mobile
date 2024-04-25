@@ -1,4 +1,6 @@
 import 'package:latlong2/latlong.dart';
+import 'package:universe_rental/services/network_services/api_end_points.dart';
+import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/m_listing_tag.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
@@ -13,6 +15,7 @@ class ListingModel {
   String subTitle;
   String about;
   String hostName;
+  List<String> imgList;
 
   EnumListingType listingType;
   List<ListingTag> listingTags;
@@ -31,6 +34,7 @@ class ListingModel {
     required this.id,
     required this.title,
     required this.subTitle,
+    required this.imgList,
     required this.listingType,
     required this.listingTags,
     required this.addressLocation,
@@ -47,19 +51,53 @@ class ListingModel {
   factory ListingModel.fromApi(Map<String, dynamic> data) {
     List<ListingTag> _listTags = [];
     for (var v in data['listingOnTag']) {
-      _listTags.add(ListingTag.fromApi(data: v));
+      _listTags.add(ListingTag.fromApi(data: v['listingTag']));
     }
+    print(_listTags);
 
     Map<String, List<Map<CurrencyModel, double>>> _nightData = {};
-    for (var v in data['fdf']) {
-      _nightData = {};
+    for (var v in data['nightData']) {
+      List<Map<CurrencyModel, double>> _currencyList = [];
+      for (var _currency in v['listingPrice']) {
+        _currencyList.add({
+          CurrencyModel.fromApi(data: _currency['currency']):
+              double.parse(_currency['amount'].toString())
+        });
+      }
+      _nightData[v['date'].toString().split("T").first] = _currencyList;
     }
+    print(_nightData);
 
     Map<ListingAttribute, int> _attributeData = {};
-    for (var v in data['']) {
-      _attributeData[ListingAttribute.fromApi(data: v)] = v['quantity'];
+    for (var attribute in data['listingOnAttribute']) {
+      _attributeData[
+              ListingAttribute.fromApi(data: attribute['listingAttribute'])] =
+          attribute['quantity'];
     }
+    print(_attributeData);
 
+    Map<ListingPlace, List<String>> _places = {};
+
+    for (var v in data['listingOnPlace']) {
+      ListingPlace _place = ListingPlace.fromApi(data: v['listingPlace']);
+      List<String> _imgs = [];
+      for (var image in v['imageList']) {
+        _imgs.add(ApiService().domain + image);
+      }
+      _places[_place] = _imgs;
+    }
+    print(_places);
+
+    List<ListingOffer> _offerList = [];
+    for (var _offer in data['listingOffers']) {
+      _offerList.add(ListingOffer.fromApi(data: _offer));
+    }
+    print(_offerList);
+
+    List<String> _imgList = [];
+    for (var img in data['imageList']) {
+      _imgList.add(ApiService().domain + img);
+    }
     return ListingModel(
         id: data['id'],
         title: data['title'],
@@ -73,9 +111,10 @@ class ListingModel {
         fullAddress: data['listingLocation']['fullAddress'],
         listingTags: _listTags,
         dailyNightData: _nightData,
-        listingAttributesQty: {},
-        listingPlacesImages: {},
-        offerList: []);
+        listingAttributesQty: _attributeData,
+        listingPlacesImages: _places,
+        offerList: _offerList,
+        imgList: _imgList);
   }
 }
 

@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/v_add_new_listing_controller.dart';
+import 'package:universe_rental/web_data_entry/all_listings/listing_detail/c_listing_detail_controller.dart';
+import 'package:universe_rental/web_data_entry/all_listings/listing_detail/v_listing_detail_page.dart';
 import 'package:universe_rental/web_data_entry/all_listings/listing_list/c_all_listing_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/m_listing_list_model.dart';
 import 'package:universe_rental/web_data_entry/all_listings/m_listing_model.dart';
@@ -43,28 +47,39 @@ class _AllListingPageState extends State<AllListingPage> {
                 icon: const Icon(Icons.add))
           ],
         ),
-        body: ValueListenableBuilder(
-            valueListenable: controller.allData,
-            builder: (context, data, child) => Column(
-                  children: [
-                    ...data.map((e) {
-                      ListingListModel _data = e;
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(color: Colors.black),
+        body: SingleChildScrollView(
+          child: ValueListenableBuilder(
+              valueListenable: controller.allData,
+              builder: (context, data, child) => Column(
+                    children: [
+                      ...data.map((e) {
+                        ListingListModel _data = e;
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => ListingDetailPage(),
+                                arguments: {"id": e.id});
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                side: const BorderSide(color: Colors.black),
+                              ),
+                              title: Text(_data.id),
+                              subtitle: Column(
+                                children: [
+                                  Text(_data.title),
+                                  Text(_data.address)
+                                ],
+                              ),
+                            ),
                           ),
-                          title: Text(_data.id),
-                          subtitle: Column(
-                            children: [Text(_data.title), Text(_data.address)],
-                          ),
-                        ),
-                      );
-                    }).toList()
-                  ],
-                )),
+                        );
+                      }).toList()
+                    ],
+                  )),
+        ),
       ),
     );
   }

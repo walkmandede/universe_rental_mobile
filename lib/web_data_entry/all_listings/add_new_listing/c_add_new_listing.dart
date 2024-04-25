@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
@@ -128,12 +130,14 @@ class AddNewListingController extends GetxController {
                   "listingPrices": nightData.value
                       .map((nightPrice) => {
                             "currencyID": nightPrice.currencyModel.id,
-                            "amount": 100
+                            "amount": nightPrice.perNightFee
                           })
                       .toList()
                 })
             .toList()
       };
+      jsonEncode(_data);
+      log(jsonEncode(_data));
       DialogService().showLoadingDialog();
 
       Response? response = await ApiService()
