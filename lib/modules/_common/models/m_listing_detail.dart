@@ -1,6 +1,7 @@
 
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_enum.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_attribute.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_place.dart';
 import 'm_listing_offer.dart';
@@ -61,13 +62,15 @@ class ListingDetail{
     //nightData
     Iterable nightData = data["nightData"]??[];
 
+    // superPrint(data);
+
     return ListingDetail(
       id: data["id"].toString(),
       title: data["title"].toString(),
       subTitle: data["subTitle"].toString(),
       description: data["description"].toString(),
       enumListingType: enumListingType,
-      imageList: data["imageList"]??[],
+      imageList: ((data["imageList"]??[]) as Iterable).map((e) => e.toString()).toList(),
       hostName: data["hostName"].toString(),
       listingLocation: ListingLocation.fromMap(data: data["listingLocation"]),
       listingOffers: listingOffers.map((e) => ListingOffer.fromApi(data: e)).toList(),
@@ -119,7 +122,7 @@ class ListingOnPlace{
         id: data["listingPlace"]["id"].toString(),
         name: data["listingPlace"]["name"].toString(),
       ),
-      images: data["imageList"]??[]
+      images: ((data["imageList"]??[]) as Iterable).map((e) => e.toString()).toList()
     );
   }
 

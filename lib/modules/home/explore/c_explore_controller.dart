@@ -61,6 +61,7 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
     xUpdatingShownList.notifyListeners();
     shownListing.value.clear();
     shownListing.notifyListeners();
+
     try{
       ExploreHeaderController exploreHeaderController = Get.find();
       final response = await ApiService().get(
@@ -78,14 +79,13 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
         final listingDetail = ListingDetail.fromMap(data: each);
         shownListing.value.add(listingDetail);
       }
-
-      superPrint(iterable.first);
-
+      superPrint(shownListing.value.length);
     }
     catch(e){
       superPrint(e);
       null;
     }
+
     shownListing.notifyListeners();
     xUpdatingShownList.value = false;
     xUpdatingShownList.notifyListeners();

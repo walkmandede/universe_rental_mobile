@@ -341,6 +341,38 @@ class AppFunctions {
     return result;
   }
 
+  String getDateRangeString({required DateTime firstDate,required DateTime lastDate}){
+    String dateString = "-";
+    try{
+      if(firstDate.year == lastDate.year){
+        //sameYear
+        if(firstDate.month == lastDate.month){
+          //sameYearSameMonth
+          if(firstDate.day == lastDate.day){
+            //sameYearSameMonthSameDay
+            dateString = DateFormat("d MMM").format(lastDate);
+          }
+          else{
+            //sameMonthButNotSameDay
+            dateString = "${firstDate.day}-${DateFormat("d MMM").format(lastDate)}";
+          }
+        }
+        else{
+          //sameYearButNotSameMonth
+          dateString = "${DateFormat("d MMM").format(firstDate)}-${DateFormat("d MMM").format(lastDate)}";
+        }
+      }
+      else{
+        //notSameYear
+        dateString = "${DateFormat.yMMMd().format(firstDate)}-${DateFormat.yMMMd().format(lastDate)}";
+      }
+    }
+    catch(e){
+      null;
+    }
+    return dateString;
+  }
+
 
 }
 
