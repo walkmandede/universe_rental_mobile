@@ -59,16 +59,13 @@ class ListingDetailPage extends StatelessWidget {
                         .toList(),
                   ),
                   Wrap(
+                    runSpacing: 10,
                     children: [
-                      Row(
-                        children: [
-                          ..._data.imgList.map((e) => Image.network(
-                                e,
-                                width: Get.width * 0.2,
-                                height: Get.height * 0.2,
-                              ))
-                        ],
-                      ),
+                      ..._data.imgList.map((e) => Image.network(
+                            e,
+                            width: Get.width * 0.2,
+                            height: Get.height * 0.2,
+                          )),
                     ],
                   ),
                   ..._data.dailyNightData.entries.map((nightData) {
