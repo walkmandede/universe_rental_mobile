@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/v_add_new_listing_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/listing_detail/c_listing_detail_controller.dart';
@@ -61,18 +63,35 @@ class _AllListingPageState extends State<AllListingPage> {
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                side: const BorderSide(color: Colors.black),
-                              ),
-                              title: Text(_data.id),
-                              subtitle: Column(
-                                children: [
-                                  Text(_data.title),
-                                  Text(_data.address)
-                                ],
-                              ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 10,
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side:
+                                          const BorderSide(color: Colors.black),
+                                    ),
+                                    title: Text(_data.id),
+                                    subtitle: Column(
+                                      children: [
+                                        Text(_data.title),
+                                        Text(_data.address)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      controller.deleteData(_data.id);
+                                    },
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         );

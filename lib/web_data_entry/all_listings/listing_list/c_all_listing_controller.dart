@@ -53,4 +53,18 @@ class AllListingController extends GetxController {
     //   // ),
     // ];
   }
+
+  Future<void> deleteData(String id) async {
+    DialogService().showLoadingDialog();
+    Response? response = await ApiService()
+        .patch(endPoint: "${ApiEndPoints.dataEntryListing}/$id");
+
+    final apiResponse = ApiService().validateResponse(response: response);
+    if (apiResponse.xSuccess) {
+      DialogService().showTransactionDialog(text: "Deletion success");
+      updateData();
+    } else {
+      DialogService().showTransactionDialog(text: "Something went wrong");
+    }
+  }
 }

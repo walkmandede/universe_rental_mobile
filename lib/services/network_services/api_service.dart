@@ -98,6 +98,27 @@ class ApiService {
     }
   }
 
+  Future<Response?> patch(
+      {required String endPoint,
+      bool xNeedToken = false,
+      bool xBaseUrlIncluded = true}) async {
+    final xHasInternet = await checkInternet();
+    if (xHasInternet) {
+      DataController dataController = Get.find();
+      final response = await http.patch(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        headers: {
+          "acccept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
+      return convertHttpResponseToGetResponse(response: response);
+    } else {
+      return null;
+    }
+  }
+
   Future<Response?> delete(
       {required String endPoint,
       bool xNeedToken = false,

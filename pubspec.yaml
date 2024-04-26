@@ -57,11 +57,11 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/data/
+    # - assets/data/
     - assets/images/
     - assets/dummy_images/
-    - assets/media/
-    - assets/svgs/
+    # - assets/media/
+    # - assets/svgs/
 
   fonts:
     - family: Nunito
