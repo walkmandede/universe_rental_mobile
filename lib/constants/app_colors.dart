@@ -18,7 +18,7 @@ class AppColors{
   static Color grey = Colors.grey;
   static Color lineGrey = const Color(0xffEDEDED);
   static Color iconGrey = const Color(0xFFb2b2b2);
-  static Color textGrey = const Color(0xffffffff).withOpacity(0.4);
+  static Color textGrey = Colors.grey;
   static Color textGreySoft = const Color(0xffffffff).withOpacity(0.3);
   static Color borderGrey = Colors.grey.withOpacity(0.25);
   static Color bgHardGrey = const Color(0xff282828);
