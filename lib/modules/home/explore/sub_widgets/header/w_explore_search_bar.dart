@@ -9,12 +9,14 @@ class ExploreSearchBar extends StatelessWidget {
   final Function() onTap;
   final Function(String) onChangeText;
   final bool xReadOnly;
+  final TextEditingController? txtCtrl;
   const ExploreSearchBar({
     super.key,
     required this.barSize,
     required this.onTap,
     required this.onChangeText,
-    required this.xReadOnly
+    required this.xReadOnly,
+    this.txtCtrl
   });
 
   @override
@@ -41,6 +43,7 @@ class ExploreSearchBar extends StatelessWidget {
               (barSize.width*0.025).widthBox(),
               Expanded(
                 child: TextField(
+                  controller: txtCtrl,
                   autofocus: true,
                   readOnly: xReadOnly,
                   onTap: () {

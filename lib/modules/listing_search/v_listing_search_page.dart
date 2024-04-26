@@ -1,21 +1,17 @@
 import 'dart:math';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/w_explore_search_bar.dart';
-import 'package:universe_rental/modules/where_to/c_where_to.dart';
-import 'package:universe_rental/services/others/extensions.dart';
+import 'package:universe_rental/modules/listing_search/c_listing_search.dart';
 import '../../constants/app_colors.dart';
-import '../../constants/app_constants.dart';
 
-class WhereToPage extends StatelessWidget {
+class ListingSearchPage extends StatelessWidget {
   final Size barSize;
-  const WhereToPage({super.key,required this.barSize});
+  const ListingSearchPage({super.key,required this.barSize});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(WhereToController());
+    final controller = Get.put(ListingSearchController());
     return PopScope(
       canPop: true,
       onPopInvoked: (didPop) async{
@@ -28,7 +24,13 @@ class WhereToPage extends StatelessWidget {
           backgroundColor: AppColors.black.withOpacity(0.3),
           body: Column(
             children: [
-              (Get.mediaQuery.padding.top).heightBox(),
+              Container(
+                width: double.infinity,
+                height: (Get.mediaQuery.padding.top),
+                decoration: BoxDecoration(
+                  color: AppColors.white
+                ),
+              ),
               ExploreSearchBar(
                 onTap: () {
 
@@ -36,6 +38,7 @@ class WhereToPage extends StatelessWidget {
                 onChangeText: (p0) {
 
                 },
+                txtCtrl: controller.txtSearch,
                 xReadOnly: false,
                 barSize: barSize,
               ),

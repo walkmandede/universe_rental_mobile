@@ -34,56 +34,60 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
                   );
                 }
 
-                return SingleChildScrollView(
-                  // physics: const ClampingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppConstants.basePadding/2
-                  ),
-                  child: ValueListenableBuilder(
-                    valueListenable: controller.selectedTag,
-                    builder: (context, selectedTag, child) {
-                      return Row(
-                        children: allListingTags.map((each) {
-                          final xSelected = selectedTag == each;
-                          return GestureDetector(
-                            onTap: () {
-                              vibrateNow();
-                              controller.updateSelectedTag(listingTag: each);
-                            },
-                            child: Container(
-                              height: double.infinity,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10,
-                                  vertical: c1.maxHeight * 0.2
-                              ),
-                              decoration: const BoxDecoration(
-                                  color: Colors.transparent
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Expanded(
-                                    flex: 2,
-                                    child: SvgPicture.string(
-                                      each.icon,
-                                      colorFilter: ColorFilter.mode(xSelected?AppColors.black:AppColors.iconGrey, BlendMode.srcIn)
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: FittedBox(
-                                      child: Text(
-                                        each.name,
+                return SizedBox(
+                  width: c1.maxWidth,
+                  child: SingleChildScrollView(
+                    // physics: const ClampingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: AppConstants.basePadding/2
+                    ),
+                    child: ValueListenableBuilder(
+                      valueListenable: controller.selectedTag,
+                      builder: (context, selectedTag, child) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: allListingTags.map((each) {
+                            final xSelected = selectedTag == each;
+                            return GestureDetector(
+                              onTap: () {
+                                vibrateNow();
+                                controller.updateSelectedTag(listingTag: each);
+                              },
+                              child: Container(
+                                height: double.infinity,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: c1.maxHeight * 0.2
+                                ),
+                                decoration: const BoxDecoration(
+                                    color: Colors.transparent
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: SvgPicture.string(
+                                        each.icon,
+                                        colorFilter: ColorFilter.mode(xSelected?AppColors.black:AppColors.iconGrey, BlendMode.srcIn)
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Expanded(
+                                      child: FittedBox(
+                                        child: Text(
+                                          each.name,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
-                      );
-                    },
+                            );
+                          }).toList(),
+                        );
+                      },
+                    ),
                   ),
                 );
               },

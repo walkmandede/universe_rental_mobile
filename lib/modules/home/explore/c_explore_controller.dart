@@ -76,7 +76,7 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
       Iterable iterable = response!.body["_data"]??[];
 
       for(final each in iterable){
-        final listingDetail = ListingDetail.fromMap(data: each);
+        final listingDetail = ListingDetail.fromDetail(data: each);
         shownListing.value.add(listingDetail);
       }
     }
