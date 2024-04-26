@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_enum.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
@@ -20,6 +21,7 @@ import 'package:universe_rental/web_data_entry/listing_tags/m_listing_tag.dart';
 
 import '../../_common/models/m_night_fee_model.dart';
 import '../m_listing_model.dart';
+import 'package:http/http.dart' as http;
 
 class AddNewListingController extends GetxController {
   //inputData
@@ -174,9 +176,12 @@ Future<List<String>> cImg(List<File> imageList) async {
   List<String> _resu = [];
   String s = '';
   for (int i = 0; i < imageList.length; i++) {
-    final rawImage = await imageList[i].readAsBytes();
-    final extension = imageList[i].path.split(".").last;
-    final base64Image = "data:image/$extension;${base64.encode(rawImage)}";
+    final file = imageList[i];
+    final result = await http.get(Uri.parse(file.path));
+    final rawImage = result.bodyBytes;
+    // final extension = imageList[i].path.split(".").last;
+    final base64Image = "data:image/jpg;${base64.encode(rawImage)}";
+    superPrint(base64Image.toString().substring(0,300));
     _resu.add(base64Image);
     s = base64Image;
   }
