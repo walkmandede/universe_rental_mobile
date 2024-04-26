@@ -2,11 +2,15 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
+import 'package:universe_rental/constants/app_svgs.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/each_listing/c_each_listing.dart';
 import 'package:universe_rental/modules/home/listing_detail/v_listing_detail_page.dart';
@@ -63,7 +67,8 @@ class _EachListingWidgetState extends State<EachListingWidget> {
     if(widget.each.nightData.isNotEmpty){
       dateString = AppFunctions().getDateRangeString(firstDate: widget.each.nightData.first.date, lastDate: widget.each.nightData.last.date);
       if(widget.each.nightData.first.nightFees.isNotEmpty){
-        nightDataString = "${widget.each.nightData.first.nightFees.first}";
+        final nightFee = widget.each.nightData.first.nightFees.first;
+        nightDataString = "${nightFee.currencyModel.sign}${NumberFormat("###,###").format(nightFee.perNightFee)} night";
       }
     }
 
@@ -92,7 +97,6 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                         child: PageView(
                           key: GlobalKey(),
                           controller: pageController,
-                          // restorationId: "dafs",
                           onPageChanged: (value) {
                             onPageChanged(value);
                           },
@@ -120,11 +124,26 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                       ),
                       Align(
                         alignment: Alignment.bottomCenter,
-                        child: ValueListenableBuilder(
-                          valueListenable: currentShownImageIndex,
-                          builder: (context, currentShownImageIndex, child) {
-                            return Chip(label: Text(currentShownImageIndex.toString()));
-                          },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ...List.generate(widget.each.imageList.length, (index) {
+                                return ValueListenableBuilder(
+                                  valueListenable: currentShownImageIndex,
+                                  builder: (context, currentShownImageIndex, child) {
+                                    bool xSelected = index == currentShownImageIndex;
+                                    return Card(
+                                      color: xSelected?AppColors.white:AppColors.grey,
+                                      shape: const CircleBorder(),
+                                      child: const SizedBox(width: 10,height: 10,),
+                                    );
+                                  },
+                                );
+                              })
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -133,12 +152,34 @@ class _EachListingWidgetState extends State<EachListingWidget> {
               )
           ),
           5.heightBox(),
-          Text(
-            widget.each.title,
-            style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: AppConstants.fontSizeM
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Text(
+                  widget.each.title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: AppConstants.fontSizeM
+                  ),
+                ),
+              ),
+              10.widthBox(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SvgPicture.string(AppSvgs.star),
+                  4.widthBox(),
+                  Text(
+                    "4.5",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: AppConstants.fontSizeM
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
           Text(
             widget.each.subTitle,
@@ -154,6 +195,14 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                 fontWeight: FontWeight.w500,
                 fontSize: AppConstants.fontSizeM,
                 color: AppColors.textGrey
+            ),
+          ),
+          Text(
+            nightDataString,
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: AppConstants.fontSizeM,
+                color: AppColors.black
             ),
           ),
           (AppConstants.basePadding).heightBox(),

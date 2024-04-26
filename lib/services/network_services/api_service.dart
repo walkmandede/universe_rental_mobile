@@ -1,12 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universe_rental/services/network_services/api_response.dart';
 import '../../constants/app_functions.dart';
 import 'package:dio/dio.dart' as dio;
-
 import '../../modules/_common/controllers/c_data_controller.dart';
 import '../overlays_services/dialog/dialog_service.dart';
 import 'package:http/http.dart' as http;
@@ -16,15 +15,19 @@ class ApiService {
   String baseUrl = "https://test.api.universerental.com/api/v1/";
 
   Future<bool> checkInternet() async {
-    try {
-      final result = await InternetAddress.lookup('example.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return true;
+    if (kIsWeb) {
+      return true;
+    } else {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          return true;
+        }
+      } on SocketException catch (_) {
+        return false;
       }
-    } on SocketException catch (_) {
       return false;
     }
-    return false;
   }
 
   String convertNetworkImage({required String orgPath}) {

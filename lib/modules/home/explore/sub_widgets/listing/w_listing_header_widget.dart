@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:universe_rental/modules/home/explore/c_explore_controller.dart';
+import 'package:universe_rental/modules/home/explore/sub_widgets/header/c_explore_header_controller.dart';
 
 import '../../../../../constants/app_colors.dart';
 import '../../../../../constants/app_functions.dart';
@@ -33,8 +35,18 @@ class ListingHeaderWidget extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              const Text(
-                  "124 amazing places"
+              ValueListenableBuilder(
+                valueListenable: controller.shownListing,
+                builder: (context, shownListing, child) {
+                  String label = "places";
+                  ExploreHeaderController exploreHeaderController = Get.find();
+                  if(exploreHeaderController.selectedTag.value!=null){
+                    label = exploreHeaderController.selectedTag.value!.name;
+                  }
+                  return Text(
+                    "${NumberFormat("###,###").format(shownListing.length)} $label"
+                  );
+                },
               ),
               const Spacer(),
             ],

@@ -27,6 +27,8 @@ class HomeNaviBar extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.only(
               bottom: Get.mediaQuery.padding.bottom,
+              left: AppConstants.basePadding,
+              right: AppConstants.basePadding
             ),
             decoration: BoxDecoration(
               color: Colors.white,

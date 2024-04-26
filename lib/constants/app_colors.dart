@@ -14,7 +14,7 @@ class AppColors{
   static Color orange = Colors.orange;
   static Color teal = Colors.teal;
   static Color red = Colors.red;
-  static Color bgGrey = const Color(0xffF2F2F7);
+  static Color bgGrey = const Color(0xfffafafa);
   static Color grey = Colors.grey;
   static Color lineGrey = const Color(0xffEDEDED);
   static Color iconGrey = const Color(0xFFb2b2b2);

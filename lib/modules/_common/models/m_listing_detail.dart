@@ -40,7 +40,7 @@ class ListingDetail{
     required this.nightData,
   });
 
-  factory ListingDetail.fromMap({required Map<String,dynamic> data}){
+  factory ListingDetail.fromDetail({required Map<String,dynamic> data}){
 
     EnumListingType enumListingType = EnumListingType.entirePlace;
 
@@ -160,7 +160,6 @@ class NightData{
   });
 
   factory NightData.fromMap({required Map<String,dynamic> data}){
-
     Iterable iterable = data["listingPrice"]??[];
 
     return NightData(

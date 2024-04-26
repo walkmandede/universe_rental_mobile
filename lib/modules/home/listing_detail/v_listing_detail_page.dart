@@ -26,7 +26,6 @@ class ListingDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     controller.initLoad(id: id, shownPageIndex: imageShownIndex);
-    superPrint(imageShownIndex);
     return FlutterSuperScaffold(
       isTopSafe: false,
       superBarColor: SuperBarColor(topBarColor: Colors.transparent),

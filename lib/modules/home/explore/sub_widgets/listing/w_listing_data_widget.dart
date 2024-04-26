@@ -22,10 +22,11 @@ class ListingDataWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     ExploreController controller = Get.find();
     ListingController listingController = Get.find();
-    return Padding(
+    return Container(
       padding: EdgeInsets.symmetric(
           horizontal: AppConstants.basePadding,
           vertical: AppConstants.basePadding),
+      decoration: BoxDecoration(color: AppColors.bgGrey),
       child: ValueListenableBuilder(
         valueListenable: controller.xUpdatingShownList,
         builder: (context, xUpdatingShownList, child) {

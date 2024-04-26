@@ -14,7 +14,7 @@ class NightFeeModel{
   factory NightFeeModel.fromMap({required Map<String,dynamic> data}){
     return NightFeeModel(
       perNightFee: double.tryParse(data["amount"].toString())??0,
-      currencyModel: CurrencyModel.fromApi(data: data)
+      currencyModel: CurrencyModel.fromApi(data: data["currency"])
     );
   }
 
