@@ -51,11 +51,19 @@ class ListingSearchController extends GetxController with GetTickerProviderState
     shownData.value.clear();
     shownData.notifyListeners();
     try{
-      final response = ApiService().get(
-        endPoint: "${ApiEndPoints.}"
+      final response = await ApiService().get(
+        endPoint: "${ApiEndPoints.getSearchList}?query=$searchText"
       );
+      final apiResponse = ApiService().validateResponse(
+        response: response
+      );
+      if(apiResponse.xSuccess){
+        Iterable iterable = apiResponse.bodyData["_data"]??[];
+      }
+
     }
     catch(e){
+      superPrint(e);
       null;
     }
     shownData.notifyListeners();

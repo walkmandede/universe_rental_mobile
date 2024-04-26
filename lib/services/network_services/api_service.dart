@@ -1,13 +1,11 @@
+// ignore_for_file: depend_on_referenced_packages
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universe_rental/services/network_services/api_response.dart';
 import '../../constants/app_functions.dart';
 import 'package:dio/dio.dart' as dio;
-
 import '../../modules/_common/controllers/c_data_controller.dart';
 import '../overlays_services/dialog/dialog_service.dart';
 import 'package:http/http.dart' as http;
@@ -121,6 +119,27 @@ class ApiService {
         },
       );
 
+      return convertHttpResponseToGetResponse(response: response);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Response?> patch(
+      {required String endPoint,
+        bool xNeedToken = false,
+        bool xBaseUrlIncluded = true}) async {
+    final xHasInternet = await checkInternet();
+    if (xHasInternet) {
+      DataController dataController = Get.find();
+      final response = await http.patch(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        headers: {
+          "accept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
       return convertHttpResponseToGetResponse(response: response);
     } else {
       return null;

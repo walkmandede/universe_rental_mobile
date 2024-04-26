@@ -1,5 +1,3 @@
-import 'package:universe_rental/constants/app_functions.dart';
-
 class CurrencyModel{
   String id;
   String name;
