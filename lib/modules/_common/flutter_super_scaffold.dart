@@ -139,12 +139,11 @@ class _FlutterSuperScaffoldState extends State<FlutterSuperScaffold> with RouteA
   @override
   Widget build(BuildContext context) {
     whenPageIsRevealed();
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (bool value) async {
         if (widget.onWillPop != null) {
           widget.onWillPop!();
         }
-        return widget.isWillPop;
       },
       child: MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1),

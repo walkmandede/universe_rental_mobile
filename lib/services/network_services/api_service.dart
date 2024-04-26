@@ -54,7 +54,7 @@ class ApiService {
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
     final xHasInternet = await checkInternet();
-
+    print("Get $baseUrl$endPoint");
     if (xHasInternet) {
       DataController dataController = Get.find();
       final response = await http.get(
@@ -78,7 +78,7 @@ class ApiService {
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
     final xHasInternet = await checkInternet();
-
+    print("Post $baseUrl$endPoint");
     if (xHasInternet) {
       DataController dataController = Get.find();
 

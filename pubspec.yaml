@@ -58,8 +58,8 @@ flutter:
 
   assets:
     # - assets/data/
-    - assets/images/
-    - assets/dummy_images/
+    # - assets/images/
+    # - assets/dummy_images/
     # - assets/media/
     # - assets/svgs/
 

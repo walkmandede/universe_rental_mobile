@@ -19,11 +19,12 @@ class WebDataEntryHomePage extends StatefulWidget {
 }
 
 class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
-  ValueNotifier<bool> xLoaded = ValueNotifier(false);
+  ValueNotifier<bool> xLoaded = ValueNotifier(true);
 
   @override
   void initState() {
-    initLoad();
+    // initLoad();
+
     super.initState();
   }
 
@@ -33,15 +34,16 @@ class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
     super.dispose();
   }
 
-  Future<void> initLoad() async {
-    final controller = Get.put(DataEntryDataController());
-    await controller.fetchAllData();
+  // Future<void> initLoad() async {
+  //   final controller = Get.put(DataEntryDataController());
+  //   await controller.fetchAllData();
 
-    xLoaded.value = true;
-  }
+  //   xLoaded.value = true;
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print("Start Home Page");
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: FloatingActionButton.extended(

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:universe_rental/web_data_entry/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/v_add_new_listing_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/listing_detail/c_listing_detail_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/listing_detail/v_listing_detail_page.dart';
@@ -24,6 +25,7 @@ class _AllListingPageState extends State<AllListingPage> {
   @override
   void initState() {
     // TODO: implement initState
+    initLoad();
     super.initState();
   }
 
@@ -31,6 +33,13 @@ class _AllListingPageState extends State<AllListingPage> {
   void dispose() {
     Get.delete<AllListingController>();
     super.dispose();
+  }
+
+  Future<void> initLoad() async {
+    final controller = Get.put(DataEntryDataController());
+    await controller.fetchAllData();
+
+    // xLoaded.value = true;
   }
 
   @override

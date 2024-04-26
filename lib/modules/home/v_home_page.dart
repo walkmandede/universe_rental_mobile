@@ -23,7 +23,8 @@ class HomePage extends StatelessWidget {
       isTopSafe: true,
       isBotSafe: false,
       superBarColor: SuperBarColor(
-        xTopIconWhite: false
+        xTopIconWhite: false,
+        topBarColor: Colors.transparent
       ),
       isResizeToAvoidBottomInset: false,
       body: SizedBox.expand(
