@@ -7,6 +7,7 @@ import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/modules/home/c_home_controller.dart';
 import 'package:universe_rental/modules/home/explore/c_explore_controller.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/c_listing_controller.dart';
+import 'package:universe_rental/modules/home/explore/sub_widgets/listing/each_listing/w_each_listing_widget.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/w_listing_shimmer_widget.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 
@@ -59,74 +60,7 @@ class ListingDataWidget extends StatelessWidget {
                     itemCount: shownListing.length,
                     itemBuilder: (context, index) {
                       final each = shownListing[index];
-                      var dateString = "-";
-                      var nightDataString = "-";
-                      if(each.nightData.isNotEmpty){
-                        dateString = AppFunctions().getDateRangeString(firstDate: each.nightData.first.date, lastDate: each.nightData.last.date);
-                        if(each.nightData.first.nightFees.isNotEmpty){
-                          nightDataString = "${each.nightData.first.nightFees.first}";
-                        }
-                      }
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AspectRatio(
-                            aspectRatio: 1,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius),
-                              child: SizedBox.expand(
-                                child: PageView(
-                                  children: [
-                                    ...each.imageList.map((e) {
-                                      return CachedNetworkImage(
-                                        imageUrl: e.getServerPath(),
-                                        fit: BoxFit.cover,
-                                        errorWidget: (context, url, error) {
-                                          return Container(
-                                            width: double.infinity,
-                                            height: double.infinity,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(),
-                                              borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius)
-                                            ),
-                                            child: const Icon(Icons.image_not_supported_rounded),
-                                          );
-                                        },
-                                      );
-                                    }).toList()
-                                  ],
-                                ),
-                              ),
-                            )
-                          ),
-                          5.heightBox(),
-                          Text(
-                            each.title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: AppConstants.fontSizeM
-                            ),
-                          ),
-                          Text(
-                            each.subTitle,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: AppConstants.fontSizeM,
-                                color: AppColors.textGrey
-                            ),
-                          ),
-                          Text(
-                            dateString,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: AppConstants.fontSizeM,
-                                color: AppColors.textGrey
-                            ),
-                          ),
-                          (AppConstants.basePadding).heightBox(),
-                        ],
-                      );
+                      return EachListingWidget(each: each);
                     },
                   );
                 }

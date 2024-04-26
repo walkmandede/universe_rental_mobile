@@ -79,7 +79,6 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
         final listingDetail = ListingDetail.fromMap(data: each);
         shownListing.value.add(listingDetail);
       }
-      superPrint(shownListing.value.length);
     }
     catch(e){
       superPrint(e);
