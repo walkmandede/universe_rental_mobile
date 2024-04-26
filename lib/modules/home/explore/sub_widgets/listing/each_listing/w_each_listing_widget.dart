@@ -1,4 +1,6 @@
 
+// ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,31 +12,69 @@ import 'package:universe_rental/modules/home/explore/sub_widgets/listing/each_li
 import 'package:universe_rental/modules/home/listing_detail/v_listing_detail_page.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 
-class EachListingWidget extends StatelessWidget {
+class EachListingWidget extends StatefulWidget {
   final ListingDetail each;
-  EachListingWidget({super.key,required this.each});
-  final controller = Get.put(EachListingWidgetController());
+  const EachListingWidget({super.key,required this.each});
+
+  @override
+  State<EachListingWidget> createState() => _EachListingWidgetState();
+}
+
+class _EachListingWidgetState extends State<EachListingWidget> {
+
+  ListingDetail? listingDetail;
+  ValueNotifier<int> currentShownImageIndex = ValueNotifier(0);
+  PageController pageController = PageController(initialPage: 0,keepPage: true);
+
+  @override
+  void initState() {
+    initLoad();
+    super.initState();
+  }
+
+  Future<void> initLoad() async{
+    if(listingDetail==null){
+      listingDetail = widget.each;
+      null;
+    }
+  }
+
+  void onPageChanged(int pageIndex){
+    currentShownImageIndex.value = pageIndex;
+    currentShownImageIndex.notifyListeners();
+  }
+
+  void movePage({required int pageIndex,required String id}){
+    try{
+      if(id == listingDetail!.id){
+        pageController.jumpToPage(pageIndex);
+      }
+    }
+    catch(e){
+      null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
 
     var dateString = "-";
     var nightDataString = "-";
-    if(each.nightData.isNotEmpty){
-      dateString = AppFunctions().getDateRangeString(firstDate: each.nightData.first.date, lastDate: each.nightData.last.date);
-      if(each.nightData.first.nightFees.isNotEmpty){
-        nightDataString = "${each.nightData.first.nightFees.first}";
+    if(widget.each.nightData.isNotEmpty){
+      dateString = AppFunctions().getDateRangeString(firstDate: widget.each.nightData.first.date, lastDate: widget.each.nightData.last.date);
+      if(widget.each.nightData.first.nightFees.isNotEmpty){
+        nightDataString = "${widget.each.nightData.first.nightFees.first}";
       }
     }
 
-    controller.initLoad(each: each);
     return GestureDetector(
+      key: GlobalKey(),
       onTap: () {
-        superPrint(each.id);
+        superPrint(widget.each.id);
         Get.to(()=> ListingDetailPage(
-            id: each.id,
-            images: each.imageList,
-            imageShownIndex: controller.currentShownImageIndex.value,
+            id: widget.each.id,
+            images: widget.each.imageList,
+            imageShownIndex: currentShownImageIndex.value,
         ));
       },
       child: Column(
@@ -48,16 +88,16 @@ class EachListingWidget extends StatelessWidget {
                   child: Stack(
                     children: [
                       Hero(
-                        tag: "imageList${each.id}",
+                        tag: "imageList${widget.each.id}",
                         child: PageView(
                           key: GlobalKey(),
-                          controller: controller.pageController,
+                          controller: pageController,
                           // restorationId: "dafs",
                           onPageChanged: (value) {
-                            controller.onPageChanged(value);
+                            onPageChanged(value);
                           },
                           children: [
-                            ...each.imageList.map((e) {
+                            ...widget.each.imageList.map((e) {
                               return CachedNetworkImage(
                                 imageUrl: e.getServerPath(),
                                 fit: BoxFit.cover,
@@ -79,7 +119,13 @@ class EachListingWidget extends StatelessWidget {
                         ),
                       ),
                       Align(
-                        alignment: Alignment.center,
+                        alignment: Alignment.bottomCenter,
+                        child: ValueListenableBuilder(
+                          valueListenable: currentShownImageIndex,
+                          builder: (context, currentShownImageIndex, child) {
+                            return Chip(label: Text(currentShownImageIndex.toString()));
+                          },
+                        ),
                       )
                     ],
                   ),
@@ -88,14 +134,14 @@ class EachListingWidget extends StatelessWidget {
           ),
           5.heightBox(),
           Text(
-            each.title,
+            widget.each.title,
             style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: AppConstants.fontSizeM
             ),
           ),
           Text(
-            each.subTitle,
+            widget.each.subTitle,
             style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: AppConstants.fontSizeM,

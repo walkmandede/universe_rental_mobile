@@ -27,8 +27,8 @@ class ListingDetailPage extends StatelessWidget {
         topBarColor: Colors.transparent
       ),
       onWillPop: () {
-        EachListingWidgetController eachListingWidgetController = Get.find();
-        eachListingWidgetController.movePage(pageIndex: controller.currentShownPageIndex.value, id: id);
+        // EachListingWidgetController eachListingWidgetController = Get.find();
+        // eachListingWidgetController.movePage(pageIndex: controller.currentShownPageIndex.value, id: id);
       },
       body: Stack(
         children: [
