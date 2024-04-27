@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_rental/constants/app_constants.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/w_explore_search_bar.dart';
 import 'package:universe_rental/modules/listing_search/c_listing_search.dart';
 import 'package:universe_rental/services/others/extensions.dart';
@@ -64,41 +65,64 @@ class ListingSearchPage extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           final each = shownData[index];
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: AppConstants.basePadding,
-                              vertical: AppConstants.basePadding,
-                            ),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-
-                                  child: SizedBox(
-                                    width: Get.width * 0.1,
-                                    height: Get.width*0.1,
-                                    child: Builder(
-                                      builder: (context) {
-                                        if(each.imageList.isEmpty){
-                                          return const Center(
-                                            child: Icon(Icons.image_not_supported_rounded),
-                                          );
-                                        }
-                                        else{
-                                          return CachedNetworkImage(
-                                            imageUrl: each.imageList.first.getServerPath(),
-                                            errorWidget: (context, url, error) {
+                          return GestureDetector(
+                            onTap: () {
+                              vibrateNow();
+                              controller.onClickEachResult(listingDetail: each);
+                            },
+                            child: Container(
+                              width: min(Get.width*0.175,100),
+                              height: min(Get.width*0.175,100),
+                              decoration: const BoxDecoration(
+                                color: Colors.transparent
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: AppConstants.basePadding,
+                                vertical: 10,
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Hero(
+                                      tag: "imageList${each.id}",
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: Builder(
+                                          builder: (context) {
+                                            if(each.imageList.isEmpty){
                                               return const Center(
                                                 child: Icon(Icons.image_not_supported_rounded),
                                               );
-                                            },
-                                            fit: BoxFit.cover,
-                                          );
-                                        }
-                                      },
-                                    )
+                                            }
+                                            else{
+                                              return CachedNetworkImage(
+                                                imageUrl: each.imageList.first.getServerPath(),
+                                                errorWidget: (context, url, error) {
+                                                  return const Center(
+                                                    child: Icon(Icons.image_not_supported_rounded),
+                                                  );
+                                                },
+                                                fit: BoxFit.cover,
+                                              );
+                                            }
+                                          },
+                                        )
+                                      ),
+                                    ),
                                   ),
-                                )
-                              ],
+                                  10.widthBox(),
+                                  Expanded(
+                                    child: Text(
+                                      each.title,
+                                      style: TextStyle(
+                                        fontSize: AppConstants.fontSizeM
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },

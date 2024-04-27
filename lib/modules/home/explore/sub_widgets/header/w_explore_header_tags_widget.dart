@@ -33,7 +33,6 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
                     ),
                   );
                 }
-
                 return SizedBox(
                   width: c1.maxWidth,
                   child: SingleChildScrollView(
@@ -61,16 +60,19 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
                                     vertical: c1.maxHeight * 0.2
                                 ),
                                 decoration: const BoxDecoration(
-                                    color: Colors.transparent
+                                  color: Colors.transparent,
                                 ),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Expanded(
                                       flex: 2,
-                                      child: SvgPicture.string(
-                                        each.icon,
-                                        colorFilter: ColorFilter.mode(xSelected?AppColors.black:AppColors.iconGrey, BlendMode.srcIn)
+                                      child: AspectRatio(
+                                        aspectRatio: 1,
+                                        child: SvgPicture.string(
+                                          each.icon,
+                                          colorFilter: ColorFilter.mode(xSelected?AppColors.black:AppColors.iconGrey, BlendMode.srcIn)
+                                        ),
                                       ),
                                     ),
                                     Expanded(

@@ -248,7 +248,9 @@ class ApiService {
         }
         apiResponse.message = response.body["message"] ?? "";
       } catch (e) {
-        superPrint(e);
+        if(response.request!=null){
+          superPrint(e,title: response.request!.url);
+        }
         apiResponse.message = e.toString();
         if (response.statusCode == null) {
           // Get.off(()=> const LoginGreetingPage());

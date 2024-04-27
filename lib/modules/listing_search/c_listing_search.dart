@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
+import 'package:universe_rental/modules/home/listing_detail/v_listing_detail_page.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 
@@ -79,6 +80,15 @@ class ListingSearchController extends GetxController with GetTickerProviderState
       null;
     }
     shownData.notifyListeners();
+  }
+
+  void onClickEachResult({required ListingDetail listingDetail}){
+
+    Get.to(
+      ()=> ListingDetailPage(id: listingDetail.id, images: listingDetail.imageList, imageShownIndex: 0),
+      transition: Transition.downToUp
+    );
+
   }
 
 }

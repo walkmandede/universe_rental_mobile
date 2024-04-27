@@ -41,6 +41,7 @@ class HomeController extends GetxController{
       final exploreHeaderController = Get.put(ExploreHeaderController());
       DataController dataController  = Get.find();
       await dataController.fetchListingTags();
+      dataController.updateSpFavorites();
       Get.put(ExploreController());
       if(dataController.allListingTags.value.isNotEmpty){
         exploreHeaderController.updateSelectedTag(listingTag: dataController.allListingTags.value.first);
