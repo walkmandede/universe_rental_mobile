@@ -2,17 +2,20 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_tag.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_response.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
+import 'package:universe_rental/services/sp_services/sp_keys.dart';
 
 class DataController extends GetxController{
 
   String apiToken = "";
 
   ValueNotifier<List<ListingTag>> allListingTags = ValueNotifier([]);
+  ValueNotifier<List<String>> favoriteListingIds = ValueNotifier([]);
 
 
 
@@ -42,6 +45,32 @@ class DataController extends GetxController{
       null;
     }
     allListingTags.notifyListeners();
+  }
+
+  Future<void> updateSpFavorites() async{
+    favoriteListingIds.value.clear();
+    try{
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      favoriteListingIds.value = sharedPreferences.getStringList(SpKeys.favoriteList)??[];
+    }
+    catch(e){
+      null;
+    }
+    favoriteListingIds.notifyListeners();
+  }
+
+  Future<void> toggleSpFavorites({required String listingId}) async{
+    bool xIsFavorite = favoriteListingIds.value.contains(listingId);
+    if(xIsFavorite){
+      favoriteListingIds.value.remove(listingId);
+    }
+    else{
+      favoriteListingIds.value.add(listingId);
+    }
+    favoriteListingIds.notifyListeners();
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setStringList(SpKeys.favoriteList, favoriteListingIds.value);
+    updateSpFavorites();
   }
 
 }
