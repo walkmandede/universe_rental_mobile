@@ -73,8 +73,8 @@ class _AnlListingPlacesWidgetState extends State<AnlListingPlacesWidget> {
                                 width: 200,
                                 height: 200,
                                 decoration: BoxDecoration(border: Border.all()),
-                                child: Image.file(
-                                  eachImage,
+                                child: Image.network(
+                                  eachImage.path,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
                                     return const Center(

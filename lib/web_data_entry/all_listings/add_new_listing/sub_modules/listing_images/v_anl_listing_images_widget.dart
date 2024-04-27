@@ -41,8 +41,8 @@ class _AnlListingImagesWidgetState extends State<AnlListingImagesWidget> {
                       decoration: BoxDecoration(
                         border: Border.all()
                       ),
-                      child: Image.file(
-                        e,
+                      child: Image.network(
+                        e.path,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return const Center(

@@ -1,8 +1,12 @@
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/w_explore_search_bar.dart';
 import 'package:universe_rental/modules/listing_search/c_listing_search.dart';
+import 'package:universe_rental/services/others/extensions.dart';
 import '../../constants/app_colors.dart';
 
 class ListingSearchPage extends StatelessWidget {
@@ -41,6 +45,67 @@ class ListingSearchPage extends StatelessWidget {
                 txtCtrl: controller.txtSearch,
                 xReadOnly: false,
                 barSize: barSize,
+              ),
+              Flexible(
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.vertical(
+                      bottom: Radius.circular(AppConstants.baseBorderRadius)
+                    )
+                  ),
+                  child: ValueListenableBuilder(
+                    valueListenable: controller.shownData,
+                    builder: (context, shownData, child) {
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: shownData.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final each = shownData[index];
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppConstants.basePadding,
+                              vertical: AppConstants.basePadding,
+                            ),
+                            child: Row(
+                              children: [
+                                ClipRRect(
+
+                                  child: SizedBox(
+                                    width: Get.width * 0.1,
+                                    height: Get.width*0.1,
+                                    child: Builder(
+                                      builder: (context) {
+                                        if(each.imageList.isEmpty){
+                                          return const Center(
+                                            child: Icon(Icons.image_not_supported_rounded),
+                                          );
+                                        }
+                                        else{
+                                          return CachedNetworkImage(
+                                            imageUrl: each.imageList.first.getServerPath(),
+                                            errorWidget: (context, url, error) {
+                                              return const Center(
+                                                child: Icon(Icons.image_not_supported_rounded),
+                                              );
+                                            },
+                                            fit: BoxFit.cover,
+                                          );
+                                        }
+                                      },
+                                    )
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
               ),
               Expanded(
                 child: GestureDetector(

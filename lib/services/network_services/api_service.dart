@@ -229,7 +229,7 @@ class ApiService {
   }) {
     ApiResponse apiResponse = ApiResponse.getInstance();
     if (response == null) {
-      // Get.off(()=> const LoginMainPage());
+      superPrint('response is null,may be no internet access!');
       DialogService().showTransactionDialog(
           text: "Unable to connect to the server!\nPlease try again later!");
     } else {
@@ -248,6 +248,7 @@ class ApiService {
         }
         apiResponse.message = response.body["message"] ?? "";
       } catch (e) {
+        superPrint(e);
         apiResponse.message = e.toString();
         if (response.statusCode == null) {
           // Get.off(()=> const LoginGreetingPage());

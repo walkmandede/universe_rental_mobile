@@ -81,6 +81,28 @@ class ListingDetail{
     );
   }
 
+  factory ListingDetail.fromSearch({required Map<String,dynamic> data}){
+    return ListingDetail(
+      id: data["id"].toString(),
+      title: data["title"].toString(),
+      subTitle: '',
+      listingLocation: ListingLocation(
+        fullAddress: data["listingLocation"]["fullAddress"].toString(),
+        remark: "",
+        latLng: const LatLng(0,0),
+      ),
+      imageList: ((data["imageList"] as List<dynamic>)??[]).map((e) => e.toString()).toList(),
+      listingOffers: [],
+      hostName: '',
+      enumListingType: EnumListingType.shareRoom,
+      description: '',
+      listingOnAttributes: [],
+      listingOnPlaces: [],
+      listingTags: [],
+      nightData: [],
+    );
+  }
+
 }
 
 class ListingLocation{

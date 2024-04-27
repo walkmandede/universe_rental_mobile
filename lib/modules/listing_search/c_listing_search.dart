@@ -13,8 +13,7 @@ class ListingSearchController extends GetxController with GetTickerProviderState
 
   int animationDurationInMs = 200;
   Map<String,AnimationController> dataAnimations = {};
-  late Timer timer;
-  bool xSearching = false;
+  Timer? timer;
   TextEditingController txtSearch = TextEditingController(text: "");
   ValueNotifier<List<ListingDetail>> shownData = ValueNotifier([]);
 
@@ -26,24 +25,32 @@ class ListingSearchController extends GetxController with GetTickerProviderState
 
   @override
   void onClose() {
-    //
+    if(timer!=null)timer!.cancel();
     super.onClose();
   }
 
   Future<void> initLoad() async{
-    timer = Timer.periodic(const Duration(milliseconds: 2000), (timer) {
-      xSearching = false;
-    });
     txtSearch.addListener(() {
       onSearch();
     });
   }
 
   Future<void> onSearch() async{
-    if(!xSearching){
-      xSearching = true;
-      updateShownListing();
+    if(timer!=null){
+      timer!.cancel();
+      resetTimer();
     }
+    else{
+      resetTimer();
+    }
+  }
+
+  void resetTimer(){
+    timer  = Timer(
+      const Duration(milliseconds: 2000), () {
+        updateShownListing();
+      },
+    );
   }
 
   Future<void> updateShownListing() async{
@@ -59,6 +66,11 @@ class ListingSearchController extends GetxController with GetTickerProviderState
       );
       if(apiResponse.xSuccess){
         Iterable iterable = apiResponse.bodyData["_data"]??[];
+        for(final each in iterable){
+          final eachListing = ListingDetail.fromSearch(data: each);
+          shownData.value.add(eachListing);
+        }
+        superPrint(iterable);
       }
 
     }
