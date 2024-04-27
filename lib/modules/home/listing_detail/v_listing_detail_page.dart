@@ -1,17 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/flutter_super_scaffold.dart';
-import 'package:universe_rental/modules/home/explore/sub_widgets/listing/each_listing/c_each_listing.dart';
 import 'package:universe_rental/modules/home/listing_detail/c_listing_detail.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_listing_detail_app_bar.dart';
+import 'package:universe_rental/modules/my_calendar/_my_calendar_test_page.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 
 class ListingDetailPage extends StatelessWidget {
@@ -27,7 +23,7 @@ class ListingDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // controller.initLoad(id: id, shownPageIndex: imageShownIndex);
+    controller.initLoad(id: id, shownPageIndex: imageShownIndex);
     return FlutterSuperScaffold(
       isTopSafe: false,
       superBarColor: SuperBarColor(topBarColor: Colors.transparent),
@@ -40,86 +36,64 @@ class ListingDetailPage extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                //   AspectRatio(
-                //     aspectRatio: 1,
-                //     child: Hero(
-                //       tag: "imageList$id",
-                //       child: PageView(
-                //         controller: PageController(initialPage: imageShownIndex),
-                //         onPageChanged: (value) {
-                //         },
-                //         children: [
-                //           ...images.map((e) {
-                //             return CachedNetworkImage(
-                //               imageUrl: e.getServerPath(),
-                //               fit: BoxFit.cover,
-                //               errorWidget: (context, url, error) {
-                //                 return Container(
-                //                   width: double.infinity,
-                //                   height: double.infinity,
-                //                   alignment: Alignment.center,
-                //                   decoration: BoxDecoration(
-                //                       border: Border.all(),
-                //                       borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius)
-                //                   ),
-                //                   child: const Icon(Icons.image_not_supported_rounded),
-                //                 );
-                //               },
-                //             );
-                //           }).toList()
-                //         ],
-                //       ),
-                //     ),
-                //   )
-                Container(
-                  color: Colors.red,
-                  width: double.infinity,
-                  height: 300,
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      listingData(),
-                      (Get.height * 0.02).heightBox(),
-                      divider(),
-                      hostCard(),
-                      aboutPlace(),
-                      Column(
-                        children: [
-                          const Text("Place Photos"),
-                          SingleChildScrollView(
-                            child: Row(
-                              children: [
-                                ...List.generate(
-                                    5,
-                                    (index) => Container(
-                                          color: Colors.amber,
-                                          height: 200,
-                                          width: 200,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: const Text("fdf"),
-                                        ))
-                              ],
-                            ),
-                          )
-                          // ListView.builder(
-                          // scrollDirection: Axis.horizontal,
-                          // shrinkWrap: true,
-                          // // physics: NeverScrollableScrollPhysics(),
-                          // itemCount: 3,
-                          // itemBuilder: (context, index) {
-                          //   return Image.asset(
-                          //       'assets/images/fakeprofile.png');
-                          // })
-                        ],
-                      )
-                    ],
+                AspectRatio(
+                  aspectRatio: 1,
+                  child: Hero(
+                    tag: "imageList$id",
+                    child: PageView(
+                      controller: PageController(initialPage: imageShownIndex),
+                      onPageChanged: (value) {},
+                      children: [
+                        ...images.map((e) {
+                          return CachedNetworkImage(
+                            imageUrl: e.getServerPath(),
+                            fit: BoxFit.cover,
+                            errorWidget: (context, url, error) {
+                              return Container(
+                                width: double.infinity,
+                                height: double.infinity,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    border: Border.all(),
+                                    borderRadius: BorderRadius.circular(
+                                        AppConstants.baseBorderRadius)),
+                                child: const Icon(
+                                    Icons.image_not_supported_rounded),
+                              );
+                            },
+                          );
+                        }).toList()
+                      ],
+                    ),
                   ),
-                )
+                ),
+                // Container(
+                //   color: Colors.red,
+                //   width: double.infinity,
+                //   height: 300,
+                // ),
+                ValueListenableBuilder(
+                    valueListenable: controller.listingData,
+                    builder: (context, value, child) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 22, vertical: 18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            listingData(),
+                            (Get.height * 0.02).heightBox(),
+                            divider(),
+                            hostCard(),
+                            aboutPlace(),
+                            placesImages(),
+                            offerList(),
+                            location(),
+                            booking(),
+                          ],
+                        ),
+                      );
+                    })
               ],
             ),
           ),
@@ -233,38 +207,114 @@ class ListingDetailPage extends StatelessWidget {
           style: TextStyle(fontSize: 16),
         ),
         10.heightBox(),
+        topBoxShadow(),
+      ],
+    );
+  }
+
+  Widget booking() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("4 nights in Tambon Hua Hin"),
+        const Text('Apr 13, 2024 - Apr 17, 2024'),
         Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-                offset: Offset(0, -Get.height * 0.05),
-                blurRadius: 4,
-                spreadRadius: 3,
-                color: AppColors.white.withOpacity(0.6))
-          ]),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              divider(),
-              Container(
-                height: Get.height * 0.05,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                          offset: const Offset(0, 10),
-                          blurRadius: 4,
-                          spreadRadius: 2,
-                          color: AppColors.grey.withOpacity(0.1))
-                    ],
-                    borderRadius: const BorderRadius.all(Radius.circular(20))),
-                child: const Text("See More"),
-              ),
-            ],
+            color: Colors.amber,
+            height: Get.height * 0.42,
+            child: const MyCalendarTestPage()),
+        const Text(
+          "Restart Date",
+          style: TextStyle(
+            decoration: TextDecoration.underline,
           ),
         )
       ],
+    );
+  }
+
+  Widget placesImages() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Place photo Tour",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          (Get.height * 0.02).heightBox(),
+          SizedBox(
+            height: Get.height * 0.3,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: Get.height * 0.24,
+                        padding: const EdgeInsets.only(bottom: 10),
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20))),
+                        child: Image.asset('assets/images/fakephoto1.png'),
+                      ),
+                      const Text("Living Room")
+                    ],
+                  );
+                }),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget offerList() {
+    return Column(
+      children: [
+        const Text(
+          "Offer Lists",
+        ),
+        Container(
+            color: Colors.red,
+            height: Get.height * 0.18,
+            child: Column(
+              children:
+                  List.generate(3, (index) => Text(index.toString())).toList(),
+            ))
+      ],
+    );
+  }
+
+  Widget location() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Locations',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+          ),
+          (Get.height * 0.02).heightBox(),
+          Container(
+            height: Get.height * 0.3,
+            width: double.infinity,
+            color: Colors.red,
+          ),
+          (Get.height * 0.02).heightBox(),
+          const Text(
+            "Entire villa in Tambon Hua Hin, Thailand",
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          ),
+          (Get.height * 0.01).heightBox(),
+          const Text(
+              "Nearby Place \n -place near shwedagon \n -near xsphere n -near sule pagoda"),
+          (Get.height * 0.01).heightBox(),
+          topBoxShadow()
+        ],
+      ),
     );
   }
 
@@ -281,6 +331,39 @@ class ListingDetailPage extends StatelessWidget {
       width: Get.width * 0.02,
       height: Get.height * 0.02,
       decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.black),
+    );
+  }
+
+  Widget topBoxShadow() {
+    return Container(
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            offset: Offset(0, -Get.height * 0.05),
+            blurRadius: 4,
+            spreadRadius: 3,
+            color: AppColors.white.withOpacity(0.6))
+      ]),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          divider(),
+          Container(
+            height: Get.height * 0.05,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      offset: const Offset(0, 10),
+                      blurRadius: 4,
+                      spreadRadius: 2,
+                      color: AppColors.grey.withOpacity(0.1))
+                ],
+                borderRadius: const BorderRadius.all(Radius.circular(20))),
+            child: const Text("See More"),
+          ),
+        ],
+      ),
     );
   }
 }
