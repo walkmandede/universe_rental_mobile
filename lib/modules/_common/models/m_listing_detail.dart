@@ -104,7 +104,6 @@ class ListingDetail{
   }
 
   factory ListingDetail.fromResponse2({required Map<String,dynamic> data}){
-    superPrint(data);
     //nightData
     Iterable nightData = data["nightData"]??[];
 
