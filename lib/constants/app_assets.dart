@@ -24,6 +24,7 @@ class AppAssets{
   static String homeBookingBg = "assets/images/home_booking_bg.png";
   static String nutjobsBookingBg = "assets/images/nutjobs_booking_bg.png";
   static String scheduleBookingBg = "assets/images/schedule_booking_bg.png";
+  static String loadingGif1 = "assets/images/loading_gif_1.gif";
   static String dummy = "____";
 
 }

@@ -45,8 +45,8 @@ class HomePage extends StatelessWidget {
                           builder: (context, currentPage, child) {
                             switch(currentPage){
                               case 0 : return const ExploreMainPage();
-                              case 1 : return const ChatPage();
-                              case 2 : return const ListsPage();
+                              case 1 : return FavoritePage();
+                              case 2 : return const Placeholder();
                               case 3 : return const ChatPage();
                               default: return const SizedBox.expand();
                             }

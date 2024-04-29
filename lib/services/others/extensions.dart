@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import '../../constants/app_assets.dart';
@@ -88,5 +89,14 @@ extension CustomDateTime on DateTime {
 extension ServerImage on String {
   String getServerPath() {
     return ApiService().baseUrl.replaceAll("/api/v1/", "") + toString();
+  }
+}
+
+extension CustomList on List {
+  String getCSV() {
+    return toString()
+        .replaceAll("[", "")
+        .replaceAll("]", "")
+        .removeAllWhitespace;
   }
 }

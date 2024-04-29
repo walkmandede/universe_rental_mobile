@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/home/explore/c_explore_controller.dart';
+import 'package:universe_rental/modules/home/explore/sub_widgets/listing_map/c_listing_map.dart';
 import '../../../../_common/models/m_listing_tag.dart';
 
 class ExploreHeaderController extends GetxController{
@@ -35,8 +36,20 @@ class ExploreHeaderController extends GetxController{
   Future<void> updateSelectedTag({required ListingTag listingTag}) async{
     selectedTag.value = listingTag;
     selectedTag.notifyListeners();
-    ExploreController exploreController = Get.find();
-    await exploreController.updateShownListing();
+    try{
+      ExploreController exploreController = Get.find();
+      await exploreController.updateShownListing();
+    }
+    catch(e){
+      null;
+    }
+    try{
+      ListingMapController listingMapController = Get.find();
+      await listingMapController.updateData();
+    }
+    catch(e){
+      null;
+    }
   }
 
 }

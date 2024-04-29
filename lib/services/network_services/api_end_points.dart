@@ -1,7 +1,9 @@
 class ApiEndPoints {
-  static String getTags = "listing-tag";
+  static String getTags = "listing-tag/mobile";
   static String getShownList = "listing/by-tag";
   static String getSearchList = "listing/search";
+  static String getFavorites = "listing/favorite";
+  static String getLocationListings = "listing/by-location";
   static String dummy = "___";
 
   //web_data_entry
