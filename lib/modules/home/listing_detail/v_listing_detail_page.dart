@@ -101,7 +101,7 @@ class ListingDetailPage extends StatelessWidget {
                                 divider(),
                                 hostCard(_listing),
                                 AboutPlaceWidget(listing: _listing),
-                                placesImages(),
+                                placesImages(listing: _listing),
                                 divider(),
                                 (Get.height * 0.02).heightBox(),
                                 OfferListWidget(listing: _listing),
@@ -419,7 +419,10 @@ class ListingDetailPage extends StatelessWidget {
     );
   }
 
-  Widget placesImages() {
+  Widget placesImages({required ListingDetail listing}) {
+    double _imgHeight = Get.height * 0.21;
+    double _imgWidth = Get.width * 0.68;
+    double _borderRaius = 20;
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 0),
       child: Column(
@@ -433,21 +436,151 @@ class ListingDetailPage extends StatelessWidget {
           SizedBox(
             height: Get.height * 0.28,
             child: ListView.builder(
+                padding: EdgeInsets.zero,
                 scrollDirection: Axis.horizontal,
-                itemCount: 3,
+                itemCount: listing.listingOnPlaces.length,
                 itemBuilder: (context, index) {
+                  ListingOnPlace _currentListingPlace =
+                      listing.listingOnPlaces[index];
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: Get.height * 0.24,
-                        padding: const EdgeInsets.only(bottom: 10),
-                        decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: Image.asset('assets/images/fakephoto1.png'),
-                      ),
-                      const Text("Living Room")
+                          height: _imgHeight,
+                          width: _imgWidth,
+                          margin: const EdgeInsets.only(bottom: 10, right: 10),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: _currentListingPlace.images.length == 1
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image.network(
+                                      _currentListingPlace.images.first,
+                                      fit: BoxFit.cover),
+                                )
+                              : _currentListingPlace.images.length == 2
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft:
+                                                  Radius.circular(_borderRaius),
+                                              bottomLeft: Radius.circular(
+                                                  _borderRaius)),
+                                          child: Image.network(
+                                              _currentListingPlace.images.first,
+                                              width: _imgWidth / 2.03,
+                                              height: _imgHeight,
+                                              fit: BoxFit.cover),
+                                        ),
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                              topRight:
+                                                  Radius.circular(_borderRaius),
+                                              bottomRight: Radius.circular(
+                                                  _borderRaius)),
+                                          child: Image.network(
+                                              _currentListingPlace.images.last,
+                                              width: _imgWidth / 2.03,
+                                              height: _imgHeight,
+                                              fit: BoxFit.cover),
+                                        )
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft:
+                                                  Radius.circular(_borderRaius),
+                                              topLeft: Radius.circular(
+                                                  _borderRaius)),
+                                          child: Image.network(
+                                              _currentListingPlace.images.first,
+                                              width: _imgWidth / 1.52,
+                                              height: _imgHeight,
+                                              fit: BoxFit.cover),
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                  topRight: Radius.circular(
+                                                      _borderRaius)),
+                                              child: Image.network(
+                                                  _currentListingPlace
+                                                      .images[1],
+                                                  width: _imgWidth / 3.1,
+                                                  height: _imgHeight / 2.05,
+                                                  fit: BoxFit.cover),
+                                            ),
+                                            Stack(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          bottomRight:
+                                                              Radius.circular(
+                                                                  _borderRaius)),
+                                                  child: Image.network(
+                                                      _currentListingPlace
+                                                          .images.last,
+                                                      width: _imgWidth / 3.1,
+                                                      height: _imgHeight / 2.05,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                                if (_currentListingPlace
+                                                        .images.length >
+                                                    3)
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      _showImageDialog(
+                                                          context,
+                                                          _currentListingPlace
+                                                              .images);
+                                                    },
+                                                    child: Container(
+                                                      width: _imgWidth / 3.1,
+                                                      height: _imgHeight / 2.05,
+                                                      decoration: BoxDecoration(
+                                                          color: AppColors.grey
+                                                              .withOpacity(0.4),
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  bottomRight: Radius
+                                                                      .circular(
+                                                                          _borderRaius))),
+                                                      child: IconButton(
+                                                          onPressed: () {
+                                                            _showImageDialog(
+                                                                context,
+                                                                _currentListingPlace
+                                                                    .images);
+                                                          },
+                                                          icon: const Icon(
+                                                            Icons.add,
+                                                            color: Colors.white,
+                                                            size: 34,
+                                                          )),
+                                                    ),
+                                                  )
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    )),
+                      Text(_currentListingPlace.listingPlace.name)
                     ],
                   );
                 }),
@@ -457,60 +590,36 @@ class ListingDetailPage extends StatelessWidget {
     );
   }
 
-  // Widget offerList(ListingDetail listing) {
-  //   return Column(
-  //     children: [
-  //       const Text(
-  //         "Offer Lists",
-  //       ),
-  //       Container(
-  //           height: Get.height * 0.18,
-  //           child: Column(
-  //             children:
-  //                 List.generate(3, (index) => Text(index.toString())).toList(),
-  //           ))
-  //     ],
-  //   );
-  // }
-
-  // Widget location() {
-  //   return Padding(
-  //     padding: const EdgeInsets.symmetric(vertical: 20),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         const Text(
-  //           'Locations',
-  //           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-  //         ),
-  //         (Get.height * 0.02).heightBox(),
-  //         Container(
-  //           height: Get.height * 0.3,
-  //           width: double.infinity,
-  //           color: Colors.red,
-  //         ),
-  //         (Get.height * 0.02).heightBox(),
-  //         const Text(
-  //           "Entire villa in Tambon Hua Hin, Thailand",
-  //           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-  //         ),
-  //         (Get.height * 0.01).heightBox(),
-  //         const Text(
-  //             "Nearby Place \n -place near shwedagon \n -near xsphere n -near sule pagoda"),
-  //         (Get.height * 0.01).heightBox(),
-  //         // topBoxShadow()
-  //       ],
-  //     ),
-  //   );
-  // }
-
-  Widget bubble() {
-    return Container(
-      width: Get.width * 0.01,
-      height: Get.height * 0.01,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.black),
+  void _showImageDialog(BuildContext context, List<String> imgList) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+            child: PageView(
+          children: [
+            ...imgList.map(
+              (e) => SizedBox(
+                width: Get.width,
+                height: Get.height / 2,
+                child: Image.network(
+                  e, // Replace with your image URL
+                  fit: BoxFit.contain,
+                ),
+              ),
+            )
+          ],
+        ));
+      },
     );
   }
+}
+
+Widget bubble() {
+  return Container(
+    width: Get.width * 0.01,
+    height: Get.height * 0.01,
+    decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.black),
+  );
 }
 
 Widget divider() {
