@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
@@ -9,6 +10,8 @@ import 'package:universe_rental/web_data_entry/all_listings/m_listing_model.dart
 class ListingDetailController extends GetxController {
   ValueNotifier<int> currentShownPageIndex = ValueNotifier(0);
   ValueNotifier<ListingDetail?> listingData = ValueNotifier(null);
+  ValueNotifier<DateTimeRange> selectedDateTimeRange =
+      ValueNotifier(DateTimeRange(end: DateTime.now(), start: DateTime.now()));
   @override
   void onInit() {
     //
@@ -40,9 +43,17 @@ class ListingDetailController extends GetxController {
     if (apiResponse.xSuccess) {
       listingData.value =
           ListingDetail.fromDetail(data: apiResponse.bodyData['_data']);
+
       listingData.notifyListeners();
     } else {
       DialogService().showTransactionDialog(text: "Something went wrong");
     }
+  }
+
+  onChangedSelectedDate(DateTimeRange? date) {
+    if (date != null) {
+      selectedDateTimeRange.value = date;
+    }
+    selectedDateTimeRange.notifyListeners();
   }
 }

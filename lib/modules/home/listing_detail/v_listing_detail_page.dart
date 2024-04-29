@@ -100,6 +100,7 @@ class ListingDetailPage extends StatelessWidget {
                                 AboutPlaceWidget(listing: _listing),
                                 placesImages(),
                                 divider(),
+                                (Get.height * 0.02).heightBox(),
                                 OfferListWidget(listing: _listing),
                                 // location(),
                                 LocationWidget(listing: _listing),
@@ -270,12 +271,25 @@ class ListingDetailPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("4 nights in Tambon Hua Hin"),
-        const Text('Apr 13, 2024 - Apr 17, 2024'),
-        Container(
-            color: Colors.amber,
-            height: Get.height * 0.42,
-            child: const MyCalendarTestPage()),
+        const Text(
+          "4 nights in Tambon Hua Hin",
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+        ),
+        Text(
+          'Apr 13, 2024 - Apr 17, 2024',
+          style: TextStyle(
+              fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.grey),
+        ),
+        ValueListenableBuilder(
+            valueListenable: controller.selectedDateTimeRange,
+            builder: (context, value, child) {
+              return Container(
+                  // color: Colors.amber,
+                  height: Get.height * 0.42,
+                  child: MyCalendarTestPage(
+                    selectedDateTimeRange: value,
+                  ));
+            }),
         const Text(
           "Restart Date",
           style: TextStyle(
@@ -488,6 +502,7 @@ class _OfferListWidgetState extends State<OfferListWidget> {
           "Offer Lists",
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
+        (Get.height * 0.02).heightBox(),
         SizedBox(
           height: _xClickSeeMore ? null : Get.height * 0.14,
           child: ListView.builder(
@@ -514,28 +529,6 @@ class _OfferListWidgetState extends State<OfferListWidget> {
                 );
               }),
         ),
-
-        // Column(mainAxisSize: MainAxisSize.min, children: [
-        //   ...widget.listing.listingOffers.map((offer) {
-        //     return Padding(
-        //       padding: const EdgeInsets.symmetric(vertical: 4),
-        //       child: Row(
-        //         children: [
-        //           SvgPicture.string(
-        //             offer.icon,
-        //           ),
-        //           10.widthBox(),
-        //           Text(
-        //             offer.name,
-        //             style: const TextStyle(fontSize: 16),
-        //           )
-        //         ],
-        //       ),
-        //     );
-        //   })
-        // ]
-        //     // List.generate(3, (index) => Text(index.toString())).toList(),
-        //     )),
         10.heightBox(),
         topBoxShadow(_xClickSeeMore, () {
           setState(() {
@@ -570,10 +563,12 @@ class _LocationWidgetState extends State<LocationWidget> {
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
           (Get.height * 0.02).heightBox(),
-          Container(
+          SizedBox(
             height: Get.height * 0.3,
             width: double.infinity,
-            color: Colors.red,
+            child: MapWidget(
+              latLng: widget.listing.listingLocation.latLng,
+            ),
           ),
           (Get.height * 0.02).heightBox(),
           Text(

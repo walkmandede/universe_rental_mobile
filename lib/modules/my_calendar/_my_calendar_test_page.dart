@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:universe_rental/modules/my_calendar/w_my_calendar_widget.dart';
 
 class MyCalendarTestPage extends StatefulWidget {
-  const MyCalendarTestPage({super.key});
-
+  const MyCalendarTestPage({super.key, required this.selectedDateTimeRange});
+  final DateTimeRange selectedDateTimeRange;
   @override
   State<MyCalendarTestPage> createState() => _MyCalendarTestPageState();
 }
@@ -31,9 +31,8 @@ class _MyCalendarTestPageState extends State<MyCalendarTestPage> {
                 aspectRatio: 2 / 2,
                 child: MyCalendar(
                   initialDateRange: DateTimeRange(
-                    start: DateTime(2024, 4, 2),
-                    end: DateTime(2024, 4, 16),
-                  ),
+                      start: widget.selectedDateTimeRange.start,
+                      end: widget.selectedDateTimeRange.end),
                   xStartWithMonday: false,
                 ),
               ),
