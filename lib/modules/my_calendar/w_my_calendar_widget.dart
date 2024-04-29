@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/widgets/w_fitted_widget.dart';
+import 'package:universe_rental/services/others/extensions.dart';
 import '../../constants/app_colors.dart';
 import 'c_my_calendar.dart';
 
@@ -15,10 +16,12 @@ class MyCalendar extends StatefulWidget {
   final DateTimeRange? initialDateRange;
   final bool xStartWithMonday;
   final void Function(DateTimeRange)? onChangeDate;
+  final Set<String> validDates;
   const MyCalendar(
       {super.key,
       this.initialDateRange,
       this.xStartWithMonday = false,
+      required this.validDates,
       this.onChangeDate});
 
   @override
@@ -68,7 +71,8 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
     //setData
     if (widget.initialDateRange != null) {
       startDate.value = widget.initialDateRange!.start;
-      endDate.value = widget.initialDateRange!.start;
+      // startDate.notifyListeners();
+      endDate.value = widget.initialDateRange!.end;
       focusedDate.value = startDate.value!.copyWith(day: 1);
     }
   }
@@ -102,9 +106,15 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
         startDate.value = dateTime;
         startDate.notifyListeners();
       } else {
-        endDate.value = dateTime;
-        endDate.notifyListeners();
-        animateDateRange();
+        bool _valid = hasInvalidDates(startDate.value!, dateTime);
+        if (_valid) {
+          endDate.value = dateTime;
+          endDate.notifyListeners();
+          animateDateRange();
+        } else {
+          startDate.value = dateTime;
+          startDate.notifyListeners();
+        }
       }
     } else {
       startDate.value = dateTime;
@@ -113,6 +123,21 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
       endDate.notifyListeners();
     }
     chageSelectedDate();
+  }
+
+  bool hasInvalidDates(DateTime sDate, DateTime eDate) {
+    List<String> _selectedBetweenDates = [];
+    bool _return = true;
+    final _result = AppFunctions()
+        .getBetweenDates(dtr: DateTimeRange(start: sDate, end: eDate));
+    _selectedBetweenDates = _result.map((e) => e.getDateKey()).toList();
+
+    _selectedBetweenDates.forEach((element) {
+      if (!widget.validDates.contains(element)) {
+        _return = false;
+      }
+    });
+    return _return;
   }
 
   void animateDateRange() {
@@ -332,9 +357,14 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                                                                 GestureDetector(
                                                                     onTap: () {
                                                                       vibrateNow();
-                                                                      onClickEachDate(
-                                                                          dateTime:
-                                                                              thatDate);
+                                                                      if (widget
+                                                                          .validDates
+                                                                          .contains(
+                                                                              thatDate.getDateKey())) {
+                                                                        onClickEachDate(
+                                                                            dateTime:
+                                                                                thatDate);
+                                                                      }
                                                                     },
                                                                     child:
                                                                         AnimatedBuilder(
@@ -345,10 +375,6 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                                                                               child) {
                                                                         final dateRangeAnimatedValue =
                                                                             dateRangeAnimation.value;
-
-                                                                        BoxDecoration
-                                                                            boxDecoration =
-                                                                            BoxDecoration();
 
                                                                         return Stack(
                                                                           children: [
@@ -402,19 +428,24 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                                                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                                                       child: Text(
                                                                                         dayString,
-                                                                                        style: TextStyle(color: AppColors.white),
+                                                                                        style: TextStyle(
+                                                                                          color: AppColors.white,
+                                                                                        ),
                                                                                       ),
                                                                                     ),
                                                                                   );
                                                                                 } else {
                                                                                   return Container(
                                                                                     alignment: Alignment.center,
-                                                                                    decoration: BoxDecoration(color: Colors.transparent),
+                                                                                    decoration: const BoxDecoration(color: Colors.transparent),
                                                                                     child: FittedWidget(
                                                                                       mainAxisAlignment: MainAxisAlignment.center,
                                                                                       child: Text(
                                                                                         dayString,
-                                                                                        style: TextStyle(color: dayString == "-" ? AppColors.white : AppColors.black),
+                                                                                        style: TextStyle(
+                                                                                          color: dayString == "-" ? AppColors.white : AppColors.black,
+                                                                                          decoration: widget.validDates.contains(thatDate.getDateKey()) ? TextDecoration.none : TextDecoration.lineThrough,
+                                                                                        ),
                                                                                       ),
                                                                                     ),
                                                                                   );

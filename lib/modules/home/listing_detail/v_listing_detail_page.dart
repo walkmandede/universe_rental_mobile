@@ -9,9 +9,11 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
+import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/flutter_super_scaffold.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_offer.dart';
+import 'package:universe_rental/modules/_common/models/m_night_fee_model.dart';
 import 'package:universe_rental/modules/home/listing_detail/c_listing_detail.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_listing_detail_app_bar.dart';
 import 'package:universe_rental/modules/my_calendar/_my_calendar_test_page.dart';
@@ -105,7 +107,19 @@ class ListingDetailPage extends StatelessWidget {
                                 OfferListWidget(listing: _listing),
                                 // location(),
                                 LocationWidget(listing: _listing),
-                                booking(),
+                                booking(listing: _listing),
+                                if (controller.xContainNightDate.value)
+                                  SizedBox(
+                                    height: Get.height * 0.14,
+                                  ),
+                                if (controller.xSelectedDates.value &&
+                                    !controller.xContainNightDate.value &&
+                                    controller.selectedDateTimeRange.value.start
+                                            .getDateKey() ==
+                                        DateTime.now().getDateKey())
+                                  SizedBox(
+                                    height: Get.height * 0.08,
+                                  )
                               ],
                             ),
                           );
@@ -136,49 +150,85 @@ class ListingDetailPage extends StatelessWidget {
   }
 
   Widget reserveButtom() {
-    return Container(
-      height: Get.height * 0.14,
-      decoration: BoxDecoration(color: Colors.amber),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              children: [
-                ValueListenableBuilder(
-                    valueListenable: controller.selectedDateTimeRange,
-                    builder: (context, sDate, child) {
-                      return Text("");
-                    }),
-                Text(
-                  '\$115 night',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+    return ValueListenableBuilder(
+      valueListenable: controller.xContainNightDate,
+      builder: (context, value, child) {
+        if (value) {
+          return Container(
+              height: Get.height * 0.14,
+              padding: const EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    blurRadius: 10,
+                    spreadRadius: 4,
+                    offset: const Offset(0, -14),
+                    color: AppColors.grey.withOpacity(0.4))
+              ]),
+              child: ValueListenableBuilder(
+                valueListenable: controller.selectedDateTimeRange,
+                builder: (context, sDate, child) {
+                  NightFeeModel _firstNightDate = controller
+                      .listingData.value!.nightData
+                      .firstWhere((element) =>
+                          element.date.getDateKey() ==
+                          sDate!.start.getDateKey())
+                      .nightFees
+                      .first;
+
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Text(AppFunctions().getDateRangeString(
+                                firstDate: sDate.start, lastDate: sDate.end)),
+                            Text(
+                              '  \$ ${_firstNightDate.perNightFee} ${_firstNightDate.currencyModel.abbr.toString()} night',
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
                       ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 16)),
-                  onPressed: () {},
-                  child: const Text(
-                    'Reserve',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  )),
-            ),
-          )
-        ],
-      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 16)),
+                              onPressed: () {},
+                              child: const Text(
+                                'Reserve',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              )),
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ));
+        } else if (controller.xSelectedDates.value &&
+            !value &&
+            controller.selectedDateTimeRange.value.start.getDateKey() ==
+                DateTime.now().getDateKey()) {
+          return Container(
+              color: Colors.white,
+              height: Get.height * 0.08,
+              width: double.infinity,
+              alignment: Alignment.center,
+              child: const Text("No Data Available"));
+        }
+        return const SizedBox();
+      },
     );
   }
 
@@ -323,7 +373,7 @@ class ListingDetailPage extends StatelessWidget {
   //   );
   // }
 
-  Widget booking() {
+  Widget booking({required ListingDetail listing}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -335,7 +385,7 @@ class ListingDetailPage extends StatelessWidget {
             valueListenable: controller.selectedDateTimeRange,
             builder: (context, value, child) {
               return Text(
-                "${controller.selectedDateTimeRange.value.start.getMDY()} - ${controller.selectedDateTimeRange.value.end.getMDY()}",
+                "${controller.selectedDateTimeRange.value!.start.getMDY()} - ${controller.selectedDateTimeRange.value!.end.getMDY()}",
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -349,6 +399,7 @@ class ListingDetailPage extends StatelessWidget {
                   height: Get.height * 0.42,
                   child: MyCalendarTestPage(
                     selectedDateTimeRange: value,
+                    validDates: controller.validDates,
                     onChangeDate: controller.onChangedSelectedDate,
                   ));
             }),
@@ -586,6 +637,7 @@ class _OfferListWidgetState extends State<OfferListWidget> {
                     children: [
                       SvgPicture.string(
                         offer.icon,
+                        width: Get.width * 0.06,
                       ),
                       10.widthBox(),
                       Text(

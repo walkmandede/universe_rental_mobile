@@ -7,8 +7,12 @@ import 'package:universe_rental/modules/my_calendar/w_my_calendar_widget.dart';
 
 class MyCalendarTestPage extends StatefulWidget {
   const MyCalendarTestPage(
-      {super.key, required this.selectedDateTimeRange, this.onChangeDate});
+      {super.key,
+      required this.selectedDateTimeRange,
+      this.onChangeDate,
+      required this.validDates});
   final DateTimeRange selectedDateTimeRange;
+  final Set<String> validDates;
   final void Function(DateTimeRange)? onChangeDate;
   @override
   State<MyCalendarTestPage> createState() => _MyCalendarTestPageState();
@@ -37,6 +41,7 @@ class _MyCalendarTestPageState extends State<MyCalendarTestPage> {
                         start: widget.selectedDateTimeRange.start,
                         end: widget.selectedDateTimeRange.end),
                     xStartWithMonday: false,
+                    validDates: widget.validDates,
                     onChangeDate: widget.onChangeDate),
               ),
             ),
