@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
@@ -15,8 +15,8 @@ import 'package:universe_rental/modules/_common/models/m_listing_offer.dart';
 import 'package:universe_rental/modules/home/listing_detail/c_listing_detail.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_listing_detail_app_bar.dart';
 import 'package:universe_rental/modules/my_calendar/_my_calendar_test_page.dart';
+import 'package:universe_rental/modules/my_calendar/c_my_calendar.dart';
 import 'package:universe_rental/services/others/extensions.dart';
-import 'package:universe_rental/web_data_entry/listing_attribute/m_listing_attribute.dart';
 
 class ListingDetailPage extends StatelessWidget {
   final String id;
@@ -34,6 +34,7 @@ class ListingDetailPage extends StatelessWidget {
     controller.initLoad(id: id, shownPageIndex: imageShownIndex);
     return FlutterSuperScaffold(
       isTopSafe: false,
+      isBotSafe: false,
       superBarColor: SuperBarColor(topBarColor: Colors.transparent),
       onWillPop: () {
         // EachListingWidgetController eachListingWidgetController = Get.find();
@@ -121,9 +122,62 @@ class ListingDetailPage extends StatelessWidget {
                 decoration: const BoxDecoration(color: Colors.transparent),
                 child: const ListingDetailAppBar(),
               ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                child: reserveButtom(),
+              ),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget reserveButtom() {
+    return Container(
+      height: Get.height * 0.14,
+      decoration: BoxDecoration(color: Colors.amber),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                ValueListenableBuilder(
+                    valueListenable: controller.selectedDateTimeRange,
+                    builder: (context, sDate, child) {
+                      return Text("");
+                    }),
+                Text(
+                  '\$115 night',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 16)),
+                  onPressed: () {},
+                  child: const Text(
+                    'Reserve',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white),
+                  )),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -144,10 +198,12 @@ class ListingDetailPage extends StatelessWidget {
         (Get.height * 0.01).heightBox(),
         Wrap(
           runSpacing: 10,
+          spacing: 10,
           children: [
             ...listing.listingOnAttributes.map((e) {
               ListingOnAttribute _attribute = e;
               int index = listing.listingOnAttributes.indexOf(e);
+
               return Row(
                 children: [
                   if (index != 0) (Get.width * 0.02).widthBox(),
@@ -275,25 +331,37 @@ class ListingDetailPage extends StatelessWidget {
           "4 nights in Tambon Hua Hin",
           style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
         ),
-        Text(
-          'Apr 13, 2024 - Apr 17, 2024',
-          style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.w400, color: AppColors.grey),
-        ),
         ValueListenableBuilder(
             valueListenable: controller.selectedDateTimeRange,
             builder: (context, value, child) {
-              return Container(
-                  // color: Colors.amber,
+              return Text(
+                "${controller.selectedDateTimeRange.value.start.getMDY()} - ${controller.selectedDateTimeRange.value.end.getMDY()}",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.grey),
+              );
+            }),
+        ValueListenableBuilder(
+            valueListenable: controller.selectedDateTimeRange,
+            builder: (context, value, child) {
+              return SizedBox(
                   height: Get.height * 0.42,
                   child: MyCalendarTestPage(
                     selectedDateTimeRange: value,
+                    onChangeDate: controller.onChangedSelectedDate,
                   ));
             }),
-        const Text(
-          "Restart Date",
-          style: TextStyle(
-            decoration: TextDecoration.underline,
+        GestureDetector(
+          onTap: () {
+            controller.onChangedSelectedDate(
+                DateTimeRange(start: DateTime.now(), end: DateTime.now()));
+          },
+          child: const Text(
+            "Restart Date",
+            style: TextStyle(
+              decoration: TextDecoration.underline,
+            ),
           ),
         )
       ],

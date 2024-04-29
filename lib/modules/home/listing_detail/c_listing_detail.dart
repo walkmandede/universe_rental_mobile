@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
+import 'package:universe_rental/modules/my_calendar/c_my_calendar.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
@@ -12,6 +13,7 @@ class ListingDetailController extends GetxController {
   ValueNotifier<ListingDetail?> listingData = ValueNotifier(null);
   ValueNotifier<DateTimeRange> selectedDateTimeRange =
       ValueNotifier(DateTimeRange(end: DateTime.now(), start: DateTime.now()));
+  ValueNotifier<bool> xSelectDate = ValueNotifier(false);
   @override
   void onInit() {
     //
@@ -53,7 +55,9 @@ class ListingDetailController extends GetxController {
   onChangedSelectedDate(DateTimeRange? date) {
     if (date != null) {
       selectedDateTimeRange.value = date;
+      xSelectDate.value = true;
     }
     selectedDateTimeRange.notifyListeners();
+    xSelectDate.notifyListeners();
   }
 }
