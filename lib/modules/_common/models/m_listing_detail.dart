@@ -1,4 +1,5 @@
 
+import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_enum.dart';
 import 'package:universe_rental/constants/app_functions.dart';
@@ -39,6 +40,25 @@ class ListingDetail{
     required this.listingTags,
     required this.nightData,
   });
+
+  String getNightDataString(){
+    String nightDataString = "-";
+    if(nightData.isNotEmpty){
+      if(nightData.first.nightFees.isNotEmpty){
+        final nightFee = nightData.first.nightFees.first;
+        nightDataString = "${nightFee.currencyModel.sign}${NumberFormat("###,###").format(nightFee.perNightFee)} night";
+      }
+    };
+    return nightDataString;
+  }
+
+  String getDateString(){
+    String dateString = "-";
+    if(nightData.isNotEmpty){
+      dateString = AppFunctions().getDateRangeString(firstDate: nightData.first.date, lastDate: nightData.last.date);
+    }
+    return dateString;
+  }
 
   factory ListingDetail.fromDetail({required Map<String,dynamic> data}){
 
@@ -115,6 +135,34 @@ class ListingDetail{
         fullAddress: "",
         remark: "",
         latLng: const LatLng(0,0),
+      ),
+      imageList: ((data["imageList"] as List<dynamic>)??[]).map((e) => e.toString()).toList(),
+      listingOffers: [],
+      hostName: '',
+      enumListingType: EnumListingType.shareRoom,
+      description: '',
+      listingOnAttributes: [],
+      listingOnPlaces: [],
+      listingTags: [],
+      nightData: nightData.map((e) => NightData.fromMap(data: e)).toList(),
+    );
+  }
+
+  factory ListingDetail.fromLocation({required Map<String,dynamic> data}){
+    //nightData
+    Iterable nightData = data["nightData"]??[];
+
+    return ListingDetail(
+      id: data["id"].toString(),
+      title: data["title"].toString(),
+      subTitle: data["subTitle"].toString(),
+      listingLocation: ListingLocation(
+        fullAddress: data["listingLocation"]["fullAddress"].toString(),
+        remark: data["listingLocation"]["remark"].toString(),
+        latLng: LatLng(
+          double.tryParse(data["listingLocation"]["lat"].toString())??0,
+          double.tryParse(data["listingLocation"]["lng"].toString())??0,
+        ),
       ),
       imageList: ((data["imageList"] as List<dynamic>)??[]).map((e) => e.toString()).toList(),
       listingOffers: [],

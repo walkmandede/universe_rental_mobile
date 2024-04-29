@@ -63,15 +63,6 @@ class _EachListingWidgetState extends State<EachListingWidget> {
   @override
   Widget build(BuildContext context) {
 
-    var dateString = "-";
-    var nightDataString = "-";
-    if(widget.each.nightData.isNotEmpty){
-      dateString = AppFunctions().getDateRangeString(firstDate: widget.each.nightData.first.date, lastDate: widget.each.nightData.last.date);
-      if(widget.each.nightData.first.nightFees.isNotEmpty){
-        final nightFee = widget.each.nightData.first.nightFees.first;
-        nightDataString = "${nightFee.currencyModel.sign}${NumberFormat("###,###").format(nightFee.perNightFee)} night";
-      }
-    }
 
     return GestureDetector(
       key: GlobalKey(),
@@ -209,7 +200,7 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                     ),
                   ),
                   Text(
-                    dateString,
+                    widget.each.getDateString(),
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: AppConstants.fontSizeM,
@@ -217,7 +208,7 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                     ),
                   ),
                   Text(
-                    nightDataString,
+                    widget.each.getNightDataString(),
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: AppConstants.fontSizeM,
