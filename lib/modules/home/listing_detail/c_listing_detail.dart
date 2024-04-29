@@ -19,6 +19,7 @@ class ListingDetailController extends GetxController {
   ValueNotifier<bool> xSelectedDates = ValueNotifier(false);
   ValueNotifier<bool> xContainNightDate = ValueNotifier(false);
   Set<String> validDates = {};
+  ValueNotifier<bool> xLoading = ValueNotifier(false);
   @override
   void onInit() {
     //
@@ -45,6 +46,8 @@ class ListingDetailController extends GetxController {
   }
 
   Future<void> getListingData(String id) async {
+    xLoading.value = true;
+    xLoading.notifyListeners();
     Response? response = await ApiService()
         .get(endPoint: "${ApiEndPoints.dataEntryListing}/$id");
 
@@ -59,8 +62,12 @@ class ListingDetailController extends GetxController {
       listingData.value!.nightData.forEach((element) {
         validDates.add(element.date.getDateKey());
       });
+      xLoading.value = false;
+      xLoading.notifyListeners();
     } else {
       DialogService().showTransactionDialog(text: "Something went wrong");
+      xLoading.value = false;
+      xLoading.notifyListeners();
     }
   }
 

@@ -16,6 +16,7 @@ import 'package:universe_rental/modules/_common/models/m_listing_offer.dart';
 import 'package:universe_rental/modules/_common/models/m_night_fee_model.dart';
 import 'package:universe_rental/modules/home/listing_detail/c_listing_detail.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_listing_detail_app_bar.dart';
+import 'package:universe_rental/modules/home/listing_detail/w_shimmer_page.dart';
 import 'package:universe_rental/modules/my_calendar/_my_calendar_test_page.dart';
 import 'package:universe_rental/modules/my_calendar/c_my_calendar.dart';
 import 'package:universe_rental/services/others/extensions.dart';
@@ -87,14 +88,18 @@ class ListingDetailPage extends StatelessWidget {
                   //   height: 300,
                   // ),
                   ValueListenableBuilder(
-                      valueListenable: controller.listingData,
-                      builder: (context, _listing, child) {
+                      valueListenable: controller.xLoading,
+                      builder: (context, loading, child) {
+                        if (loading) {
+                          return ShimmerListingDetailPage();
+                        }
+                        ListingDetail? _listing = controller.listingData.value;
                         if (_listing != null) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 22, vertical: 18),
                             child: Column(
-                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 listingData(_listing),
                                 (Get.height * 0.02).heightBox(),
@@ -255,6 +260,7 @@ class ListingDetailPage extends StatelessWidget {
               int index = listing.listingOnAttributes.indexOf(e);
 
               return Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   if (index != 0) (Get.width * 0.02).widthBox(),
                   Text(
@@ -692,19 +698,24 @@ class _AboutPlaceWidgetState extends State<AboutPlaceWidget> {
         ),
         10.heightBox(),
         SizedBox(
-          height: _xClickSeeMore ? null : Get.height * 0.1,
+          height: widget.listing.description.length > 50
+              ? _xClickSeeMore
+                  ? null
+                  : Get.height * 0.1
+              : null,
           child: Text(
             widget.listing.description,
             style: const TextStyle(fontSize: 16),
           ),
         ),
         10.heightBox(),
-        topBoxShadow(_xClickSeeMore, () {
-          setState(() {
-            _xClickSeeMore = !_xClickSeeMore;
-            print(_xClickSeeMore);
-          });
-        }),
+        if (widget.listing.description.length > 50)
+          topBoxShadow(_xClickSeeMore, () {
+            setState(() {
+              _xClickSeeMore = !_xClickSeeMore;
+              print(_xClickSeeMore);
+            });
+          }),
       ],
     );
   }
@@ -732,7 +743,11 @@ class _OfferListWidgetState extends State<OfferListWidget> {
         ),
         (Get.height * 0.02).heightBox(),
         SizedBox(
-          height: _xClickSeeMore ? null : Get.height * 0.14,
+          height: widget.listing.listingOffers.length > 3
+              ? _xClickSeeMore
+                  ? null
+                  : Get.height * 0.14
+              : null,
           child: ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
@@ -759,12 +774,13 @@ class _OfferListWidgetState extends State<OfferListWidget> {
               }),
         ),
         10.heightBox(),
-        topBoxShadow(_xClickSeeMore, () {
-          setState(() {
-            _xClickSeeMore = !_xClickSeeMore;
-            print(_xClickSeeMore);
-          });
-        }),
+        if (widget.listing.listingOffers.length > 3)
+          topBoxShadow(_xClickSeeMore, () {
+            setState(() {
+              _xClickSeeMore = !_xClickSeeMore;
+              print(_xClickSeeMore);
+            });
+          }),
       ],
     );
   }
@@ -809,12 +825,13 @@ class _LocationWidgetState extends State<LocationWidget> {
           (Get.height * 0.01).heightBox(),
           // topBoxShadow()
           10.heightBox(),
-          topBoxShadow(_xClickSeeMore, () {
-            setState(() {
-              _xClickSeeMore = !_xClickSeeMore;
-              print(_xClickSeeMore);
-            });
-          }),
+          if (widget.listing.listingLocation.remark.length > 50)
+            topBoxShadow(_xClickSeeMore, () {
+              setState(() {
+                _xClickSeeMore = !_xClickSeeMore;
+                print(_xClickSeeMore);
+              });
+            }),
         ],
       ),
     );
