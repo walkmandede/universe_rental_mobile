@@ -1,11 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
@@ -18,10 +16,9 @@ import 'package:universe_rental/modules/home/listing_detail/c_listing_detail.dar
 import 'package:universe_rental/modules/home/listing_detail/w_listing_detail_app_bar.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_shimmer_page.dart';
 import 'package:universe_rental/modules/my_calendar/_my_calendar_test_page.dart';
-import 'package:universe_rental/modules/my_calendar/c_my_calendar.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 
-class ListingDetailPage extends StatelessWidget {
+class ListingDetailPage extends StatefulWidget {
   final String id;
   final List<String> images;
   final int imageShownIndex;
@@ -30,11 +27,38 @@ class ListingDetailPage extends StatelessWidget {
       required this.id,
       required this.images,
       required this.imageShownIndex});
+
+  @override
+  State<ListingDetailPage> createState() => _ListingDetailPageState();
+}
+
+class _ListingDetailPageState extends State<ListingDetailPage>
+    with TickerProviderStateMixin {
   final controller = Get.put(ListingDetailController());
+  late AnimationController animatedController;
+  ScrollController scrollController = ScrollController();
+  Rx<int> _currentIndex = 0.obs;
+  @override
+  void initState() {
+    initLoad();
+    super.initState();
+  }
+
+  initLoad() {
+    animatedController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 500));
+    scrollController.addListener(() {
+      if (scrollController.position.pixels > Get.width) {
+        animatedController.forward();
+      } else {
+        animatedController.reverse();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    controller.initLoad(id: id, shownPageIndex: imageShownIndex);
+    controller.initLoad(id: widget.id, shownPageIndex: widget.imageShownIndex);
     return FlutterSuperScaffold(
       isTopSafe: false,
       isBotSafe: false,
@@ -48,50 +72,75 @@ class ListingDetailPage extends StatelessWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
+              controller: scrollController,
               child: Column(
                 children: [
                   AspectRatio(
                     aspectRatio: 1,
                     child: Hero(
-                      tag: "imageList$id",
-                      child: PageView(
-                        controller:
-                            PageController(initialPage: imageShownIndex),
-                        onPageChanged: (value) {},
+                      tag: "imageList${widget.id}",
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
                         children: [
-                          ...images.map((e) {
-                            return CachedNetworkImage(
-                              imageUrl: e.getServerPath(),
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, error) {
-                                return Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(),
-                                      borderRadius: BorderRadius.circular(
-                                          AppConstants.baseBorderRadius)),
-                                  child: const Icon(
-                                      Icons.image_not_supported_rounded),
+                          PageView(
+                            controller: PageController(
+                                initialPage: widget.imageShownIndex),
+                            onPageChanged: (value) {
+                              setState(() {
+                                _currentIndex.value = value;
+                              });
+                            },
+                            children: [
+                              ...widget.images.map((e) {
+                                return CachedNetworkImage(
+                                  imageUrl: e.getServerPath(),
+                                  fit: BoxFit.cover,
+                                  width: Get.width,
+                                  height: Get.height,
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          border: Border.all(),
+                                          borderRadius: BorderRadius.circular(
+                                              AppConstants.baseBorderRadius)),
+                                      child: const Icon(
+                                          Icons.image_not_supported_rounded),
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          }).toList()
+                              }).toList()
+                            ],
+                          ),
+                          Material(
+                            color: Colors.transparent,
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.7),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(6))),
+                              child: Text(
+                                "${_currentIndex.value + 1}/ ${widget.images.length}",
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                   ),
-                  // Container(
-                  //   color: Colors.red,
-                  //   width: double.infinity,
-                  //   height: 300,
-                  // ),
                   ValueListenableBuilder(
                       valueListenable: controller.xLoading,
                       builder: (context, loading, child) {
                         if (loading) {
-                          return ShimmerListingDetailPage();
+                          return const ShimmerListingDetailPage();
                         }
                         ListingDetail? _listing = controller.listingData.value;
                         if (_listing != null) {
@@ -134,14 +183,25 @@ class ListingDetailPage extends StatelessWidget {
                 ],
               ),
             ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
-                decoration: const BoxDecoration(color: Colors.transparent),
-                child: const ListingDetailAppBar(),
-              ),
-            ),
+            AnimatedBuilder(
+                animation: animatedController,
+                builder: (context, child) {
+                  final animationValue = animatedController.value;
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: Get.height * 0.14,
+                      padding: EdgeInsets.only(top: Get.mediaQuery.padding.top),
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(animationValue)),
+                      child: ListingDetailAppBar(
+                        id: widget.id,
+                        animatedValue: animationValue,
+                        animatedController: animatedController,
+                      ),
+                    ),
+                  );
+                }),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
@@ -208,7 +268,13 @@ class ListingDetailPage extends StatelessWidget {
                                   ),
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 16)),
-                              onPressed: () {},
+                              onPressed: () {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: const Text("Reservation Done!"),
+                                  backgroundColor: AppColors.bgBlack,
+                                ));
+                              },
                               child: const Text(
                                 'Reserve',
                                 style: TextStyle(
@@ -266,27 +332,12 @@ class ListingDetailPage extends StatelessWidget {
                   Text(
                       '${_attribute.quantity} ${_attribute.listingAttribute.name}'),
                   if (index != 3) (Get.width * 0.02).widthBox(),
-                  if (index != 3) bubble(),
+                  if (index < listing.listingOnAttributes.length - 1) bubble(),
                 ],
               );
             })
           ],
         ),
-        // Wrap(
-        //   direction: Axis.horizontal,
-        //   children: List.generate(listing.listingOnAttributes.length, (index) {
-        //     ListingOnAttribute _attribute = listing.listingOnAttributes[index];
-        //     return Row(
-        //       children: [
-        //         if (index != 0) (Get.width * 0.02).widthBox(),
-        //         Text(
-        //             '${_attribute.quantity} ${_attribute.listingAttribute.name}'),
-        //         if (index != 3) (Get.width * 0.02).widthBox(),
-        //         if (index != 3) bubble(),
-        //       ],
-        //     );
-        //   }).toList(),
-        // ),
         (Get.height * 0.01).heightBox(),
         Row(
           children: [
@@ -356,28 +407,6 @@ class ListingDetailPage extends StatelessWidget {
       ),
     );
   }
-
-  // Widget aboutPlace(ListingDetail listing) {
-  //   return Column(
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       const Text(
-  //         'About this space',
-  //         style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-  //       ),
-  //       10.heightBox(),
-  //       SizedBox(
-  //         height: Get.height * 0.1,
-  //         child: Text(
-  //           listing.description,
-  //           style: const TextStyle(fontSize: 16),
-  //         ),
-  //       ),
-  //       10.heightBox(),
-  //       topBoxShadow(),
-  //     ],
-  //   );
-  // }
 
   Widget booking({required ListingDetail listing}) {
     return Column(
@@ -698,7 +727,7 @@ class _AboutPlaceWidgetState extends State<AboutPlaceWidget> {
         ),
         10.heightBox(),
         SizedBox(
-          height: widget.listing.description.length > 50
+          height: widget.listing.description.length > 250
               ? _xClickSeeMore
                   ? null
                   : Get.height * 0.1
