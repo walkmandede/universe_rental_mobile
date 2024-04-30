@@ -27,8 +27,7 @@ class FaryPoi{
       id: data["id"].toString(),
       nameMm: data["nameMm"].toString(),
       nameEn: data["nameEn"].toString(),
-      poiPoints: rawPolygon.map((e) {
-        Map<String,dynamic> rawEach = jsonDecode(e);
+      poiPoints: rawPolygon.map((rawEach) {
         return LatLng(
           double.tryParse(rawEach["latitude"].toString())??0,
           double.tryParse(rawEach["longitude"].toString())??0,
@@ -37,6 +36,7 @@ class FaryPoi{
       faryPickUpPoints: rawPickUpPoints.map((e) {
         return FaryPickUpPoint(
           id: e["id"].toString(),
+          poiId: data["id"].toString(),
           nameEn: e["nameEn"].toString(),
           nameMm: e["nameMm"].toString(),
           latLng: LatLng(
@@ -53,12 +53,14 @@ class FaryPoi{
 class FaryPickUpPoint{
 
   String id;
+  String poiId;
   String nameEn;
   String nameMm;
   LatLng latLng;
 
   FaryPickUpPoint({
     required this.id,
+    required this.poiId,
     required this.nameEn,
     required this.nameMm,
     required this.latLng

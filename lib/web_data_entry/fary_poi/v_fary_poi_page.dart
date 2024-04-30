@@ -24,6 +24,12 @@ class FaryPoiPage extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
+                controller.onClickHelp();
+              },
+              icon: const Icon(Icons.help),
+            ),
+            IconButton(
+              onPressed: () {
                 controller.clearData();
               },
               icon: const Icon(Icons.clear),
@@ -159,7 +165,7 @@ class FaryPoiPage extends StatelessWidget {
                             color: Colors.black,
                             fontSize: AppConstants.fontSizeS
                         ),
-                        isFilled: true
+                        isFilled: true,
                     );
                   }).toList(),
                 );
@@ -176,9 +182,13 @@ class FaryPoiPage extends StatelessWidget {
                           point: e.latLng,
                           child: GestureDetector(
                             onTap: () {
-
+                              DialogService().showSnack(title: "${e.nameEn} (${e.nameMm})", message: e.latLng.toString());
                             },
                             onDoubleTap: () {
+                              final result = controller.shownData.value.where((element) => element.id == e.poiId).firstOrNull;
+                              if(result!=null){
+                                controller.onClickDeletePoi(faryPoi: result);
+                              }
                             },
                             child: const Card(
                               shape: CircleBorder(),

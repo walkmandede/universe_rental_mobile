@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/fary_poi/bs_fary_pick_up_point.dart';
@@ -34,7 +35,7 @@ class FaryPoiController extends GetxController{
   TextEditingController txtPickUpPointNameMm = TextEditingController();
 
   // String baseUrl = "http://192.168.1.44:9003";
-  String baseUrl = "http://192.168.86.63:9003";
+  String baseUrl = "http://192.168.86.60:9003";
 
   @override
   void onInit() {
@@ -103,18 +104,19 @@ class FaryPoiController extends GetxController{
         final data = FaryPoi.fromApi(data: each);
         shownData.value.add(data);
         shownPickUpPoints.value.addAll(
-          data.faryPickUpPoints
+            data.faryPickUpPoints
         );
       }
       shownData.notifyListeners();
       shownPickUpPoints.notifyListeners();
-      superPrint(shownPickUpPoints.value.map((e) => e.latLng.toJson()).toList());
     }
     else{
 
     }
 
+
     try{
+
 
     }
     catch(e){
@@ -149,6 +151,7 @@ class FaryPoiController extends GetxController{
           else{
             FaryPickUpPoint faryPickUpPoint = FaryPickUpPoint(
               id: '',
+              poiId: "",
               latLng: point,
               nameEn: txtPickUpPointNameEn.text,
               nameMm: txtPickUpPointNameMm.text
@@ -205,8 +208,8 @@ class FaryPoiController extends GetxController{
                     "nameEn" : txtPoiNameEn.text,
                     "nameMm" : txtPoiNameMm.text,
                     "polygons" : poiPoints.value.map((e) => {
-                      "lat" : e.latitude,
-                      "lng" : e.longitude
+                      "latitude" : e.latitude,
+                      "longitude" : e.longitude
                     }).toList(),
                     "pickUpPoints" : pickUpPoints.value.map((e) {
                       return {
@@ -226,13 +229,14 @@ class FaryPoiController extends GetxController{
 
 
                   final apiResponse = ApiService().validateResponse(response: response);
-
+                  superPrint(payload);
+                  superPrint(apiResponse.bodyData);
                   if(apiResponse.xSuccess){
                     clearData();
                     updateData();
                   }
                   else{
-
+                    DialogService().showSnack(title: "Something went wrong", message: apiResponse.message);
                   }
 
                 }
@@ -246,6 +250,68 @@ class FaryPoiController extends GetxController{
           backgroundColor: Colors.transparent
       );
     }
+  }
+
+  Future<void> onClickDeletePoi({required FaryPoi faryPoi}) async{
+    DialogService().showTransactionDialog(
+      text: "Are you sure you want to delete ${faryPoi.nameEn}(${faryPoi.nameMm})?",
+      onClickYes: () async{
+        await Future.delayed(const Duration(milliseconds: 500));
+        DialogService().showLoadingDialog();
+        final response = await ApiService().delete(
+          endPoint: "$baseUrl/poi/${faryPoi.id}",
+          xBaseUrlIncluded: false
+        );
+        DialogService().dismissDialog();
+        superPrint(response!.body);
+        final apiResponse = ApiService().validateResponse(response: response);
+        if(apiResponse.xSuccess){
+          clearData();
+          updateData();
+        }
+        else{
+          DialogService().showSnack(title: "Something went wrong!", message: apiResponse.message);
+        }
+      },
+    );
+  }
+
+  Future<void> onClickHelp() async{
+    Get.bottomSheet(
+      Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: AppConstants.basePadding,
+          vertical: AppConstants.basePadding,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white
+        ),
+        child: const Column(
+          children: [
+            Text(
+              """
+              အညွှန်း
+              --------
+              အပြာရောင် = အသစ်ထည့် / အစိမ်းရောင် = ထည့်ပြီးသား data
+              
+              အသစ်ထည့်ရန်
+              -----------
+              မြေပုံအလွတ်ကို တစ်ချက်ထိရင် boundary ဆွဲမည်
+              ဖိထားလျှင် pick up ပွိုင့် ထည့်မည်
+              နှစ်ချက်ဆက်တိုင်နှိပ်လျှင် ဖျက်မည်
+              
+              
+              ထည့်ပြီးသားဖျက်ရန်
+              --------------
+              အစိမ်းရောင် pickup point တစ်ခုကို နှစ်ချက်ဆက်တိုက်နှိပ်ပါ
+              """,
+              textAlign: TextAlign.center,
+            )
+          ],
+        ),
+      )
+    );
   }
 
 }
