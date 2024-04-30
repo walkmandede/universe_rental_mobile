@@ -443,7 +443,11 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                                                                                       child: Text(
                                                                                         dayString,
                                                                                         style: TextStyle(
-                                                                                          color: dayString == "-" ? AppColors.white : AppColors.black,
+                                                                                          color: dayString == "-"
+                                                                                              ? AppColors.white
+                                                                                              : !widget.validDates.contains(thatDate.getDateKey())
+                                                                                                  ? Colors.grey
+                                                                                                  : AppColors.black,
                                                                                           decoration: widget.validDates.contains(thatDate.getDateKey()) ? TextDecoration.none : TextDecoration.lineThrough,
                                                                                         ),
                                                                                       ),
