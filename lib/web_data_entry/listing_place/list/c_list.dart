@@ -6,7 +6,6 @@ import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
-import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 
 class ListingPlaceListController extends GetxController {
@@ -16,12 +15,6 @@ class ListingPlaceListController extends GetxController {
   void onInit() {
     initLoad();
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 
   Future<void> initLoad() async {

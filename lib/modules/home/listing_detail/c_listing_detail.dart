@@ -29,12 +29,6 @@ class ListingDetailController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
-
   Future<void> initLoad(
       {required String id, required int shownPageIndex}) async {
     currentShownPageIndex.value = shownPageIndex;

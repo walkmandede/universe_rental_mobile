@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/services/others/extensions.dart';
-import 'package:universe_rental/web_data_entry/currency/new/c_add.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/new/c_add.dart';
 
 class ListingOfferAddPage extends StatefulWidget {
@@ -17,12 +16,6 @@ class _ListingOfferAddPageState extends State<ListingOfferAddPage> {
   final controller = Get.put(ListingOfferAddController());
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   void dispose() {
     Get.delete<ListingOfferAddController>();
     super.dispose();
@@ -31,12 +24,11 @@ class _ListingOfferAddPageState extends State<ListingOfferAddPage> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Listing Offer Add Page"
-          ),
+          title: const Text("Listing Offer Add Page"),
           actions: [
             IconButton(
               onPressed: () {
@@ -68,16 +60,13 @@ class _ListingOfferAddPageState extends State<ListingOfferAddPage> {
                 Container(
                   width: 50,
                   height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all()
-                  ),
+                  decoration: BoxDecoration(border: Border.all()),
                   child: ValueListenableBuilder(
                     valueListenable: controller.svgData,
                     builder: (context, svgData, child) {
-                      if(svgData==null){
+                      if (svgData == null) {
                         return const Icon(Icons.question_mark_rounded);
-                      }
-                      else{
+                      } else {
                         return SvgPicture.string(
                           svgData,
                           width: 50,
@@ -90,7 +79,6 @@ class _ListingOfferAddPageState extends State<ListingOfferAddPage> {
                     },
                   ),
                 )
-            
               ],
             ),
           ),

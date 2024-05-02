@@ -14,12 +14,6 @@ class AllListingController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
-
   Future<void> initLoad() async {
     updateData();
   }
@@ -32,10 +26,10 @@ class AllListingController extends GetxController {
 
     if (apiResponse.xSuccess) {
       allData.value.clear();
-      Iterable _rawData = apiResponse.bodyData['_data'];
+      Iterable rawData = apiResponse.bodyData['_data'];
 
-      for (var _data in _rawData) {
-        allData.value.add(ListingListModel.fromApi(_data));
+      for (var data in rawData) {
+        allData.value.add(ListingListModel.fromApi(data));
       }
 
       allData.notifyListeners();
