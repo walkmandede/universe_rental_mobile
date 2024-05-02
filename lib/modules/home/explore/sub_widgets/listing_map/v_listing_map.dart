@@ -12,112 +12,106 @@ import 'package:universe_rental/modules/home/explore/sub_widgets/listing_map/c_l
 
 class ListingMapPage extends StatelessWidget {
   final Size baseSize;
-  ListingMapPage({super.key,required this.baseSize});
+  ListingMapPage({super.key, required this.baseSize});
   final controller = Get.put(ListingMapController());
 
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
-      child: SizedBox.expand(
-        child: Stack(
-          children: [
-            FlutterMap(
-              mapController: controller.mapController,
-              options: MapOptions(
-                initialCenter: const LatLng(16.813451759154145, 96.13404351529357),
-                initialZoom: 17.5,
-                interactionOptions: const InteractionOptions(
-                    enableMultiFingerGestureRace: true
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1)),
+        child: SizedBox.expand(
+          child: Stack(
+            children: [
+              FlutterMap(
+                mapController: controller.mapController,
+                options: MapOptions(
+                  initialCenter:
+                      const LatLng(16.813451759154145, 96.13404351529357),
+                  initialZoom: 17.5,
+                  interactionOptions: const InteractionOptions(
+                      enableMultiFingerGestureRace: true),
+                  maxZoom: 20,
+                  onMapEvent: (p0) {
+                    controller.onMapMove();
+                  },
                 ),
-                maxZoom: 20,
-                onMapEvent: (p0) {
-                  controller.onMapMove();
-                },
+                children: [
+                  TileLayer(
+                    // urlTemplate: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                    urlTemplate:
+                        "https://api.maptiler.com/maps/350b059e-93c6-428e-8a5a-da7f1cda974f/{z}/{x}/{y}.png?key=SD6Ev9Xf11MLip5FQDt5",
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: controller.shownData,
+                    builder: (context, shownData, child) {
+                      return MarkerLayer(
+                        markers: shownData.map((eachData) {
+                          return Marker(
+                              point: eachData.listingLocation.latLng,
+                              width: controller.baseMarkerWidth,
+                              height: controller.baseMarkerWidth * 0.5,
+                              child: Card(
+                                color: AppColors.white,
+                                elevation: 5,
+                                shadowColor: AppColors.grey.withOpacity(0.4),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(2000)),
+                                child: LayoutBuilder(
+                                  builder: (a1, c1) {
+                                    return Container(
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: c1.maxWidth * 0.1,
+                                          vertical: c1.maxWidth * 0.1),
+                                      child: FittedWidget(
+                                        child:
+                                            Text(eachData.getNightDataString()),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ));
+                        }).toList(),
+                      );
+                    },
+                  )
+                ],
               ),
-              children: [
-                TileLayer(
-                  urlTemplate: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-                ),
-                ValueListenableBuilder(
-                  valueListenable: controller.shownData,
-                  builder: (context, shownData, child) {
-                    return MarkerLayer(
-                      markers: shownData.map((eachData) {
-                        return Marker(
-                          point: eachData.listingLocation.latLng,
-                          width: controller.baseMarkerWidth,
-                          height: controller.baseMarkerWidth * 0.5,
-                          child: Card(
-                            color: AppColors.white,
-                            elevation: 5,
-                            shadowColor: AppColors.grey.withOpacity(0.4),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2000)
-                            ),
-                            child: LayoutBuilder(
-                              builder: (a1, c1) {
-                                return Container(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: c1.maxWidth * 0.1,
-                                    vertical: c1.maxWidth * 0.1
-                                  ),
-                                  child: FittedWidget(
-                                    child: Text(
-                                      eachData.getNightDataString()
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                          )
-                        );
-                      }).toList(),
+              Align(
+                alignment: Alignment.topCenter,
+                child: GetBuilder<ExploreController>(
+                  builder: (exploreController) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          top: Get.height * exploreController.headerBarHeight),
+                      child: ValueListenableBuilder(
+                        valueListenable: controller.xFetching,
+                        builder: (context, xFetching, child) {
+                          if (xFetching) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(2000)),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppConstants.basePadding / 2,
+                                    vertical: AppConstants.basePadding / 4),
+                                child: const Text("Loading"),
+                              ),
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      ),
                     );
                   },
-                )
-              ],
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: GetBuilder<ExploreController>(
-                builder: (exploreController) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      top: Get.height * exploreController.headerBarHeight
-                    ),
-                    child: ValueListenableBuilder(
-                      valueListenable: controller.xFetching,
-                      builder: (context, xFetching, child) {
-                        if(xFetching){
-                          return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(2000)
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: AppConstants.basePadding/2,
-                                vertical: AppConstants.basePadding/4
-                              ),
-                              child: const Text("Loading"),
-                            ),
-                          );
-                        }
-                        else{
-                          return const SizedBox.shrink();
-                        }
-                      },
-                    ),
-                  );
-                },
-              ),
-            )
-          ],
-        ),
-      )
-    );
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

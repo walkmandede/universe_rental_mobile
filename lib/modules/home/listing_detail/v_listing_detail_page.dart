@@ -427,10 +427,14 @@ class _ListingDetailPageState extends State<ListingDetailPage>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "4 nights in Tambon Hua Hin",
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        ),
+        ValueListenableBuilder(
+            valueListenable: controller.selectedDateTimeRange,
+            builder: (context, selectDate, child) {
+              return Text(
+                "${AppFunctions().getBetweenDates(dtr: DateTimeRange(start: selectDate.start, end: selectDate.end)).length} nights in ${controller.listingData.value!.title}",
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              );
+            }),
         ValueListenableBuilder(
             valueListenable: controller.selectedDateTimeRange,
             builder: (context, value, child) {
@@ -902,9 +906,9 @@ class MapWidget extends StatelessWidget {
         ),
         children: [
           TileLayer(
-            urlTemplate:
-                "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-          ),
+              urlTemplate:
+                  // "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+                  "https://api.maptiler.com/maps/350b059e-93c6-428e-8a5a-da7f1cda974f/{z}/{x}/{y}.png?key=SD6Ev9Xf11MLip5FQDt5"),
           MarkerLayer(
             markers: [
               Marker(

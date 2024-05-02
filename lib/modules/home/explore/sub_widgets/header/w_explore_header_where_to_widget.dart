@@ -12,20 +12,18 @@ class ExploreHeaderWhereToWidget extends StatelessWidget {
     return LayoutBuilder(
       builder: (c1, c2) {
         return ExploreSearchBar(
-            barSize: Size(c2.maxWidth,c2.maxHeight),
+            barSize: Size(c2.maxWidth, c2.maxHeight),
             onTap: () {
               Get.to(
-                      ()=> ListingSearchPage(barSize: Size(c2.maxWidth,c2.maxHeight),),
+                  () => ListingSearchPage(
+                        barSize: Size(c2.maxWidth, c2.maxHeight),
+                      ),
                   transition: Transition.noTransition,
                   duration: const Duration(milliseconds: 300),
-                  opaque: false
-              );
+                  opaque: false);
             },
-            onChangeText: (p0) {
-
-            },
-            xReadOnly: true
-        );
+            onChangeText: (p0) {},
+            xReadOnly: true);
       },
     );
   }

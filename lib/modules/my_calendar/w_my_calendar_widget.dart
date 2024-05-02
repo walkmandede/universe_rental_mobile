@@ -85,8 +85,11 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
             AppFunctions().getNextMonth(dateTime: focusedDate.value).start;
       } else {
         //prevMonth
-        focusedDate.value =
-            AppFunctions().getPrevMonth(dateTime: focusedDate.value).start;
+        //only if the current month is greater then pageindex
+        if (focusedDate.value.month > DateTime.now().month) {
+          focusedDate.value =
+              AppFunctions().getPrevMonth(dateTime: focusedDate.value).start;
+        }
       }
       lastIndex = pageIndex;
       focusedDate.notifyListeners();
@@ -250,7 +253,9 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                           itemBuilder: (context, index) {
                             int difference = index - lastIndex;
                             DateTime thatMonthFd =
-                                fd.copyWith(month: fd.month + difference);
+                                fd.month > DateTime.now().month
+                                    ? fd.copyWith(month: fd.month + difference)
+                                    : fd.copyWith(month: fd.month);
                             List<int?> rawDateData = AppFunctions()
                                 .getCalendarData(
                                     dateTime: thatMonthFd,

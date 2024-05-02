@@ -5,7 +5,8 @@ import 'app_colors.dart';
 
 class AppConstants {
   static String baseRasterTileWhiteUrl =
-      "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png";
+      // "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png";
+      "https://api.maptiler.com/maps/350b059e-93c6-428e-8a5a-da7f1cda974f/{z}/{x}/{y}.png?key=SD6Ev9Xf11MLip5FQDt5";
   // static String baseRasterTileWhiteUrl = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
   // static String baseRasterTileWhiteUrl = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png";
 
@@ -41,5 +42,4 @@ class AppConstants {
   static double authBgTopImageRatio = 616 / 932;
 
   static int bsAnimateDurationInMs = 550;
-
 }
