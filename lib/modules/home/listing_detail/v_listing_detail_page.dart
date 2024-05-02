@@ -37,7 +37,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
   final controller = Get.put(ListingDetailController());
   late AnimationController animatedController;
   ScrollController scrollController = ScrollController();
-  Rx<int> _currentIndex = 0.obs;
+
   @override
   void initState() {
     initLoad();
@@ -86,9 +86,10 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                             controller: PageController(
                                 initialPage: widget.imageShownIndex),
                             onPageChanged: (value) {
-                              setState(() {
-                                _currentIndex.value = value;
-                              });
+                              // setState(() {
+                              controller.currentIndex.value = value;
+                              controller.currentIndex.notifyListeners();
+                              // });
                             },
                             children: [
                               ...widget.images.map((e) {
@@ -124,12 +125,16 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                                   color: Colors.black.withOpacity(0.7),
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(6))),
-                              child: Text(
-                                "${_currentIndex.value + 1}/ ${widget.images.length}",
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700),
-                              ),
+                              child: ValueListenableBuilder(
+                                  valueListenable: controller.currentIndex,
+                                  builder: (context, index, child) {
+                                    return Text(
+                                      "${index + 1}/ ${widget.images.length}",
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700),
+                                    );
+                                  }),
                             ),
                           )
                         ],

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,6 +24,7 @@ class ListingDetailController extends GetxController {
   Set<String> validDates = {};
   ValueNotifier<bool> xLoading = ValueNotifier(false);
   ValueNotifier<String?> xHasNightDataDate = ValueNotifier(null);
+  ValueNotifier<int> currentIndex = ValueNotifier(0);
   @override
   void onInit() {
     //
