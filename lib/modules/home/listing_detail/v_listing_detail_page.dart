@@ -162,18 +162,28 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                                 // location(),
                                 LocationWidget(listing: _listing),
                                 booking(listing: _listing),
-                                if (controller.xContainNightDate.value)
-                                  SizedBox(
-                                    height: Get.height * 0.14,
-                                  ),
-                                if (controller.xSelectedDates.value &&
-                                    !controller.xContainNightDate.value &&
-                                    controller.selectedDateTimeRange.value.start
-                                            .getDateKey() ==
-                                        DateTime.now().getDateKey())
-                                  SizedBox(
-                                    height: Get.height * 0.08,
-                                  )
+                                ValueListenableBuilder(
+                                    valueListenable:
+                                        controller.xContainNightDate,
+                                    builder: (context, value, child) {
+                                      if (controller.xContainNightDate.value) {
+                                        return SizedBox(
+                                          height: Get.height * 0.14,
+                                        );
+                                      } else if (controller
+                                              .xSelectedDates.value &&
+                                          !controller.xContainNightDate.value &&
+                                          controller.selectedDateTimeRange.value
+                                                  .start
+                                                  .getDateKey() ==
+                                              DateTime.now().getDateKey()) {
+                                        return SizedBox(
+                                          height: Get.height * 0.08,
+                                        );
+                                      } else {
+                                        return const SizedBox();
+                                      }
+                                    })
                               ],
                             ),
                           );
@@ -236,7 +246,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                       .listingData.value!.nightData
                       .firstWhere((element) =>
                           element.date.getDateKey() ==
-                          sDate!.start.getDateKey())
+                          controller.xHasNightDataDate.value)
                       .nightFees
                       .first;
 
@@ -894,23 +904,37 @@ class MapWidget extends StatelessWidget {
             markers: [
               Marker(
                   point: latLng,
-                  width: 25,
-                  height: 25,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: const BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
-                    padding: const EdgeInsets.all(4),
-                    child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                      decoration: const BoxDecoration(
-                          color: Colors.white, shape: BoxShape.circle),
-                      alignment: Alignment.center,
-                      child: const FittedBox(child: Icon(Icons.pin_drop)),
-                    ),
-                  ))
+                  width: Get.width * 0.14,
+                  height: Get.width * 0.14,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset('assets/images/map_pin.png'),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: Icon(
+                          TablerIcons.smart_home,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  )
+                  // Container(
+                  //   width: double.infinity,
+                  //   height: double.infinity,
+                  //   decoration: const BoxDecoration(
+                  //       color: Colors.red, shape: BoxShape.circle),
+                  //   padding: const EdgeInsets.all(4),
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: double.infinity,
+                  //     decoration: const BoxDecoration(
+                  //         color: Colors.white, shape: BoxShape.circle),
+                  //     alignment: Alignment.center,
+                  //     child: const FittedBox(child: Icon(Icons.pin_drop)),
+                  //   ),
+                  // ),
+                  )
             ],
           )
         ],

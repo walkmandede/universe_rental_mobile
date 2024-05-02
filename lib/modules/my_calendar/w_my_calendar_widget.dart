@@ -106,15 +106,15 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
         startDate.value = dateTime;
         startDate.notifyListeners();
       } else {
-        bool _valid = hasInvalidDates(startDate.value!, dateTime);
-        if (_valid) {
-          endDate.value = dateTime;
-          endDate.notifyListeners();
-          animateDateRange();
-        } else {
-          startDate.value = dateTime;
-          startDate.notifyListeners();
-        }
+        // bool _valid = hasInvalidDates(startDate.value!, dateTime);
+        // if (_valid) {
+        endDate.value = dateTime;
+        endDate.notifyListeners();
+        animateDateRange();
+        // } else {
+        //   startDate.value = dateTime;
+        //   startDate.notifyListeners();
+        // }
       }
     } else {
       startDate.value = dateTime;
@@ -357,14 +357,14 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                                                                 GestureDetector(
                                                                     onTap: () {
                                                                       vibrateNow();
-                                                                      if (widget
-                                                                          .validDates
-                                                                          .contains(
-                                                                              thatDate.getDateKey())) {
-                                                                        onClickEachDate(
-                                                                            dateTime:
-                                                                                thatDate);
-                                                                      }
+                                                                      // if (widget
+                                                                      //     .validDates
+                                                                      //     .contains(
+                                                                      //         thatDate.getDateKey())) {
+                                                                      onClickEachDate(
+                                                                          dateTime:
+                                                                              thatDate);
+                                                                      // }
                                                                     },
                                                                     child:
                                                                         AnimatedBuilder(

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
@@ -54,7 +55,7 @@ class ShimmerListingDetailPage extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.symmetric(vertical: 6),
                           width: double.infinity,
-                          height: Get.height * 0.02,
+                          height: Get.height * 0.1,
                           decoration: BoxDecoration(
                               color: AppColors.grey.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(
@@ -72,8 +73,39 @@ class ShimmerListingDetailPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Text("------" * 4),
-                  // Text("------" * 4),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    width: Get.width * 0.5,
+                    height: Get.height * 0.02,
+                    decoration: BoxDecoration(
+                        color: AppColors.grey.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(
+                            AppConstants.baseBorderRadius)),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 6),
+                    width: Get.width * 0.3,
+                    height: Get.height * 0.02,
+                    decoration: BoxDecoration(
+                        color: AppColors.grey.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(
+                            AppConstants.baseBorderRadius)),
+                  ),
+                  Row(
+                      children: List.generate(
+                          2,
+                          (index) => Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 6, horizontal: 10),
+                                width: Get.width * 0.5,
+                                height: Get.height * 0.2,
+                                decoration: BoxDecoration(
+                                    color: AppColors.grey.withOpacity(0.3),
+                                    borderRadius: BorderRadius.circular(
+                                        AppConstants.baseBorderRadius)),
+                              ))),
+                  Text("------" * 4),
+                  Text("------" * 4),
                   10.heightBox(),
                 ],
               );
