@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/services/others/extensions.dart';
-import 'package:universe_rental/web_data_entry/currency/new/c_add.dart';
 import 'package:universe_rental/web_data_entry/listing_tags/new/c_add.dart';
 
 class ListingTagAddPage extends StatefulWidget {
@@ -32,12 +30,11 @@ class _ListingTagAddPageState extends State<ListingTagAddPage> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Listing Tag Add Page"
-          ),
+          title: const Text("Listing Tag Add Page"),
           actions: [
             IconButton(
               onPressed: () {
@@ -69,16 +66,13 @@ class _ListingTagAddPageState extends State<ListingTagAddPage> {
                 Container(
                   width: 50,
                   height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all()
-                  ),
+                  decoration: BoxDecoration(border: Border.all()),
                   child: ValueListenableBuilder(
                     valueListenable: controller.svgData,
                     builder: (context, svgData, child) {
-                      if(svgData==null){
+                      if (svgData == null) {
                         return const Icon(Icons.question_mark_rounded);
-                      }
-                      else{
+                      } else {
                         return SvgPicture.string(
                           svgData,
                           width: 50,
@@ -91,7 +85,6 @@ class _ListingTagAddPageState extends State<ListingTagAddPage> {
                     },
                   ),
                 )
-            
               ],
             ),
           ),

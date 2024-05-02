@@ -8,7 +8,6 @@ import 'package:universe_rental/services/overlays_services/dialog/dialog_service
 import 'package:universe_rental/web_data_entry/currency/m_currency_model.dart';
 import 'package:universe_rental/web_data_entry/listing_place/m_listing_place.dart';
 
-import '../../all_listings/m_listing_model.dart';
 import '../../listing_attribute/m_listing_attribute.dart';
 import '../../listing_offers/m_listing_offer.dart';
 import '../../listing_tags/m_listing_tag.dart';

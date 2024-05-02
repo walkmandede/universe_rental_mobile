@@ -439,7 +439,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
             valueListenable: controller.selectedDateTimeRange,
             builder: (context, value, child) {
               return Text(
-                "${controller.selectedDateTimeRange.value!.start.getMDY()} - ${controller.selectedDateTimeRange.value!.end.getMDY()}",
+                "${controller.selectedDateTimeRange.value.start.getMDY()} - ${controller.selectedDateTimeRange.value.end.getMDY()}",
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,

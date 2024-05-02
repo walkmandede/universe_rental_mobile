@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/modules/_common/controllers/c_data_controller.dart';
-import 'package:universe_rental/services/others/extensions.dart';
 
 class ListingDetailAppBar extends StatelessWidget {
   final double animatedValue;

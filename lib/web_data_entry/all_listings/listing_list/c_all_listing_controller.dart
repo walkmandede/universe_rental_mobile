@@ -5,8 +5,6 @@ import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/all_listings/m_listing_list_model.dart';
 
-import '../m_listing_model.dart';
-
 class AllListingController extends GetxController {
   ValueNotifier<List<ListingListModel>> allData = ValueNotifier([]);
 

@@ -1,17 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/c_explore_header_controller.dart';
-import 'package:universe_rental/modules/my_calendar/c_my_calendar.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
-import 'package:universe_rental/web_data_entry/_common/models/m_night_fee_model.dart';
-import 'package:universe_rental/web_data_entry/all_listings/m_listing_model.dart';
 
 class ListingDetailController extends GetxController {
   ValueNotifier<int> currentShownPageIndex = ValueNotifier(0);
