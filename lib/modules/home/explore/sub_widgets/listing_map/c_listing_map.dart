@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/c_explore_header_controller.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
@@ -73,7 +72,7 @@ class ListingMapController extends GetxController {
           shownData.value.add(listing);
         }
         shownData.notifyListeners();
-        print("New data fetching");
+        // print("New data fetching");
       }
     } catch (e) {
       null;

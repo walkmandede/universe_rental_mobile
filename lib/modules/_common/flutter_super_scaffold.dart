@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
-import 'package:get/get.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -12,9 +10,9 @@ class SuperBarColor {
   bool xBotIconWhite;
   SuperBarColor(
       {this.xTopIconWhite = false,
-        this.xBotIconWhite = false,
-        this.topBarColor = Colors.white,
-        this.botBarColor = Colors.white});
+      this.xBotIconWhite = false,
+      this.topBarColor = Colors.white,
+      this.botBarColor = Colors.white});
 
   factory SuperBarColor.defaultValue() {
     return SuperBarColor(
@@ -31,12 +29,16 @@ SuperBarColor defaultSuperBar = SuperBarColor(
     xBotIconWhite: false,
     xTopIconWhite: false);
 
-void setSuperBarColor({required SuperBarColor superBarColor}){
+void setSuperBarColor({required SuperBarColor superBarColor}) {
   Future.delayed(const Duration(milliseconds: 100)).then((value) {
-    FlutterStatusbarcolor.setStatusBarColor(superBarColor.topBarColor, animate: true);
-    FlutterStatusbarcolor.setNavigationBarColor(superBarColor.botBarColor, animate: true);
-    FlutterStatusbarcolor.setNavigationBarWhiteForeground(superBarColor.xBotIconWhite);
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(superBarColor.xTopIconWhite);
+    FlutterStatusbarcolor.setStatusBarColor(superBarColor.topBarColor,
+        animate: true);
+    FlutterStatusbarcolor.setNavigationBarColor(superBarColor.botBarColor,
+        animate: true);
+    FlutterStatusbarcolor.setNavigationBarWhiteForeground(
+        superBarColor.xBotIconWhite);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(
+        superBarColor.xTopIconWhite);
   });
 }
 
@@ -56,28 +58,27 @@ class FlutterSuperScaffold extends StatefulWidget {
   final Widget? drawer;
   const FlutterSuperScaffold(
       {Key? key,
-        this.id = "",
-        required this.body,
-        this.floatingActionButton,
-        this.superBarColor,
-        this.backgroundColor = Colors.white,
-        this.appBar,
-        this.isBotSafe = true,
-        this.isTopSafe = true,
-        this.isResizeToAvoidBottomInset = true,
-        this.onWillPop,
-        this.xFlexibleBody = false,
-        this.isWillPop = true,
-        this.drawer
-      })
+      this.id = "",
+      required this.body,
+      this.floatingActionButton,
+      this.superBarColor,
+      this.backgroundColor = Colors.white,
+      this.appBar,
+      this.isBotSafe = true,
+      this.isTopSafe = true,
+      this.isResizeToAvoidBottomInset = true,
+      this.onWillPop,
+      this.xFlexibleBody = false,
+      this.isWillPop = true,
+      this.drawer})
       : super(key: key);
 
   @override
   State<FlutterSuperScaffold> createState() => _FlutterSuperScaffoldState();
 }
 
-class _FlutterSuperScaffoldState extends State<FlutterSuperScaffold> with RouteAware {
-
+class _FlutterSuperScaffoldState extends State<FlutterSuperScaffold>
+    with RouteAware {
   @override
   void didPopNext() {
     super.didPopNext();
@@ -176,7 +177,9 @@ class _FlutterSuperScaffoldState extends State<FlutterSuperScaffold> with RouteA
                       }
                     },
                   ),
-                  widget.xFlexibleBody?Flexible(child: widget.body):Expanded(child: widget.body),
+                  widget.xFlexibleBody
+                      ? Flexible(child: widget.body)
+                      : Expanded(child: widget.body),
                   Builder(
                     builder: (context) {
                       if (widget.isBotSafe) {

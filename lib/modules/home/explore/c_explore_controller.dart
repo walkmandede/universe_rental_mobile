@@ -2,7 +2,6 @@
 
 import 'dart:math';
 
-import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';

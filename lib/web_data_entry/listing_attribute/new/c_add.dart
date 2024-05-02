@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
-import 'package:universe_rental/web_data_entry/currency/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_attribute/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/listing_place/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/listing_tags/list/c_list.dart';
 
 class ListingAttributeAddController extends GetxController {
   TextEditingController txtName = TextEditingController(text: "");

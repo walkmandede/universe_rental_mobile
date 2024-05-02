@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/modules/home/explore/c_explore_controller.dart';
-import 'package:universe_rental/modules/home/explore/sub_widgets/listing/c_listing_controller.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/each_listing/w_each_listing_widget.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/listing/w_listing_shimmer_widget.dart';
-
 import '../../../../../constants/app_colors.dart';
 
 class ListingDataWidget extends StatelessWidget {
@@ -16,7 +14,7 @@ class ListingDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ExploreController controller = Get.find();
-    ListingController listingController = Get.find();
+    // ListingController listingController = Get.find();
     return Container(
       padding: EdgeInsets.symmetric(
           horizontal: AppConstants.basePadding,

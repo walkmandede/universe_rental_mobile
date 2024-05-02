@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/_common/controllers/c_data_controller.dart';
-import 'package:universe_rental/modules/home/listing_detail/v_listing_detail_page.dart';
 import 'package:universe_rental/modules/home/v_home_page.dart';
 import 'package:universe_rental/web_data_entry/web_data_entry_home_page.dart';
 import 'constants/app_colors.dart';

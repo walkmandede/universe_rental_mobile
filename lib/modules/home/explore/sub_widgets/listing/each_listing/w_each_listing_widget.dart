@@ -1,18 +1,15 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/constants/app_svgs.dart';
 import 'package:universe_rental/modules/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
-import 'package:universe_rental/modules/home/explore/sub_widgets/listing/each_listing/c_each_listing.dart';
 import 'package:universe_rental/modules/home/listing_detail/v_listing_detail_page.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 

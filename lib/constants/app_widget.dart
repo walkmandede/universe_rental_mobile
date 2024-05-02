@@ -1,11 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'app_assets.dart';
-import 'app_colors.dart';
 
-class AppWidgets{
-
-  Widget dummyCarWidget({Color carColor = Colors.grey}){
+class AppWidgets {
+  Widget dummyCarWidget({Color carColor = Colors.grey}) {
     return LayoutBuilder(
       builder: (c1, c2) {
         final shortestSide = min(c2.maxHeight, c2.maxWidth);
@@ -24,6 +22,4 @@ class AppWidgets{
       },
     );
   }
-
-
 }

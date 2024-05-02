@@ -3,10 +3,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'package:universe_rental/constants/app_constants.dart';
@@ -24,42 +22,38 @@ class ImageUploadTestPage extends StatefulWidget {
 }
 
 class _ImageUploadTestPageState extends State<ImageUploadTestPage> {
-
   ValueNotifier<File?> imageFile = ValueNotifier(null);
 
-  Future<void> uploadImage() async{
+  Future<void> uploadImage() async {
     final result = await AppFunctions().pickImage();
-    if(result!=null){
+    if (result != null) {
       imageFile.value = result;
       imageFile.notifyListeners();
     }
   }
 
-  Future<void> onClickSave() async{
+  Future<void> onClickSave() async {
     Get.put(DataController());
-    if(imageFile.value!=null){
+    if (imageFile.value != null) {
       final rawImage = await imageFile.value!.readAsBytes();
       final extension = imageFile.value!.path.split(".").last;
       final base64Image = "data:image/$extension;${base64.encode(rawImage)}";
-      print(base64Image.substring(0,100));
+      // print(base64Image.substring(0,100));
       // superPrint(base64Image);
       DialogService().showLoadingDialog();
       final response = await ApiService().post(
         endPoint: "listing/img-test",
         data: {
           // "images" : "-"
-          "images" : [
-            base64Image
-          ]
+          "images": [base64Image]
         },
         xNeedToken: false,
       );
       DialogService().dismissDialog();
-      if(response==null){
+      if (response == null) {
         log("Response is null");
-      }
-      else{
-        superPrint(response.bodyString,title: response.statusCode);
+      } else {
+        superPrint(response.bodyString, title: response.statusCode);
       }
     }
   }
@@ -91,12 +85,11 @@ class _ImageUploadTestPageState extends State<ImageUploadTestPage> {
                       child: ValueListenableBuilder(
                         valueListenable: imageFile,
                         builder: (context, data, child) {
-                          if(data==null){
+                          if (data == null) {
                             return const Center(
                               child: Icon(Icons.error),
                             );
-                          }
-                          else{
+                          } else {
                             return Image.file(data);
                           }
                         },
@@ -106,14 +99,15 @@ class _ImageUploadTestPageState extends State<ImageUploadTestPage> {
                 ),
               ),
               10.heightBox(),
-              ElevatedButton(onPressed: () {
-                onClickSave();
-              }, child: const Text("Save"))
+              ElevatedButton(
+                  onPressed: () {
+                    onClickSave();
+                  },
+                  child: const Text("Save"))
             ],
           ),
         ),
       ),
     );
   }
-
 }

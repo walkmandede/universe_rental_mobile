@@ -49,7 +49,7 @@ class ListingDetail {
             "${nightFee.currencyModel.sign}${NumberFormat("###,###").format(nightFee.perNightFee)} night";
       }
     }
-    ;
+
     return nightDataString;
   }
 

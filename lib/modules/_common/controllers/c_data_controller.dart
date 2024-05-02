@@ -3,10 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_tag.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
-import 'package:universe_rental/services/network_services/api_response.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/sp_services/sp_keys.dart';
 
