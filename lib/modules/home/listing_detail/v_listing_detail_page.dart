@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -407,9 +409,9 @@ class _ListingDetailPageState extends State<ListingDetailPage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Hosted by ${listing.hostName}",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500, fontSize: 18),
+                  "afjodfdufdofjdfodjdofjdofjdofjdojfjdofjdofdojjfdojf",
+                  // "Hosted by ${listing.hostName}",
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 const Text(
                   "Normalhost . 2 years hosting ",
@@ -910,7 +912,7 @@ class MapWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       child: SizedBox(
         width: Get.width * 0.4,
         height: Get.width * 0.4 * 0.8,
