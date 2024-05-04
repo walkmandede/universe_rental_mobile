@@ -31,7 +31,11 @@ class ListingDetailAppBar extends StatelessWidget {
             child: Stack(
               alignment: Alignment.centerLeft,
               children: [
-                containerWithBorder(const Icon(Icons.arrow_back_ios_new), () {
+                containerWithBorder(
+                    Icon(
+                      Icons.arrow_back_ios_new,
+                      size: AppConstants.fontSizeL,
+                    ), () {
                   Get.back();
                 }),
                 Container(
@@ -39,7 +43,11 @@ class ListingDetailAppBar extends StatelessWidget {
                     left: (Get.width * (0.5 - (animationValue * 0.1))) - 40,
                   ),
                   child: containerWithBorder(
-                      const Icon(TablerIcons.share_2), () {}),
+                      Icon(
+                        TablerIcons.share_2,
+                        size: AppConstants.fontSizeL,
+                      ),
+                      () {}),
                 ),
                 ValueListenableBuilder(
                     valueListenable: controller.favoriteListingIds,
@@ -52,12 +60,15 @@ class ListingDetailAppBar extends StatelessWidget {
                           ),
                           child: containerWithBorder(
                               controller.favoriteListingIds.value.contains(id)
-                                  ? const Icon(
+                                  ? Icon(
                                       Icons.favorite_rounded,
                                       color: Colors.red,
+                                      size: AppConstants.fontSizeL,
                                     )
-                                  : const Icon(Icons.favorite_border_rounded),
-                              () {
+                                  : Icon(
+                                      Icons.favorite_border_rounded,
+                                      size: AppConstants.fontSizeL,
+                                    ), () {
                             controller.toggleSpFavorites(listingId: id);
                           }),
                         ),
@@ -79,7 +90,7 @@ class ListingDetailAppBar extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
-            border: Border.all(color: AppColors.grey)),
+            border: Border.all(color: AppColors.grey.withOpacity(0.4))),
         child: wid,
       ),
     );

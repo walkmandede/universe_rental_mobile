@@ -30,6 +30,8 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
   final controller = Get.put(MyCalendarController());
   ValueNotifier<DateTime> focusedDate =
       ValueNotifier(DateTime.now().copyWith(day: 1));
+  // ValueNotifier<DateTime> focusedEndDate =
+  //     ValueNotifier(DateTime.now().copyWith(day: 1));
   ValueNotifier<DateTime?> startDate = ValueNotifier(null);
   ValueNotifier<DateTime?> endDate = ValueNotifier(null);
   int lastIndex = 0;
@@ -72,6 +74,12 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
       // startDate.notifyListeners();
       endDate.value = widget.initialDateRange!.end;
       focusedDate.value = startDate.value!.copyWith(day: 1);
+      // focusedEndDate.value = endDate.value!.copyWith(day: 1);
+      // endDate.notifyListeners();
+      dateRangeAnimation.forward();
+      // focusedEndDate.notifyListeners();
+
+      // hasInvalidDates(focusedDate, focusedEndDate);
     }
   }
 
@@ -126,20 +134,20 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
     chageSelectedDate();
   }
 
-  bool hasInvalidDates(DateTime sDate, DateTime eDate) {
-    List<String> _selectedBetweenDates = [];
-    bool _return = true;
-    final _result = AppFunctions()
-        .getBetweenDates(dtr: DateTimeRange(start: sDate, end: eDate));
-    _selectedBetweenDates = _result.map((e) => e.getDateKey()).toList();
+  // bool hasInvalidDates(DateTime sDate, DateTime eDate) {
+  //   List<String> _selectedBetweenDates = [];
+  //   bool _return = true;
+  //   final _result = AppFunctions()
+  //       .getBetweenDates(dtr: DateTimeRange(start: sDate, end: eDate));
+  //   _selectedBetweenDates = _result.map((e) => e.getDateKey()).toList();
 
-    _selectedBetweenDates.forEach((element) {
-      if (!widget.validDates.contains(element)) {
-        _return = false;
-      }
-    });
-    return _return;
-  }
+  //   _selectedBetweenDates.forEach((element) {
+  //     if (!widget.validDates.contains(element)) {
+  //       _return = false;
+  //     }
+  //   });
+  //   return _return;
+  // }
 
   void animateDateRange() {
     dateRangeAnimation.reset();
@@ -313,10 +321,18 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                                                                       1);
                                                           bool xIncluded =
                                                               false;
-                                                          bool xStartDate =
-                                                              sD == thatDate;
-                                                          bool xEndDate =
-                                                              eD == thatDate;
+                                                          bool xStartDate = sD!
+                                                                  .getDateKey() ==
+                                                              thatDate
+                                                                  .getDateKey();
+
+                                                          bool xEndDate = false;
+                                                          if (eD != null) {
+                                                            xEndDate = eD
+                                                                    .getDateKey() ==
+                                                                thatDate
+                                                                    .getDateKey();
+                                                          }
 
                                                           if (dayString ==
                                                               "-") {

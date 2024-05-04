@@ -14,7 +14,7 @@ class ListingDetailController extends GetxController {
 
   ValueNotifier<DateTimeRange> selectedDateTimeRange =
       ValueNotifier(DateTimeRange(start: DateTime.now(), end: DateTime.now()));
-  ValueNotifier<bool> xSelectedDates = ValueNotifier(false);
+  ValueNotifier<bool> xSelectedDates = ValueNotifier(true);
   ValueNotifier<bool> xContainNightDate = ValueNotifier(false);
   Set<String> validDates = {};
   ValueNotifier<bool> xLoading = ValueNotifier(false);
@@ -34,7 +34,9 @@ class ListingDetailController extends GetxController {
     currentShownPageIndex.value = shownPageIndex;
     currentIndex.value = shownPageIndex;
     currentIndex.notifyListeners();
-    getListingData(id);
+
+    await getListingData(id);
+    checkNightDataExist();
   }
 
   void onPageChanged(int index) {
@@ -92,6 +94,7 @@ class ListingDetailController extends GetxController {
     }
    */
     xContainNightDate.value = false;
+    xContainNightDate.notifyListeners();
     xHasNightDataDate.value = null;
     xSelectedDates.value = false;
     final _selectedRawDates = AppFunctions().getBetweenDates(

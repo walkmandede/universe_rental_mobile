@@ -10,7 +10,7 @@ class ExploreHeaderController extends GetxController {
   ValueNotifier<ListingTag?> selectedTag = ValueNotifier(null);
   ValueNotifier<DateTimeRange> selectedDateRange = ValueNotifier(DateTimeRange(
       start: DateTime.now(),
-      end: DateTime.now().add(const Duration(days: 100))));
+      end: DateTime.now().add(const Duration(days: 100)))); //datechange
 
   @override
   void onInit() {
