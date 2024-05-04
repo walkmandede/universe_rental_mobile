@@ -386,7 +386,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.9),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
@@ -477,6 +477,13 @@ class _ListingDetailPageState extends State<ListingDetailPage>
     double _imgHeight = Get.height * 0.21;
     double _imgWidth = Get.width * 0.68;
     double _borderRaius = 20;
+    bool xHasAllImgs = true;
+    for (var v in listing.listingOnPlaces) {
+      if (v.images.isEmpty) {
+        xHasAllImgs = false;
+        break;
+      }
+    }
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 0),
       child: Column(
@@ -487,158 +494,168 @@ class _ListingDetailPageState extends State<ListingDetailPage>
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           (Get.height * 0.02).heightBox(),
-          SizedBox(
-            height: Get.height * 0.28,
-            child: ListView.builder(
-                padding: EdgeInsets.zero,
-                scrollDirection: Axis.horizontal,
-                itemCount: listing.listingOnPlaces.length,
-                itemBuilder: (context, index) {
-                  ListingOnPlace _currentListingPlace =
-                      listing.listingOnPlaces[index];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                          height: _imgHeight,
-                          width: _imgWidth,
-                          margin: const EdgeInsets.only(bottom: 10, right: 10),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: _currentListingPlace.images.length == 1
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.network(
-                                      _currentListingPlace.images.first,
-                                      fit: BoxFit.cover),
-                                )
-                              : _currentListingPlace.images.length == 2
-                                  ? Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft:
-                                                  Radius.circular(_borderRaius),
-                                              bottomLeft: Radius.circular(
-                                                  _borderRaius)),
-                                          child: Image.network(
-                                              _currentListingPlace.images.first,
-                                              width: _imgWidth / 2.03,
-                                              height: _imgHeight,
-                                              fit: BoxFit.cover),
-                                        ),
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                              topRight:
-                                                  Radius.circular(_borderRaius),
-                                              bottomRight: Radius.circular(
-                                                  _borderRaius)),
-                                          child: Image.network(
-                                              _currentListingPlace.images.last,
-                                              width: _imgWidth / 2.03,
-                                              height: _imgHeight,
-                                              fit: BoxFit.cover),
-                                        )
-                                      ],
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                              bottomLeft:
-                                                  Radius.circular(_borderRaius),
-                                              topLeft: Radius.circular(
-                                                  _borderRaius)),
-                                          child: Image.network(
-                                              _currentListingPlace.images.first,
-                                              width: _imgWidth / 1.52,
-                                              height: _imgHeight,
-                                              fit: BoxFit.cover),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(
-                                                      _borderRaius)),
-                                              child: Image.network(
-                                                  _currentListingPlace
-                                                      .images[1],
-                                                  width: _imgWidth / 3.1,
-                                                  height: _imgHeight / 2.05,
-                                                  fit: BoxFit.cover),
-                                            ),
-                                            Stack(
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  _borderRaius)),
-                                                  child: Image.network(
-                                                      _currentListingPlace
-                                                          .images.last,
-                                                      width: _imgWidth / 3.1,
-                                                      height: _imgHeight / 2.05,
-                                                      fit: BoxFit.cover),
-                                                ),
-                                                if (_currentListingPlace
-                                                        .images.length >
-                                                    3)
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      _showImageDialog(
-                                                          context,
-                                                          _currentListingPlace
-                                                              .images);
-                                                    },
-                                                    child: Container(
-                                                      width: _imgWidth / 3.1,
-                                                      height: _imgHeight / 2.05,
-                                                      decoration: BoxDecoration(
-                                                          color: AppColors.grey
-                                                              .withOpacity(0.4),
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          _borderRaius))),
-                                                      child: IconButton(
-                                                          onPressed: () {
-                                                            _showImageDialog(
-                                                                context,
-                                                                _currentListingPlace
-                                                                    .images);
-                                                          },
-                                                          icon: const Icon(
-                                                            Icons.add,
-                                                            color: Colors.white,
-                                                            size: 34,
-                                                          )),
-                                                    ),
-                                                  )
-                                              ],
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    )),
-                      Text(_currentListingPlace.listingPlace.name)
-                    ],
-                  );
-                }),
-          )
+          if (xHasAllImgs)
+            SizedBox(
+              height: Get.height * 0.28,
+              child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listing.listingOnPlaces.length,
+                  itemBuilder: (context, index) {
+                    ListingOnPlace _currentListingPlace =
+                        listing.listingOnPlaces[index];
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            height: _imgHeight,
+                            width: _imgWidth,
+                            margin:
+                                const EdgeInsets.only(bottom: 10, right: 10),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: _currentListingPlace.images.length == 1
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.network(
+                                        _currentListingPlace.images.first,
+                                        fit: BoxFit.cover),
+                                  )
+                                : _currentListingPlace.images.length == 2
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(
+                                                    _borderRaius),
+                                                bottomLeft: Radius.circular(
+                                                    _borderRaius)),
+                                            child: Image.network(
+                                                _currentListingPlace
+                                                    .images.first,
+                                                width: _imgWidth / 2.03,
+                                                height: _imgHeight,
+                                                fit: BoxFit.cover),
+                                          ),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(
+                                                    _borderRaius),
+                                                bottomRight: Radius.circular(
+                                                    _borderRaius)),
+                                            child: Image.network(
+                                                _currentListingPlace
+                                                    .images.last,
+                                                width: _imgWidth / 2.03,
+                                                height: _imgHeight,
+                                                fit: BoxFit.cover),
+                                          )
+                                        ],
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(
+                                                    _borderRaius),
+                                                topLeft: Radius.circular(
+                                                    _borderRaius)),
+                                            child: Image.network(
+                                                _currentListingPlace
+                                                    .images.first,
+                                                width: _imgWidth / 1.52,
+                                                height: _imgHeight,
+                                                fit: BoxFit.cover),
+                                          ),
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(
+                                                        _borderRaius)),
+                                                child: Image.network(
+                                                    _currentListingPlace
+                                                        .images[1],
+                                                    width: _imgWidth / 3.1,
+                                                    height: _imgHeight / 2.05,
+                                                    fit: BoxFit.cover),
+                                              ),
+                                              Stack(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    _borderRaius)),
+                                                    child: Image.network(
+                                                        _currentListingPlace
+                                                            .images.last,
+                                                        width: _imgWidth / 3.1,
+                                                        height:
+                                                            _imgHeight / 2.05,
+                                                        fit: BoxFit.cover),
+                                                  ),
+                                                  if (_currentListingPlace
+                                                          .images.length >
+                                                      3)
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        _showImageDialog(
+                                                            context,
+                                                            _currentListingPlace
+                                                                .images);
+                                                      },
+                                                      child: Container(
+                                                        width: _imgWidth / 3.1,
+                                                        height:
+                                                            _imgHeight / 2.05,
+                                                        decoration: BoxDecoration(
+                                                            color: AppColors
+                                                                .grey
+                                                                .withOpacity(
+                                                                    0.4),
+                                                            borderRadius:
+                                                                BorderRadius.only(
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            _borderRaius))),
+                                                        child: IconButton(
+                                                            onPressed: () {
+                                                              _showImageDialog(
+                                                                  context,
+                                                                  _currentListingPlace
+                                                                      .images);
+                                                            },
+                                                            icon: const Icon(
+                                                              Icons.add,
+                                                              color:
+                                                                  Colors.white,
+                                                              size: 34,
+                                                            )),
+                                                      ),
+                                                    )
+                                                ],
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      )),
+                        Text(_currentListingPlace.listingPlace.name)
+                      ],
+                    );
+                  }),
+            )
         ],
       ),
     );
@@ -892,61 +909,63 @@ class MapWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: Get.width * 0.4,
-      height: Get.width * 0.4 * 0.8,
-      decoration: BoxDecoration(border: Border.all()),
-      child: FlutterMap(
-        options: MapOptions(
-          initialCenter: latLng,
-          initialZoom: 17.5,
-          interactionOptions:
-              const InteractionOptions(enableMultiFingerGestureRace: true),
-          maxZoom: 20,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: SizedBox(
+        width: Get.width * 0.4,
+        height: Get.width * 0.4 * 0.8,
+        child: FlutterMap(
+          options: MapOptions(
+            initialCenter: latLng,
+            initialZoom: 17.5,
+            interactionOptions:
+                const InteractionOptions(enableMultiFingerGestureRace: true),
+            maxZoom: 20,
+          ),
+          children: [
+            TileLayer(
+                urlTemplate:
+                    // "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+                    "https://api.maptiler.com/maps/350b059e-93c6-428e-8a5a-da7f1cda974f/{z}/{x}/{y}.png?key=SD6Ev9Xf11MLip5FQDt5"),
+            MarkerLayer(
+              markers: [
+                Marker(
+                    point: latLng,
+                    width: Get.width * 0.14,
+                    height: Get.width * 0.14,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset('assets/images/map_pin.png'),
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Icon(
+                            TablerIcons.smart_home,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    )
+                    // Container(
+                    //   width: double.infinity,
+                    //   height: double.infinity,
+                    //   decoration: const BoxDecoration(
+                    //       color: Colors.red, shape: BoxShape.circle),
+                    //   padding: const EdgeInsets.all(4),
+                    //   child: Container(
+                    //     width: double.infinity,
+                    //     height: double.infinity,
+                    //     decoration: const BoxDecoration(
+                    //         color: Colors.white, shape: BoxShape.circle),
+                    //     alignment: Alignment.center,
+                    //     child: const FittedBox(child: Icon(Icons.pin_drop)),
+                    //   ),
+                    // ),
+                    )
+              ],
+            )
+          ],
         ),
-        children: [
-          TileLayer(
-              urlTemplate:
-                  // "https://s.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
-                  "https://api.maptiler.com/maps/350b059e-93c6-428e-8a5a-da7f1cda974f/{z}/{x}/{y}.png?key=SD6Ev9Xf11MLip5FQDt5"),
-          MarkerLayer(
-            markers: [
-              Marker(
-                  point: latLng,
-                  width: Get.width * 0.14,
-                  height: Get.width * 0.14,
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Image.asset('assets/images/map_pin.png'),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                        child: Icon(
-                          TablerIcons.smart_home,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  )
-                  // Container(
-                  //   width: double.infinity,
-                  //   height: double.infinity,
-                  //   decoration: const BoxDecoration(
-                  //       color: Colors.red, shape: BoxShape.circle),
-                  //   padding: const EdgeInsets.all(4),
-                  //   child: Container(
-                  //     width: double.infinity,
-                  //     height: double.infinity,
-                  //     decoration: const BoxDecoration(
-                  //         color: Colors.white, shape: BoxShape.circle),
-                  //     alignment: Alignment.center,
-                  //     child: const FittedBox(child: Icon(Icons.pin_drop)),
-                  //   ),
-                  // ),
-                  )
-            ],
-          )
-        ],
       ),
     );
   }
