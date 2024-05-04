@@ -56,7 +56,7 @@ class ExploreHeaderTagsWidget extends StatelessWidget {
                               child: Container(
                                 height: double.infinity,
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 10,
+                                    horizontal: 18,
                                     vertical: c1.maxHeight * 0.2
                                 ),
                                 decoration: const BoxDecoration(
