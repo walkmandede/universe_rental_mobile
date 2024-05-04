@@ -21,6 +21,7 @@ class AppConstants {
   static double baseButtonHeightL = 60;
   static double baseButtonHeightS = 40;
 
+  static double fontSizeXXL = 22;
   static double fontSizeL = 18;
   static double fontSizeXL = 20;
   static double fontSizeM = 16;

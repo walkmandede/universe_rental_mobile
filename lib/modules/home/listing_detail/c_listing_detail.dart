@@ -32,6 +32,8 @@ class ListingDetailController extends GetxController {
   Future<void> initLoad(
       {required String id, required int shownPageIndex}) async {
     currentShownPageIndex.value = shownPageIndex;
+    currentIndex.value = shownPageIndex;
+    currentIndex.notifyListeners();
     getListingData(id);
   }
 

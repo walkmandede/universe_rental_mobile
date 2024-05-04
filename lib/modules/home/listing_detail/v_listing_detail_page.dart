@@ -14,6 +14,7 @@ import 'package:universe_rental/modules/_common/flutter_super_scaffold.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_offer.dart';
 import 'package:universe_rental/modules/_common/models/m_night_fee_model.dart';
+import 'package:universe_rental/modules/_common/widgets/w_fitted_widget.dart';
 import 'package:universe_rental/modules/home/listing_detail/c_listing_detail.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_listing_detail_app_bar.dart';
 import 'package:universe_rental/modules/home/listing_detail/w_shimmer_page.dart';
@@ -267,7 +268,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                             Text(AppFunctions().getDateRangeString(
                                 firstDate: sDate.start, lastDate: sDate.end)),
                             Text(
-                              '  \$ ${_firstNightDate.perNightFee} ${_firstNightDate.currencyModel.abbr.toString()} night',
+                              '  ${_firstNightDate.currencyModel.sign} ${_firstNightDate.perNightFee} ${_firstNightDate.currencyModel.abbr.toString()} per night',
                               style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                             )
@@ -326,12 +327,15 @@ class _ListingDetailPageState extends State<ListingDetailPage>
       children: [
         Text(
           listing.title.toUpperCase(),
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+          style: TextStyle(
+              fontSize: AppConstants.fontSizeXXL, fontWeight: FontWeight.w700),
         ),
         (Get.height * 0.02).heightBox(),
         Text(
           listing.subTitle,
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          style: TextStyle(
+              fontSize: AppConstants.baseBorderRadiusL,
+              fontWeight: FontWeight.w600),
         ),
         (Get.height * 0.01).heightBox(),
         Wrap(
@@ -345,7 +349,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
               return Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  if (index != 0) (Get.width * 0.02).widthBox(),
+                  // if (index != 0) (Get.width * 0.02).widthBox(),
                   Text(
                       '${_attribute.quantity} ${_attribute.listingAttribute.name}'),
                   if (index != 3) (Get.width * 0.02).widthBox(),
@@ -363,17 +367,19 @@ class _ListingDetailPageState extends State<ListingDetailPage>
               size: 18,
             ),
             4.widthBox(),
-            const Text(
+            Text(
               "4.3",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  fontSize: AppConstants.baseBorderRadiusL,
+                  fontWeight: FontWeight.w500),
             ),
             8.widthBox(),
             bubble(),
             8.widthBox(),
-            const Text(
+            Text(
               "15 reviews",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: AppConstants.baseBorderRadiusL,
                 fontWeight: FontWeight.w600,
                 decoration: TextDecoration.underline,
               ),
@@ -405,19 +411,23 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                 backgroundImage:
                     const AssetImage('assets/images/fakeprofile.png')),
             10.widthBox(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "afjodfdufdofjdfodjdofjdofjdofjdojfjdofjdofdojjfdojf",
-                  // "Hosted by ${listing.hostName}",
-                  style: const TextStyle(fontWeight: FontWeight.w500),
-                ),
-                const Text(
-                  "Normalhost . 2 years hosting ",
-                  style: TextStyle(fontSize: 16),
-                )
-              ],
+            Flexible(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hosted by ${listing.hostName}",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                  const Text(
+                    "Normalhost . 2 years hosting ",
+                    style: TextStyle(fontSize: 16),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -870,9 +880,11 @@ class _LocationWidgetState extends State<LocationWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Locations',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                fontSize: AppConstants.baseBorderRadiusXL,
+                fontWeight: FontWeight.bold),
           ),
           (Get.height * 0.02).heightBox(),
           SizedBox(
