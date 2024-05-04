@@ -2,39 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-class ListingController extends GetxController{
-
+class ListingController extends GetxController {
   ValueNotifier<bool> xListFetching = ValueNotifier(false);
   ValueNotifier<List<dynamic>> shownData = ValueNotifier([]);
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-  }
+  Future<void> initLoad() async {}
 
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
-  }
-
-  Future<void> initLoad() async{
-
-  }
-
-  Future<void> updateListingData() async{
+  Future<void> updateListingData() async {
     xListFetching.value = true;
     xListFetching.notifyListeners();
-    try{
+    try {
       //todo apicall
-    }
-    catch(e){
-
+    } catch (e) {
+      null;
     }
     xListFetching.value = false;
     xListFetching.notifyListeners();
-
   }
-
 }

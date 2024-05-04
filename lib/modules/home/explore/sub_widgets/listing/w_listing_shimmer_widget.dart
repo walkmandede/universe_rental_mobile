@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
@@ -24,17 +23,13 @@ class ListingShimmerWidget extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: AppColors.grey.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius)
-                    ),
+                        color: AppColors.grey.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(
+                            AppConstants.baseBorderRadius)),
                   ),
                 ),
-                Text(
-                    "------"*4
-                ),
-                Text(
-                    "------"*4
-                ),
+                Text("------" * 4),
+                Text("------" * 4),
                 10.heightBox(),
               ],
             );

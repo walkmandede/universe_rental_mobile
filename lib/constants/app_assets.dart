@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
-class AppAssets{
-
+class AppAssets {
   static String logo = "assets/images/logo.png";
   static String logoLabel = "assets/images/logo_label.png";
   static String authBg = "assets/images/auth_bg.png";
-  static String gradientBlackPrimary = "assets/images/gradient_black_primary.png";
+  static String gradientBlackPrimary =
+      "assets/images/gradient_black_primary.png";
   static String mmFlag = "assets/images/mm_flag.png";
   static String redTrapezium = "assets/images/red_trapezium.png";
   static String carSilhouette = "assets/images/car-silhouette.webp";
@@ -27,5 +25,4 @@ class AppAssets{
   static String loadingGif1 = "assets/images/loading_gif_1.gif";
   static String dummyProfile = "assets/images/dummy_profile.png";
   static String dummy = "____";
-
 }

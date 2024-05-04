@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/network_services/api_end_points.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
-import 'package:universe_rental/web_data_entry/currency/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_place/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/listing_tags/list/c_list.dart';
 
-class ListingPlaceAddController extends GetxController{
-
+class ListingPlaceAddController extends GetxController {
   TextEditingController txtName = TextEditingController(text: "");
 
   @override
@@ -25,37 +20,29 @@ class ListingPlaceAddController extends GetxController{
     super.onClose();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {}
 
-  }
-
-  Future<void> onClickSave() async{
-    if(txtName.text.isEmpty){
+  Future<void> onClickSave() async {
+    if (txtName.text.isEmpty) {
       DialogService().showSnack(title: "Error", message: "Fill all data");
-    }
-    else{
+    } else {
       DialogService().showLoadingDialog();
-      Response? response = await ApiService().post(
-        endPoint: ApiEndPoints.dataEntryPlace,
-        data: {
-          "name": txtName.text,
-        }
-      );
+      Response? response =
+          await ApiService().post(endPoint: ApiEndPoints.dataEntryPlace, data: {
+        "name": txtName.text,
+      });
       DialogService().dismissDialog();
       final apiResponse = ApiService().validateResponse(
-          response: response,
+        response: response,
       );
 
-      if(apiResponse.xSuccess){
+      if (apiResponse.xSuccess) {
         Get.back();
         ListingPlaceListController controller = Get.find();
         controller.updateData();
-      }
-      else{
+      } else {
         DialogService().showTransactionDialog(text: apiResponse.message);
       }
-
     }
   }
-
 }

@@ -1,16 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
-import 'package:universe_rental/services/others/extensions.dart';
-import 'package:universe_rental/web_data_entry/currency/new/c_add.dart';
 import 'package:universe_rental/web_data_entry/listing_attribute/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_attribute/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_place/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_place/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_tags/new/c_add.dart';
 
 class ListingAttributeAddPage extends StatefulWidget {
   const ListingAttributeAddPage({super.key});

@@ -5,8 +5,6 @@ import 'package:universe_rental/services/network_services/api_service.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/all_listings/m_listing_list_model.dart';
 
-import '../m_listing_model.dart';
-
 class AllListingController extends GetxController {
   ValueNotifier<List<ListingListModel>> allData = ValueNotifier([]);
 
@@ -14,12 +12,6 @@ class AllListingController extends GetxController {
   void onInit() {
     initLoad();
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    // TODO: implement onClose
-    super.onClose();
   }
 
   Future<void> initLoad() async {
@@ -34,10 +26,10 @@ class AllListingController extends GetxController {
 
     if (apiResponse.xSuccess) {
       allData.value.clear();
-      Iterable _rawData = apiResponse.bodyData['_data'];
+      Iterable rawData = apiResponse.bodyData['_data'];
 
-      for (var _data in _rawData) {
-        allData.value.add(ListingListModel.fromApi(_data));
+      for (var data in rawData) {
+        allData.value.add(ListingListModel.fromApi(data));
       }
 
       allData.notifyListeners();
@@ -56,7 +48,8 @@ class AllListingController extends GetxController {
 
   Future<void> deleteData(String id) async {
     DialogService().showLoadingDialog();
-    Response? response = await ApiService().patch(endPoint: "${ApiEndPoints.dataEntryListing}/$id");
+    Response? response = await ApiService()
+        .patch(endPoint: "${ApiEndPoints.dataEntryListing}/$id");
 
     final apiResponse = ApiService().validateResponse(response: response);
     if (apiResponse.xSuccess) {

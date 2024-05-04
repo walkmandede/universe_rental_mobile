@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
-import 'package:universe_rental/constants/app_functions.dart';
-import 'package:universe_rental/services/others/extensions.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/c_add_new_listing.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/address/v_anl_address_widget.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/sub_modules/attributes/v_anl_attributes_widget.dart';

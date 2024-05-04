@@ -1,14 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
-import 'package:universe_rental/services/others/extensions.dart';
-import 'package:universe_rental/web_data_entry/currency/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/new/c_add.dart';
 import 'package:universe_rental/web_data_entry/listing_place/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_place/new/c_add.dart';
-import 'package:universe_rental/web_data_entry/listing_tags/new/c_add.dart';
 
 class ListingPlaceAddPage extends StatefulWidget {
   const ListingPlaceAddPage({super.key});
@@ -35,12 +28,11 @@ class _ListingPlaceAddPageState extends State<ListingPlaceAddPage> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "Listing Place Add Page"
-          ),
+          title: const Text("Listing Place Add Page"),
           actions: [
             IconButton(
               onPressed: () {

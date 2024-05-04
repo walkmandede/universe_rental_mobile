@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/web_data_entry/currency/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/currency/new/v_add.dart';
-import 'package:universe_rental/web_data_entry/listing_offers/new/v_add.dart';
 
 class CurrencyListPage extends StatefulWidget {
   const CurrencyListPage({super.key});

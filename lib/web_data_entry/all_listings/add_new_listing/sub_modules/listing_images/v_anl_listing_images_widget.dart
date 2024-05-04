@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/others/extensions.dart';
-import 'package:universe_rental/web_data_entry/_common/controllers/c_data_controller.dart';
 import 'package:universe_rental/web_data_entry/all_listings/add_new_listing/c_add_new_listing.dart';
 
 class AnlListingImagesWidget extends StatefulWidget {
@@ -20,7 +18,10 @@ class _AnlListingImagesWidgetState extends State<AnlListingImagesWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Listing Images (* Double Tap To Remove)",style: TextStyle(fontSize: 15),),
+        const Text(
+          "Listing Images (* Double Tap To Remove)",
+          style: TextStyle(fontSize: 15),
+        ),
         10.heightBox(),
         ValueListenableBuilder(
           valueListenable: controller.listingImages,
@@ -38,9 +39,7 @@ class _AnlListingImagesWidgetState extends State<AnlListingImagesWidget> {
                       width: 200,
                       height: 200,
                       margin: const EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                        border: Border.all()
-                      ),
+                      decoration: BoxDecoration(border: Border.all()),
                       child: Image.network(
                         e.path,
                         fit: BoxFit.cover,
@@ -54,15 +53,14 @@ class _AnlListingImagesWidgetState extends State<AnlListingImagesWidget> {
                   );
                 }).toList(),
                 GestureDetector(
-                  onTap: () async{
+                  onTap: () async {
                     superPrint('start');
                     final result = await AppFunctions().pickImage();
-                    if(result!=null){
-                      try{
+                    if (result != null) {
+                      try {
                         controller.listingImages.value.add(result);
                         controller.listingImages.notifyListeners();
-                      }
-                      catch(e){
+                      } catch (e) {
                         null;
                       }
                     }
@@ -73,9 +71,7 @@ class _AnlListingImagesWidgetState extends State<AnlListingImagesWidget> {
                     height: 200,
                     margin: const EdgeInsets.only(right: 10),
                     decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: Colors.transparent
-                    ),
+                        border: Border.all(), color: Colors.transparent),
                     alignment: Alignment.center,
                     child: const Icon(Icons.add),
                   ),

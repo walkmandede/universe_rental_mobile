@@ -15,10 +15,9 @@ class ApiService {
   String baseUrl = "https://test.api.universerental.com/api/v1/";
 
   Future<bool> checkInternet() async {
-    if(kIsWeb){
+    if (kIsWeb) {
       return true;
-    }
-    else{
+    } else {
       try {
         final result = await InternetAddress.lookup('google.com');
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -58,7 +57,7 @@ class ApiService {
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
     final xHasInternet = await checkInternet();
-
+    print("Get $baseUrl$endPoint");
     if (xHasInternet) {
       DataController dataController = Get.find();
       final response = await http.get(
@@ -82,7 +81,7 @@ class ApiService {
       bool xNeedToken = false,
       bool xBaseUrlIncluded = true}) async {
     final xHasInternet = await checkInternet();
-
+    print("Post $baseUrl$endPoint");
     if (xHasInternet) {
       DataController dataController = Get.find();
 
@@ -96,6 +95,27 @@ class ApiService {
         },
       );
 
+      return convertHttpResponseToGetResponse(response: response);
+    } else {
+      return null;
+    }
+  }
+
+  Future<Response?> patch(
+      {required String endPoint,
+      bool xNeedToken = false,
+      bool xBaseUrlIncluded = true}) async {
+    final xHasInternet = await checkInternet();
+    if (xHasInternet) {
+      DataController dataController = Get.find();
+      final response = await http.patch(
+        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
+        headers: {
+          "acccept": "*/*",
+          "Content-Type": "application/json",
+          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
+        },
+      );
       return convertHttpResponseToGetResponse(response: response);
     } else {
       return null;
@@ -119,27 +139,6 @@ class ApiService {
         },
       );
 
-      return convertHttpResponseToGetResponse(response: response);
-    } else {
-      return null;
-    }
-  }
-
-  Future<Response?> patch(
-      {required String endPoint,
-        bool xNeedToken = false,
-        bool xBaseUrlIncluded = true}) async {
-    final xHasInternet = await checkInternet();
-    if (xHasInternet) {
-      DataController dataController = Get.find();
-      final response = await http.patch(
-        Uri.parse(xBaseUrlIncluded ? "$baseUrl$endPoint" : endPoint),
-        headers: {
-          "accept": "*/*",
-          "Content-Type": "application/json",
-          if (xNeedToken) "Authorization": "Bearer ${dataController.apiToken}",
-        },
-      );
       return convertHttpResponseToGetResponse(response: response);
     } else {
       return null;

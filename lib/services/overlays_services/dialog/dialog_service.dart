@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../constants/app_colors.dart';
 import '../../../constants/app_constants.dart';
-import 'dialogs/loading_dialog.dart';
 import 'dialogs/transaction_dialog.dart';
 
 DialogRoute? dialogRoute;
 SnackbarController? snackbarController;
 
-class DialogService{
-
+class DialogService {
   void showTransactionDialog({
     required String text,
     Function()? onClickYes,
     Function()? onClickNo,
     String yesButtonText = "Continue",
     String noButtonText = "Cancel",
-  }){
-    if(dialogRoute!=null){
+  }) {
+    if (dialogRoute != null) {
       dismissDialog();
     }
     dialogRoute = DialogRoute(
@@ -35,12 +33,12 @@ class DialogService{
             yesButtonText: yesButtonText,
             noButtonText: noButtonText,
             onClickYes: () {
-              if(onClickYes!=null){
+              if (onClickYes != null) {
                 onClickYes();
               }
             },
             onClickNo: () {
-              if(onClickNo!=null){
+              if (onClickNo != null) {
                 onClickNo();
               }
             },
@@ -51,36 +49,32 @@ class DialogService{
     Navigator.of(Get.context!).push(dialogRoute!);
   }
 
-  void showSnack({
-    required String title,
-    required String message,
-    Color bgColor = Colors.black,
-    int durationInMs = 2000
-  }){
-    snackbarController = Get.snackbar(
-        title,
-        message,
+  void showSnack(
+      {required String title,
+      required String message,
+      Color bgColor = Colors.black,
+      int durationInMs = 2000}) {
+    snackbarController = Get.snackbar(title, message,
         backgroundColor: bgColor.withOpacity(0.65),
         colorText: AppColors.white,
-      duration: Duration(milliseconds: durationInMs)
-    );
+        duration: Duration(milliseconds: durationInMs));
   }
 
-  void dismissSnackBar(){
-    if(snackbarController!=null){
+  void dismissSnackBar() {
+    if (snackbarController != null) {
       snackbarController!.close(withAnimations: false);
     }
   }
 
-  void showLoadingDialog({String loadingText = "Loading...\nPlease Wait!"}){
-    if(dialogRoute!=null){
+  void showLoadingDialog({String loadingText = "Loading...\nPlease Wait!"}) {
+    if (dialogRoute != null) {
       dismissDialog();
     }
     dialogRoute = DialogRoute(
       context: Get.context!,
       barrierDismissible: false,
       builder: (context) {
-        return  Dialog(
+        return Dialog(
           backgroundColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius),
@@ -91,12 +85,10 @@ class DialogService{
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: AppColors.black,
-                  borderRadius: BorderRadius.circular(AppConstants.baseBorderRadius*0.8),
-                  border: Border.all(
-                    color: AppColors.bgHardGrey
-                  )
-                ),
+                    color: AppColors.black,
+                    borderRadius: BorderRadius.circular(
+                        AppConstants.baseBorderRadius * 0.8),
+                    border: Border.all(color: AppColors.bgHardGrey)),
                 child: CupertinoActivityIndicator(
                   color: AppColors.primary,
                 ),
@@ -112,18 +104,15 @@ class DialogService{
     Navigator.of(Get.context!).push(dialogRoute!);
   }
 
-  void dismissDialog(){
+  void dismissDialog() {
     // dialog1Key.currentState!.pop();
-    try{
-      if(dialogRoute!=null){
+    try {
+      if (dialogRoute != null) {
         Navigator.of(Get.context!).removeRoute(dialogRoute!);
-        dialogRoute=null;
+        dialogRoute = null;
       }
-    }
-    catch(e){
+    } catch (e) {
       null;
     }
   }
 }
-
-

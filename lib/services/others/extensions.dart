@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:universe_rental/services/network_services/api_service.dart';
 import '../../constants/app_assets.dart';
 import '../../constants/app_functions.dart';
@@ -24,11 +25,16 @@ extension CustomBox on double {
     );
   }
 
-  Widget logo(){
-    return Image.asset(AppAssets.logo,width: this,height: this,fit: BoxFit.contain,);
+  Widget logo() {
+    return Image.asset(
+      AppAssets.logo,
+      width: this,
+      height: this,
+      fit: BoxFit.contain,
+    );
   }
 
-  Widget networkImage({required String imageUrl,double borderRadius = 0}){
+  Widget networkImage({required String imageUrl, double borderRadius = 0}) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),
       child: CachedNetworkImage(
@@ -42,7 +48,6 @@ extension CustomBox on double {
       ),
     );
   }
-
 }
 
 extension CustomBox2 on int {
@@ -71,27 +76,27 @@ extension CustomBox2 on int {
   }
 }
 
-extension CustomDateTime on DateTime{
-
-  String getDateKey(){
-    return toString().substring(0,10);
+extension CustomDateTime on DateTime {
+  String getDateKey() {
+    return toString().substring(0, 10);
   }
 
+  String getMDY() {
+    return DateFormat('MMM d,yyyy').format(DateTime.parse(toString()));
+  }
 }
 
-extension ServerImage on String{
-
-
-  String getServerPath(){
+extension ServerImage on String {
+  String getServerPath() {
     return ApiService().baseUrl.replaceAll("/api/v1/", "") + toString();
   }
-
 }
 
-extension CustomList on List{
-
-  String getCSV(){
-    return toString().replaceAll("[", "").replaceAll("]", "").removeAllWhitespace;
+extension CustomList on List {
+  String getCSV() {
+    return toString()
+        .replaceAll("[", "")
+        .replaceAll("]", "")
+        .removeAllWhitespace;
   }
-
 }

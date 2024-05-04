@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/others/extensions.dart';
 import 'package:universe_rental/web_data_entry/_common/controllers/c_data_controller.dart';

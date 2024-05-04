@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ChatController extends GetxController{
-
-
+class ChatController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
@@ -15,5 +12,4 @@ class ChatController extends GetxController{
     // TODO: implement onClose
     super.onClose();
   }
-
 }

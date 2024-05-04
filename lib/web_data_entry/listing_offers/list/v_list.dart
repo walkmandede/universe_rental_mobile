@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:universe_rental/constants/app_constants.dart';
-import 'package:universe_rental/constants/app_functions.dart';
-import 'package:universe_rental/web_data_entry/currency/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/currency/new/v_add.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/list/c_list.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/new/v_add.dart';
-import 'package:universe_rental/web_data_entry/listing_tags/list/c_list.dart';
-import 'package:universe_rental/web_data_entry/listing_tags/new/v_add.dart';
-
-import '../../../constants/app_colors.dart';
 
 class ListingOfferListPage extends StatefulWidget {
   const ListingOfferListPage({super.key});
@@ -38,67 +30,69 @@ class _ListingOfferListPageState extends State<ListingOfferListPage> {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1)),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Listing Offers List Page"),
-          actions: [
-            IconButton(onPressed: () {
-              Get.to(()=> const ListingOfferAddPage());
-            }, icon: const Icon(Icons.add))
-          ],
-        ),
-        body: ValueListenableBuilder(
-          valueListenable: controller.shownData,
-          builder: (context, shownData, child) {
-            return ListView.builder(
-              itemCount: shownData.length,
-              itemBuilder: (context, index) {
-                final eachData = shownData[index];
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(AppConstants.basePadding),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: SvgPicture.string(
-                          eachData.icon,
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: AppConstants.basePadding,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                eachData.name,
-                              ),
-                              Text(
-                                eachData.id,
-                              )
-                            ],
+          appBar: AppBar(
+            title: const Text("Listing Offers List Page"),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.to(() => const ListingOfferAddPage());
+                  },
+                  icon: const Icon(Icons.add))
+            ],
+          ),
+          body: ValueListenableBuilder(
+            valueListenable: controller.shownData,
+            builder: (context, shownData, child) {
+              return ListView.builder(
+                itemCount: shownData.length,
+                itemBuilder: (context, index) {
+                  final eachData = shownData[index];
+                  return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(AppConstants.basePadding),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: SvgPicture.string(
+                            eachData.icon,
                           ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          controller.deleteData(data: eachData);
-                        },
-                        icon: const Icon(Icons.delete),
-                      )
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-        )
-      ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppConstants.basePadding,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  eachData.name,
+                                ),
+                                Text(
+                                  eachData.id,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            controller.deleteData(data: eachData);
+                          },
+                          icon: const Icon(Icons.delete),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
+          )),
     );
   }
 }

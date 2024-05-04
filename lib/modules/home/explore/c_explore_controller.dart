@@ -1,9 +1,7 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
 
-
 import 'dart:math';
 
-import 'package:backdrop/backdrop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/modules/_common/models/m_listing_detail.dart';
@@ -15,14 +13,15 @@ import 'package:universe_rental/services/others/extensions.dart';
 
 import '../../../constants/app_functions.dart';
 
-class ExploreController extends GetxController with GetSingleTickerProviderStateMixin{
-
+class ExploreController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   double listingPanelHeight = 0.95;
   double headerBarHeight = 0.175;
 
   ValueNotifier<bool> xUpdatingShownList = ValueNotifier(false);
   HomeController homeController = Get.find();
-  DraggableScrollableController draggableScrollableController = DraggableScrollableController();
+  DraggableScrollableController draggableScrollableController =
+      DraggableScrollableController();
   ValueNotifier<List<ListingDetail>> shownListing = ValueNotifier([]);
 
   @override
@@ -42,45 +41,43 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
     super.onReady();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {
     draggableScrollableController.addListener(() {
       final pixels = draggableScrollableController.pixels;
       final size = draggableScrollableController.pixelsToSize(pixels);
       //y=1.6667x−0.16667
-      final y = (1.6667*size) - 0.16667;
+      final y = (1.6667 * size) - 0.16667;
       homeController.naviBarAnimatedValue.value = min(1, y);
     });
   }
 
-  double getListingHeaderHeightPortion(){
-    return (headerBarHeight - (1-listingPanelHeight));
+  double getListingHeaderHeightPortion() {
+    return (headerBarHeight - (1 - listingPanelHeight));
   }
 
-  Future<void> updateShownListing() async{
+  Future<void> updateShownListing() async {
     xUpdatingShownList.value = true;
     xUpdatingShownList.notifyListeners();
     shownListing.value.clear();
     shownListing.notifyListeners();
 
-    try{
+    try {
       ExploreHeaderController exploreHeaderController = Get.find();
       final response = await ApiService().get(
         endPoint: "${ApiEndPoints.getShownList}"
             "?tagId=${exploreHeaderController.selectedTag.value!.id}"
             "&startDate=${exploreHeaderController.selectedDateRange.value.start.getDateKey()}"
-            "&endDate=${exploreHeaderController.selectedDateRange.value.end.getDateKey()}"
-        ,
+            "&endDate=${exploreHeaderController.selectedDateRange.value.end.getDateKey()}",
         xNeedToken: false,
       );
 
-      Iterable iterable = response!.body["_data"]??[];
+      Iterable iterable = response!.body["_data"] ?? [];
 
-      for(final each in iterable){
+      for (final each in iterable) {
         final listingDetail = ListingDetail.fromResponse2(data: each);
         shownListing.value.add(listingDetail);
       }
-    }
-    catch(e){
+    } catch (e) {
       superPrint(e);
       null;
     }
@@ -89,5 +86,4 @@ class ExploreController extends GetxController with GetSingleTickerProviderState
     xUpdatingShownList.value = false;
     xUpdatingShownList.notifyListeners();
   }
-
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/services/others/extensions.dart';
@@ -20,11 +19,10 @@ class AnlNightDataWidget extends StatefulWidget {
 }
 
 class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
-
   // List<NightFeeModel> nightFeeData = [];
 
   ValueNotifier<DateTimeRange?> dateRange = ValueNotifier(null);
-  Map<CurrencyModel,double> prices = {};
+  Map<CurrencyModel, double> prices = {};
   AddNewListingController controller = Get.find();
 
   @override
@@ -39,42 +37,33 @@ class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
     super.dispose();
   }
 
-  void onClickAdd() async{
-
-    if(dateRange.value==null){
-      DialogService().showSnack(title: "Error", message: "Please add date range");
-    }
-    else{
-
-      final dates =  AppFunctions().getBetweenDates(dtr: dateRange.value!);
+  void onClickAdd() async {
+    if (dateRange.value == null) {
+      DialogService()
+          .showSnack(title: "Error", message: "Please add date range");
+    } else {
+      final dates = AppFunctions().getBetweenDates(dtr: dateRange.value!);
 
       for (var value1 in dates) {
-        final dateKey = value1.toString().substring(0,10);
+        final dateKey = value1.toString().substring(0, 10);
 
-        if(prices.isEmpty){
-          controller.dailyNightFeesMap.value.removeWhere((key, value) => key == dateKey);
-        }
-        else{
+        if (prices.isEmpty) {
+          controller.dailyNightFeesMap.value
+              .removeWhere((key, value) => key == dateKey);
+        } else {
           controller.dailyNightFeesMap.value[dateKey] = prices.entries.map((e) {
             final price = e.value;
             final currency = e.key;
-            return NightFeeModel(
-                perNightFee: price,
-                currencyModel: currency
-            );
+            return NightFeeModel(perNightFee: price, currencyModel: currency);
           }).toList();
         }
-
       }
 
       controller.dailyNightFeesMap.notifyListeners();
     }
 
     prices.clear();
-    setState(() {
-
-    });
-
+    setState(() {});
   }
 
   @override
@@ -82,13 +71,14 @@ class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text("Night Data (* Double Tap To Remove)",style: TextStyle(fontSize: 15),),
+        const Text(
+          "Night Data (* Double Tap To Remove)",
+          style: TextStyle(fontSize: 15),
+        ),
         10.heightBox(),
         Container(
           padding: EdgeInsets.all(AppConstants.basePadding),
-          decoration: BoxDecoration(
-            border: Border.all()
-          ),
+          decoration: BoxDecoration(border: Border.all()),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -102,21 +92,22 @@ class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
                     valueListenable: dateRange,
                     builder: (context, data, child) {
                       return ElevatedButton(
-                        onPressed: () async{
+                        onPressed: () async {
                           final result = await showDateRangePicker(
                               context: context,
                               firstDate: DateTime(1),
                               lastDate: DateTime(10000),
-                              initialDateRange: data ?? DateTimeRange(start: DateTime.now(), end: DateTime.now())
-                          );
+                              initialDateRange: data ??
+                                  DateTimeRange(
+                                      start: DateTime.now(),
+                                      end: DateTime.now()));
                           dateRange.value = result;
                           dateRange.notifyListeners();
                         },
                         child: Text(
-                          data==null?
-                          "Choose":
-                          "${data.start.toString().substring(0,10)}  <->  ${data.end.toString().substring(0,10)}",
-
+                          data == null
+                              ? "Choose"
+                              : "${data.start.toString().substring(0, 10)}  <->  ${data.end.toString().substring(0, 10)}",
                         ),
                       );
                     },
@@ -129,21 +120,21 @@ class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
                   return Wrap(
                     spacing: 10,
                     runSpacing: 10,
-                    children: dataEntryDataController.allCurrency.value.map((eachCurrency) {
+                    children: dataEntryDataController.allCurrency.value
+                        .map((eachCurrency) {
                       return SizedBox(
                         width: 100,
                         child: TextField(
                           controller: TextEditingController(text: "0"),
                           decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            labelText: eachCurrency.abbr
-                          ),
+                              border: const OutlineInputBorder(),
+                              labelText: eachCurrency.abbr),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
                           onChanged: (value) {
                             double? price = double.tryParse(value);
-                            if(price!=null){
+                            if (price != null) {
                               prices[eachCurrency] = price;
                             }
                           },
@@ -154,9 +145,11 @@ class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
                 },
               ),
               10.heightBox(),
-              ElevatedButton(onPressed: () {
-                onClickAdd();
-              }, child: const Text("Add"))
+              ElevatedButton(
+                  onPressed: () {
+                    onClickAdd();
+                  },
+                  child: const Text("Add"))
             ],
           ),
         ),
@@ -177,8 +170,7 @@ class _AnlNightDataWidgetState extends State<AnlNightDataWidget> {
                     children: list.map((eachCurrency) {
                       return Chip(
                         label: Text(
-                            "${eachCurrency.perNightFee} ${eachCurrency.currencyModel.sign}"
-                        ),
+                            "${eachCurrency.perNightFee} ${eachCurrency.currencyModel.sign}"),
                       );
                     }).toList(),
                   ),

@@ -8,10 +8,7 @@ import 'package:universe_rental/modules/_common/controllers/c_data_controller.da
 import 'package:universe_rental/modules/home/explore/c_explore_controller.dart';
 import 'package:universe_rental/modules/home/explore/sub_widgets/header/c_explore_header_controller.dart';
 
-import '../_common/models/m_listing_tag.dart';
-
-class HomeController extends GetxController{
-
+class HomeController extends GetxController {
   ValueNotifier<double> naviBarAnimatedValue = ValueNotifier(1);
   ValueNotifier<int> currentPage = ValueNotifier(0);
   ValueNotifier<bool> xLoading = ValueNotifier(false);
@@ -34,20 +31,20 @@ class HomeController extends GetxController{
     super.onReady();
   }
 
-  Future<void> initLoad() async{
+  Future<void> initLoad() async {
     xLoading.value = true;
     xLoading.notifyListeners();
-    try{
+    try {
       final exploreHeaderController = Get.put(ExploreHeaderController());
-      DataController dataController  = Get.find();
+      DataController dataController = Get.find();
       await dataController.fetchListingTags();
       dataController.updateSpFavorites();
       Get.put(ExploreController());
-      if(dataController.allListingTags.value.isNotEmpty){
-        exploreHeaderController.updateSelectedTag(listingTag: dataController.allListingTags.value.first);
+      if (dataController.allListingTags.value.isNotEmpty) {
+        exploreHeaderController.updateSelectedTag(
+            listingTag: dataController.allListingTags.value.first);
       }
-    }
-    catch(e){
+    } catch (e) {
       superPrint(e);
       null;
     }
@@ -55,9 +52,8 @@ class HomeController extends GetxController{
     xLoading.notifyListeners();
   }
 
-  void onClickChangePage({required int pageIndex}){
+  void onClickChangePage({required int pageIndex}) {
     currentPage.value = pageIndex;
     currentPage.notifyListeners();
   }
-
 }

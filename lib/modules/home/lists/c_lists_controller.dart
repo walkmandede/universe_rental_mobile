@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ListsController extends GetxController{
-
-
+class ListsController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
@@ -15,5 +12,4 @@ class ListsController extends GetxController{
     // TODO: implement onClose
     super.onClose();
   }
-
 }
