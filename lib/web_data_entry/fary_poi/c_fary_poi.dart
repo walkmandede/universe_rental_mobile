@@ -35,7 +35,7 @@ class FaryPoiController extends GetxController{
   TextEditingController txtPickUpPointNameMm = TextEditingController();
 
   // String baseUrl = "http://192.168.1.44:9003";
-  String baseUrl = "http://192.168.86.60:9003";
+  String baseUrl = "https://poi.farytaxi.com";
 
   @override
   void onInit() {

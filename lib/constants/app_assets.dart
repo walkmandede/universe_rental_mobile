@@ -23,5 +23,6 @@ class AppAssets {
   static String nutjobsBookingBg = "assets/images/nutjobs_booking_bg.png";
   static String scheduleBookingBg = "assets/images/schedule_booking_bg.png";
   static String loadingGif1 = "assets/images/loading_gif_1.gif";
+  static String dummyProfile = "assets/images/dummy_profile.png";
   static String dummy = "____";
 }
