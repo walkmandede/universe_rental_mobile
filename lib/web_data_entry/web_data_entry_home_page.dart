@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/web_data_entry/all_listings/listing_list/v_all_listing_page.dart';
 import 'package:universe_rental/web_data_entry/currency/list/v_list.dart';
+import 'package:universe_rental/web_data_entry/fary_poi/v_fary_poi_page.dart';
 import 'package:universe_rental/web_data_entry/listing_attribute/list/v_list.dart';
 import 'package:universe_rental/web_data_entry/listing_offers/list/v_list.dart';
 import 'package:universe_rental/web_data_entry/listing_place/list/v_list.dart';
@@ -60,6 +61,7 @@ class _WebDataEntryHomePageState extends State<WebDataEntryHomePage> {
             return ListView(
               padding: EdgeInsets.all(AppConstants.basePadding),
               children: [
+                ["Fary POI", FaryPoiPage()],
                 ["Currency List Page", const CurrencyListPage()],
                 [
                   "Listing Attribute List Page",
