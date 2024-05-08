@@ -13,13 +13,13 @@ class VSettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(),
-        backgroundColor: AppColors.borderGrey,
+        backgroundColor: AppColors.grey,
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Image.asset(
               AppAssets.dummyProfile,
