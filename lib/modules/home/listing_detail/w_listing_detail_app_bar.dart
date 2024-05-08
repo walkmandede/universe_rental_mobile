@@ -27,7 +27,16 @@ class ListingDetailAppBar extends StatelessWidget {
               horizontal: AppConstants.basePadding,
               vertical: 0,
             ),
-            color: Colors.white.withOpacity(animatedValue),
+            decoration: BoxDecoration(
+                color: Colors.white.withOpacity(animatedValue),
+                boxShadow: [
+                  if (animationValue != 0)
+                    BoxShadow(
+                        offset: Offset(0, 20 * animationValue),
+                        spreadRadius: 3 * animationValue,
+                        blurRadius: 14 * animationValue,
+                        color: AppColors.borderGrey.withOpacity(0.1))
+                ]),
             child: Stack(
               alignment: Alignment.centerLeft,
               children: [

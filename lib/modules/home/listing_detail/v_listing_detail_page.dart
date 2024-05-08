@@ -71,7 +71,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
         // eachListingWidgetController.movePage(pageIndex: controller.currentShownPageIndex.value, id: id);
       },
       body: Container(
-        color: Colors.white,
+        color: Colors.white.withOpacity(0.002),
         child: Stack(
           children: [
             SingleChildScrollView(

@@ -31,10 +31,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // fucn([3, 4, 5, 6, 9]);
     // toArray('3_6,9_12,24');
+    funcc();
     SystemChrome.setSystemUIOverlayStyle(
         const SystemUiOverlayStyle(statusBarBrightness: Brightness.light));
     return GetMaterialApp(
         // key: GlobalKey(),
+
         debugShowCheckedModeBanner: false,
         title: 'App Studio',
         navigatorObservers: [routeObserver],
@@ -103,6 +105,19 @@ class MyApp extends StatelessWidget {
         home: homeWidget()
         // home: StatusBarTestingPage1(),
         );
+  }
+
+  funcc() {
+    List arry = [9, 5, 10, 2, 24, -1, -48];
+    int _result = 0;
+    for (int i = 0; i < arry.length; i++) {
+      if (i < arry.length - 1) {
+        if (arry[i] * arry[i + 1] > _result) {
+          _result = arry[i] * arry[i + 1];
+        }
+      }
+    }
+    print(_result);
   }
 
   List toArray(str) {
