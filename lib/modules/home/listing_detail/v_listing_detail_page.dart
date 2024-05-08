@@ -267,10 +267,15 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                           children: [
                             Text(AppFunctions().getDateRangeString(
                                 firstDate: sDate.start, lastDate: sDate.end)),
-                            Text(
-                              '  ${_firstNightDate.currencyModel.sign} ${_firstNightDate.perNightFee} ${_firstNightDate.currencyModel.abbr.toString()} per night',
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  '  ${_firstNightDate.currencyModel.sign} ${_firstNightDate.perNightFee} ${_firstNightDate.currencyModel.abbr.toString()} per night  ',
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                             )
                           ],
                         ),
