@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:universe_rental/constants/app_constants.dart';
 import 'package:universe_rental/constants/app_functions.dart';
+import 'package:universe_rental/services/others/extensions.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/fary_poi/bs_fary_pick_up_point.dart';
 
@@ -25,8 +26,8 @@ class FaryPoiController extends GetxController{
   ValueNotifier<bool> xFetching = ValueNotifier(false);
   MapController mapController = MapController();
   //entry
-  ValueNotifier<List<LatLng>> poiPoints = ValueNotifier([]);
-  ValueNotifier<List<FaryPickUpPoint>> pickUpPoints = ValueNotifier([]);
+  ValueNotifier<List<LatLng>> addedPoiPoints = ValueNotifier([]);
+  ValueNotifier<List<FaryPickUpPoint>> addedPickUpPoints = ValueNotifier([]);
 
   TextEditingController txtPoiNameEn = TextEditingController();
   TextEditingController txtPoiNameMm = TextEditingController();
@@ -36,6 +37,9 @@ class FaryPoiController extends GetxController{
 
   // String baseUrl = "http://192.168.1.44:9003";
   String baseUrl = "https://poi.farytaxi.com";
+  double currentZoomLevel = 17.5;
+  double maxZoomForPolygon = 17.5;
+  ValueNotifier<bool> xShowPolygon = ValueNotifier(false);
 
   @override
   void onInit() {
@@ -73,51 +77,61 @@ class FaryPoiController extends GetxController{
     });
   }
 
-  Future<void> updateData() async{
-
-    log("updating data");
-
-    xFetching.value = true;
-
-    final topLeft = mapController.bounds!.northWest;
-    final botRight = mapController.bounds!.southEast;
-    final response = await ApiService().get(
-      endPoint: "$baseUrl/poi"
-          "?topLeftLat=${topLeft.latitude}"
-          "&topLeftLng=${topLeft.longitude}"
-          "&bottomRightLat=${botRight.latitude}"
-          "&bottomRightLng=${botRight.longitude}",
-      xBaseUrlIncluded: false,
-    );
-
-
-    shownData.value.clear();
-    shownData.notifyListeners();
-    shownPickUpPoints.value.clear();
-    shownPickUpPoints.notifyListeners();
-
-    final apiResponse = ApiService().validateResponse(response: response);
-    if(apiResponse.xSuccess){
-
-      Iterable iterable = apiResponse.bodyData["_data"]??[];
-      for(final each in iterable){
-        final data = FaryPoi.fromApi(data: each);
-        shownData.value.add(data);
-        shownPickUpPoints.value.addAll(
-            data.faryPickUpPoints
-        );
+  void polygonShowCheck(){
+    currentZoomLevel = mapController.camera.zoom;
+    if(currentZoomLevel>=maxZoomForPolygon){
+      if(!xShowPolygon.value){
+        xShowPolygon.value = true;
+        xShowPolygon.notifyListeners();
       }
-      shownData.notifyListeners();
-      shownPickUpPoints.notifyListeners();
     }
     else{
-
+      if(xShowPolygon.value){
+        xShowPolygon.value = false;
+        xShowPolygon.notifyListeners();
+      }
     }
+  }
 
+  Future<void> updateData() async{
+    xFetching.value = true;
+    xFetching.notifyListeners();
 
     try{
+      final topLeft = mapController.camera.visibleBounds.northWest;
+      final botRight = mapController.camera.visibleBounds.southEast;
+      final response = await ApiService().get(
+        endPoint: "$baseUrl/poi"
+            "?topLeftLat=${topLeft.latitude}"
+            "&topLeftLng=${topLeft.longitude}"
+            "&bottomRightLat=${botRight.latitude}"
+            "&bottomRightLng=${botRight.longitude}",
+        xBaseUrlIncluded: false,
+      );
 
+      polygonShowCheck();
 
+      shownData.value.clear();
+      shownData.notifyListeners();
+      shownPickUpPoints.value.clear();
+      shownPickUpPoints.notifyListeners();
+
+      final apiResponse = ApiService().validateResponse(response: response);
+      if(apiResponse.xSuccess){
+        Iterable iterable = apiResponse.bodyData["_data"]??[];
+        for(final each in iterable){
+          final data = FaryPoi.fromApi(data: each);
+          shownData.value.add(data);
+          shownPickUpPoints.value.addAll(
+              data.faryPickUpPoints
+          );
+        }
+        shownData.notifyListeners();
+        shownPickUpPoints.notifyListeners();
+      }
+      else{
+
+      }
     }
     catch(e){
       superPrint(e);
@@ -125,13 +139,14 @@ class FaryPoiController extends GetxController{
     }
 
     xFetching.value = false;
+    xFetching.notifyListeners();
   }
 
   void clearData(){
-    poiPoints.value.clear();
-    poiPoints.notifyListeners();
-    pickUpPoints.value.clear();
-    pickUpPoints.notifyListeners();
+    addedPoiPoints.value.clear();
+    addedPoiPoints.notifyListeners();
+    addedPickUpPoints.value.clear();
+    addedPickUpPoints.notifyListeners();
     txtPickUpPointNameEn.clear();
     txtPickUpPointNameMm.clear();
     txtPoiNameEn.clear();
@@ -156,8 +171,8 @@ class FaryPoiController extends GetxController{
               nameEn: txtPickUpPointNameEn.text,
               nameMm: txtPickUpPointNameMm.text
             );
-            pickUpPoints.value.add(faryPickUpPoint);
-            pickUpPoints.notifyListeners();
+            addedPickUpPoints.value.add(faryPickUpPoint);
+            addedPickUpPoints.notifyListeners();
             txtPickUpPointNameEn.clear();
             txtPickUpPointNameMm.clear();
             Get.back();
@@ -169,25 +184,25 @@ class FaryPoiController extends GetxController{
   }
 
   void removePickUpPoints({required FaryPickUpPoint faryPickUpPoint}){
-    pickUpPoints.value.remove(faryPickUpPoint);
-    pickUpPoints.notifyListeners();
+    addedPickUpPoints.value.remove(faryPickUpPoint);
+    addedPickUpPoints.notifyListeners();
   }
 
   void addPoiPoint({required LatLng latLng}){
-    poiPoints.value.add(latLng);
-    poiPoints.notifyListeners();
+    addedPoiPoints.value.add(latLng);
+    addedPoiPoints.notifyListeners();
   }
 
   void removePoiPoint({required LatLng latLng}){
-    poiPoints.value.remove(latLng);
-    poiPoints.notifyListeners();
+    addedPoiPoints.value.remove(latLng);
+    addedPoiPoints.notifyListeners();
   }
 
   void onClickSave() async{
-    if(poiPoints.value.length<2){
+    if(addedPoiPoints.value.length<2){
       DialogService().showTransactionDialog(text: "There must be at least 2 poi points");
     }
-    else if(pickUpPoints.value.isEmpty){
+    else if(addedPickUpPoints.value.isEmpty){
       DialogService().showTransactionDialog(text: "There must be at least 1 pick up points");
     }
     else{
@@ -207,11 +222,11 @@ class FaryPoiController extends GetxController{
                   final payload = {
                     "nameEn" : txtPoiNameEn.text,
                     "nameMm" : txtPoiNameMm.text,
-                    "polygons" : poiPoints.value.map((e) => {
+                    "polygons" : addedPoiPoints.value.map((e) => {
                       "latitude" : e.latitude,
                       "longitude" : e.longitude
                     }).toList(),
-                    "pickUpPoints" : pickUpPoints.value.map((e) {
+                    "pickUpPoints" : addedPickUpPoints.value.map((e) {
                       return {
                         "nameEn" : e.nameEn,
                         "nameMm" : e.nameMm,
@@ -308,6 +323,59 @@ class FaryPoiController extends GetxController{
               """,
               textAlign: TextAlign.center,
             )
+          ],
+        ),
+      )
+    );
+  }
+
+  Future<void> onClickSearch() async{
+    TextEditingController txtSearch = TextEditingController(text: "");
+    Get.bottomSheet(
+      Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(
+          horizontal: AppConstants.basePadding,
+          vertical: AppConstants.basePadding,
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.white
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: txtSearch,
+              decoration: const InputDecoration(
+                label: Text(
+                  "Enter location in lat lng comma format (16.125156,96.216126)",
+                  textAlign: TextAlign.center,
+                )
+              ),
+            ),
+            10.heightBox(),
+            ElevatedButton(onPressed: () {
+              try{
+
+                final locationString = txtSearch.text;
+                final locationStringArray = locationString.split(',');
+
+                if(locationStringArray.length>1){
+                  LatLng location = LatLng(double.parse(locationStringArray.first), double.parse(locationStringArray.last));
+                  superPrint(location);
+                  Get.back();
+                  mapController.move(location, currentZoomLevel);
+                }
+                else{
+                  throw Error.safeToString("Invalid Lat Lng");
+                }
+
+
+              }
+              catch(e){
+                DialogService().showSnack(title: "Something went wrong!", message: e.toString());
+              }
+            }, child: const Text("Move Now"))
           ],
         ),
       )
