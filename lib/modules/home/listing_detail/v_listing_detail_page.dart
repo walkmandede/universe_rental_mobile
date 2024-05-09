@@ -340,8 +340,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
         Text(
           listing.subTitle,
           style: TextStyle(
-              fontSize: AppConstants.baseBorderRadiusL,
-              fontWeight: FontWeight.w600),
+              fontSize: AppConstants.fontSizeM, fontWeight: FontWeight.w600),
         ),
         (Get.height * 0.01).heightBox(),
         Wrap(
@@ -462,7 +461,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
               return Text(
                 "${controller.selectedDateTimeRange.value.start.getMDY()} - ${controller.selectedDateTimeRange.value.end.getMDY()}",
                 style: TextStyle(
-                    fontSize: AppConstants.fontSizeL,
+                    fontSize: AppConstants.fontSizeM,
                     fontWeight: FontWeight.w400,
                     color: AppColors.grey),
               );
@@ -916,13 +915,13 @@ class _LocationWidgetState extends State<LocationWidget> {
           (Get.height * 0.02).heightBox(),
           Text(
             widget.listing.listingLocation.fullAddress,
-            style: TextStyle(
-                fontWeight: FontWeight.w600, fontSize: AppConstants.fontSizeL),
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           (Get.height * 0.01).heightBox(),
           Text(
             widget.listing.listingLocation.remark,
-            style: const TextStyle(fontWeight: FontWeight.w200),
+            style: TextStyle(
+                fontWeight: FontWeight.w200, color: AppColors.textGrey),
           ),
           (Get.height * 0.01).heightBox(),
           // topBoxShadow()
