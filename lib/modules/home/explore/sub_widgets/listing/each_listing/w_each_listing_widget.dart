@@ -172,7 +172,7 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                           ),
                         ),
                       )),
-                  5.heightBox(),
+                  (Get.height * 0.02).heightBox(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -217,7 +217,7 @@ class _EachListingWidgetState extends State<EachListingWidget> {
                   Text(
                     widget.each.getNightDataString(),
                     style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         fontSize: AppConstants.fontSizeM,
                         color: AppColors.black),
                   ),
