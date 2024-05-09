@@ -298,9 +298,10 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                                   backgroundColor: AppColors.bgBlack,
                                 ));
                               },
-                              child: const Text(
+                              child: Text(
                                 'Reserve',
                                 style: TextStyle(
+                                    fontSize: AppConstants.fontSizeL,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white),
                               )),
@@ -405,7 +406,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
             BoxShadow(
                 spreadRadius: 4,
                 blurRadius: 10,
-                color: AppColors.grey.withOpacity(0.3))
+                color: AppColors.grey.withOpacity(0.16))
           ]),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
@@ -449,16 +450,19 @@ class _ListingDetailPageState extends State<ListingDetailPage>
             builder: (context, selectDate, child) {
               return Text(
                 "${AppFunctions().getBetweenDates(dtr: DateTimeRange(start: selectDate.start, end: selectDate.end)).length} nights in ${controller.listingData.value!.title}",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                    fontSize: AppConstants.fontSizeL,
+                    fontWeight: FontWeight.w600),
               );
             }),
+        4.heightBox(),
         ValueListenableBuilder(
             valueListenable: controller.selectedDateTimeRange,
             builder: (context, value, child) {
               return Text(
                 "${controller.selectedDateTimeRange.value.start.getMDY()} - ${controller.selectedDateTimeRange.value.end.getMDY()}",
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: AppConstants.fontSizeL,
                     fontWeight: FontWeight.w400,
                     color: AppColors.grey),
               );
@@ -506,9 +510,10 @@ class _ListingDetailPageState extends State<ListingDetailPage>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Place photo Tour",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: AppConstants.fontSizeL, fontWeight: FontWeight.bold),
           ),
           (Get.height * 0.02).heightBox(),
           if (xHasAllImgs)
@@ -668,7 +673,10 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                                           )
                                         ],
                                       )),
-                        Text(_currentListingPlace.listingPlace.name)
+                        Text(
+                          _currentListingPlace.listingPlace.name,
+                          style: TextStyle(fontSize: AppConstants.fontSizeM),
+                        )
                       ],
                     );
                   }),
@@ -711,11 +719,16 @@ Widget bubble() {
 }
 
 Widget divider() {
-  return Divider(
-    thickness: 1,
-    color: Colors.grey.withOpacity(0.4),
-    height: Get.height * 0.02,
+  return Container(
+    height: Get.height * 0.003,
+    color: Colors.grey.withOpacity(0.1),
   );
+
+  //  Divider(
+  //   thickness: 1,
+  //   color: Colors.grey.withOpacity(0.4),
+  //   height: Get.height * 0.02,
+  // );
 }
 
 Widget topBoxShadow(bool xSeeMoreClick, void Function()? onTap) {
@@ -774,11 +787,12 @@ class _AboutPlaceWidgetState extends State<AboutPlaceWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'About this space',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          style: TextStyle(
+              fontSize: AppConstants.fontSizeL, fontWeight: FontWeight.bold),
         ),
-        10.heightBox(),
+        (Get.height * 0.02).heightBox(),
         SizedBox(
           height: widget.listing.description.length > 250
               ? _xClickSeeMore
@@ -819,9 +833,10 @@ class _OfferListWidgetState extends State<OfferListWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Offer Lists",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: AppConstants.fontSizeL, fontWeight: FontWeight.bold),
         ),
         (Get.height * 0.02).heightBox(),
         SizedBox(
@@ -848,7 +863,7 @@ class _OfferListWidgetState extends State<OfferListWidget> {
                       10.widthBox(),
                       Text(
                         offer.name,
-                        style: const TextStyle(fontSize: 18),
+                        style: TextStyle(fontSize: AppConstants.fontSizeM),
                       )
                     ],
                   ),
@@ -888,8 +903,7 @@ class _LocationWidgetState extends State<LocationWidget> {
           Text(
             'Locations',
             style: TextStyle(
-                fontSize: AppConstants.baseBorderRadiusXL,
-                fontWeight: FontWeight.bold),
+                fontSize: AppConstants.fontSizeL, fontWeight: FontWeight.bold),
           ),
           (Get.height * 0.02).heightBox(),
           SizedBox(
@@ -902,10 +916,14 @@ class _LocationWidgetState extends State<LocationWidget> {
           (Get.height * 0.02).heightBox(),
           Text(
             widget.listing.listingLocation.fullAddress,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            style: TextStyle(
+                fontWeight: FontWeight.w600, fontSize: AppConstants.fontSizeL),
           ),
           (Get.height * 0.01).heightBox(),
-          Text(widget.listing.listingLocation.remark),
+          Text(
+            widget.listing.listingLocation.remark,
+            style: const TextStyle(fontWeight: FontWeight.w200),
+          ),
           (Get.height * 0.01).heightBox(),
           // topBoxShadow()
           10.heightBox(),
