@@ -79,18 +79,7 @@ flutter:
         - asset: assets/fonts/nunito/w900.ttf
           weight: 900
 
-    - family: DM Sans
-      fonts:
-        - asset: assets/fonts/dmsans/w500.ttf
-          weight: 500
-        - asset: assets/fonts/dmsans/w600.ttf
-          weight: 600
-        - asset: assets/fonts/dmsans/w700.ttf
-          weight: 700
-        - asset: assets/fonts/dmsans/w800.ttf
-          weight: 800
-        - asset: assets/fonts/dmsans/w900.ttf
-          weight: 900
+   
 
 #dart run flutter_native_splash:create
 flutter_native_splash:
