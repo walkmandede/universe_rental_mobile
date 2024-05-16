@@ -1,30 +1,50 @@
+class AppSvgs {
+  static String browse =
+      """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-safari"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 16l2 -6l6 -2l-2 6l-6 2" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg>""";
 
-class AppSvgs{
+  static String favorite =
+      """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>""";
 
-  static String browse = """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-brand-safari"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 16l2 -6l6 -2l-2 6l-6 2" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /></svg>""";
+  static String favFill = """
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart-filled" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z" stroke-width="0" fill="currentColor" />
+</svg>""";
 
-  static String favorite = """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-heart"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>""";
+  static String list =
+      """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></svg>""";
 
-  static String list = """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-receipt"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16l-3 -2l-2 2l-2 -2l-2 2l-2 -2l-3 2m4 -14h6m-6 4h6m-2 4h2" /></svg>""";
+  static String chat =
+      """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 11v.01" /><path d="M8 11v.01" /><path d="M16 11v.01" /><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3z" /></svg>""";
 
-  static String chat = """<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-message-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 11v.01" /><path d="M8 11v.01" /><path d="M16 11v.01" /><path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3z" /></svg>""";
-
-  static String search = """<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  static String search =
+      """<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M21.2333 21.2333L16.25 16.25M3.25 10.8333C3.25 11.8292 3.44615 12.8153 3.82725 13.7353C4.20835 14.6554 4.76693 15.4914 5.47111 16.1956C6.17528 16.8997 7.01126 17.4583 7.93132 17.8394C8.85137 18.2205 9.83748 18.4167 10.8333 18.4167C11.8292 18.4167 12.8153 18.2205 13.7353 17.8394C14.6554 17.4583 15.4914 16.8997 16.1956 16.1956C16.8997 15.4914 17.4583 14.6554 17.8394 13.7353C18.2205 12.8153 18.4167 11.8292 18.4167 10.8333C18.4167 9.83748 18.2205 8.85137 17.8394 7.93132C17.4583 7.01126 16.8997 6.17528 16.1956 5.47111C15.4914 4.76693 14.6554 4.20834 13.7353 3.82725C12.8153 3.44615 11.8292 3.25 10.8333 3.25C9.83748 3.25 8.85137 3.44615 7.93132 3.82725C7.01126 4.20834 6.17528 4.76693 5.47111 5.47111C4.76693 6.17528 4.20835 7.01126 3.82725 7.93132C3.44615 8.85137 3.25 9.83748 3.25 10.8333Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 """;
 
-  static String star = """<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  static String cencel = """
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M18 6l-12 12" />
+  <path d="M6 6l12 12" />
+</svg>
+""";
+
+  static String star =
+      """<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M4.80842 4.28165L1.08676 4.82124L1.02084 4.83465C0.921056 4.86114 0.830089 4.91364 0.757229 4.98679C0.684369 5.05993 0.632227 5.1511 0.606128 5.25099C0.580029 5.35088 0.580908 5.45591 0.608675 5.55534C0.636441 5.65478 0.690101 5.74507 0.764175 5.81699L3.46034 8.4414L2.82451 12.1485L2.81692 12.2127C2.81082 12.3159 2.83225 12.4188 2.87902 12.511C2.92579 12.6032 2.99623 12.6813 3.08312 12.7374C3.17001 12.7934 3.27023 12.8253 3.37351 12.8299C3.4768 12.8344 3.57944 12.8115 3.67092 12.7633L6.99942 11.0133L10.3203 12.7633L10.3787 12.7902C10.475 12.8281 10.5796 12.8397 10.6819 12.8238C10.7841 12.808 10.8803 12.7652 10.9606 12.6999C11.0409 12.6346 11.1023 12.5491 11.1387 12.4522C11.175 12.3553 11.1849 12.2505 11.1673 12.1485L10.5309 8.4414L13.2283 5.8164L13.2738 5.76682C13.3388 5.68677 13.3814 5.59092 13.3973 5.48903C13.4132 5.38715 13.4018 5.28287 13.3642 5.18683C13.3267 5.09078 13.2644 5.0064 13.1836 4.94228C13.1029 4.87817 13.0066 4.8366 12.9045 4.82182L9.18284 4.28165L7.51917 0.909985C7.47104 0.812297 7.39651 0.730036 7.30404 0.672513C7.21156 0.61499 7.10483 0.584503 6.99592 0.584503C6.88702 0.584503 6.78029 0.61499 6.68781 0.672513C6.59534 0.730036 6.52081 0.812297 6.47267 0.909985L4.80842 4.28165Z" fill="black"/>
 </svg>
 """;
 
-  static String filter = """<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  static String filter =
+      """<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M13 6.5C13 7.07464 13.2283 7.62574 13.6346 8.03207C14.0409 8.4384 14.592 8.66667 15.1667 8.66667C15.7413 8.66667 16.2924 8.4384 16.6987 8.03207C17.1051 7.62574 17.3333 7.07464 17.3333 6.5M13 6.5C13 5.92537 13.2283 5.37427 13.6346 4.96794C14.0409 4.56161 14.592 4.33334 15.1667 4.33334C15.7413 4.33334 16.2924 4.56161 16.6987 4.96794C17.1051 5.37427 17.3333 5.92537 17.3333 6.5M13 6.5H4.33334M17.3333 6.5H21.6667M6.5 13C6.5 13.5746 6.72828 14.1257 7.1346 14.5321C7.54093 14.9384 8.09203 15.1667 8.66667 15.1667C9.2413 15.1667 9.7924 14.9384 10.1987 14.5321C10.6051 14.1257 10.8333 13.5746 10.8333 13M6.5 13C6.5 12.4254 6.72828 11.8743 7.1346 11.4679C7.54093 11.0616 8.09203 10.8333 8.66667 10.8333C9.2413 10.8333 9.7924 11.0616 10.1987 11.4679C10.6051 11.8743 10.8333 12.4254 10.8333 13M6.5 13H4.33334M10.8333 13H21.6667M16.25 19.5C16.25 20.0746 16.4783 20.6257 16.8846 21.0321C17.2909 21.4384 17.842 21.6667 18.4167 21.6667C18.9913 21.6667 19.5424 21.4384 19.9487 21.0321C20.3551 20.6257 20.5833 20.0746 20.5833 19.5M16.25 19.5C16.25 18.9254 16.4783 18.3743 16.8846 17.9679C17.2909 17.5616 17.842 17.3333 18.4167 17.3333C18.9913 17.3333 19.5424 17.5616 19.9487 17.9679C20.3551 18.3743 20.5833 18.9254 20.5833 19.5M16.25 19.5H4.33334M20.5833 19.5H21.6667" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 """;
 
-  static String profileDummy = """<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  static String profileDummy =
+      """<svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <circle cx="17" cy="17" r="16" fill="url(#pattern0_196_986)" stroke="#D9D9D9" stroke-width="2"/>
 <defs>
 <pattern id="pattern0_196_986" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -36,5 +56,4 @@ class AppSvgs{
 """;
 
   static String dummy = """_________""";
-
 }

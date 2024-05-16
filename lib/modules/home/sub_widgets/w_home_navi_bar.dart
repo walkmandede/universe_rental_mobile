@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_colors.dart';
 import 'package:universe_rental/constants/app_constants.dart';
@@ -53,7 +54,7 @@ class HomeNaviBar extends StatelessWidget {
                           break;
                         case 1:
                           iconSvg = AppSvgs.favorite;
-                          label = "Favorite";
+                          label = "Favourite";
                           break;
                         case 2:
                           iconSvg = AppSvgs.list;
@@ -90,11 +91,15 @@ class HomeNaviBar extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     SvgPicture.string(
-                                      iconSvg,
+                                      pageIndex == 1 && xSelected
+                                          ? AppSvgs.favFill
+                                          : iconSvg,
                                       // colorFilter: ColorFilter.mode(xSelected?AppColors.black:AppColors.grey, BlendMode.srcIn),
-                                      color: xSelected
-                                          ? AppColors.black
-                                          : AppColors.iconGrey,
+                                      color: pageIndex == 1 && xSelected
+                                          ? Colors.red
+                                          : xSelected
+                                              ? AppColors.black
+                                              : AppColors.iconGrey,
                                     ),
                                     (c1.maxHeight * 0.05).heightBox(),
                                     Text(

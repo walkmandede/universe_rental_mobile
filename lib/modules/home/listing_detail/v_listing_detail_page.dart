@@ -243,9 +243,9 @@ class _ListingDetailPageState extends State<ListingDetailPage>
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     blurRadius: 10,
-                    spreadRadius: 4,
+                    spreadRadius: 2,
                     offset: const Offset(0, -14),
-                    color: AppColors.grey.withOpacity(0.4))
+                    color: AppColors.grey.withOpacity(0.2))
               ]),
               child: ValueListenableBuilder(
                 valueListenable: controller.selectedDateTimeRange,
@@ -262,17 +262,23 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                        ),
                         child: Row(
                           children: [
-                            Text(AppFunctions().getDateRangeString(
-                                firstDate: sDate.start, lastDate: sDate.end)),
+                            Text(
+                              AppFunctions().getDateRangeString(
+                                  firstDate: sDate.start, lastDate: sDate.end),
+                              style:
+                                  TextStyle(fontSize: AppConstants.fontSizeL),
+                            ),
                             Flexible(
                               child: FittedBox(
                                 child: Text(
-                                  '  ${_firstNightDate.currencyModel.sign} ${_firstNightDate.perNightFee} ${_firstNightDate.currencyModel.abbr.toString()} per night  ',
-                                  style: const TextStyle(
-                                      fontSize: 18,
+                                  '  ${_firstNightDate.currencyModel.sign} ${_firstNightDate.perNightFee} per night  ',
+                                  style: TextStyle(
+                                      fontSize: AppConstants.fontSizeL,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
@@ -281,7 +287,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -356,7 +362,9 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                 children: [
                   // if (index != 0) (Get.width * 0.02).widthBox(),
                   Text(
-                      '${_attribute.quantity} ${_attribute.listingAttribute.name}'),
+                    '${_attribute.quantity} ${_attribute.listingAttribute.name}',
+                    style: TextStyle(fontSize: AppConstants.fontSizeM),
+                  ),
                   if (index != 3) (Get.width * 0.02).widthBox(),
                   if (index < listing.listingOnAttributes.length - 1) bubble(),
                 ],
@@ -375,8 +383,8 @@ class _ListingDetailPageState extends State<ListingDetailPage>
             Text(
               "4.3",
               style: TextStyle(
-                  fontSize: AppConstants.baseBorderRadiusL,
-                  fontWeight: FontWeight.w500),
+                  fontSize: AppConstants.fontSizeM,
+                  fontWeight: FontWeight.w700),
             ),
             8.widthBox(),
             bubble(),
@@ -384,7 +392,7 @@ class _ListingDetailPageState extends State<ListingDetailPage>
             Text(
               "15 reviews",
               style: TextStyle(
-                fontSize: AppConstants.baseBorderRadiusL,
+                fontSize: AppConstants.fontSizeM,
                 fontWeight: FontWeight.w600,
                 decoration: TextDecoration.underline,
               ),
@@ -422,14 +430,16 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                 children: [
                   Text(
                     "Hosted by ${listing.hostName}",
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: AppConstants.fontSizeM,
                         overflow: TextOverflow.ellipsis),
                   ),
-                  const Text(
+                  Text(
                     "Normalhost . 2 years hosting ",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(
+                      fontSize: AppConstants.fontSizeM,
+                    ),
                   )
                 ],
               ),
@@ -477,18 +487,21 @@ class _ListingDetailPageState extends State<ListingDetailPage>
                     onChangeDate: controller.onChangedSelectedDate,
                   ));
             }),
-        GestureDetector(
-          onTap: () {
-            controller.onChangedSelectedDate(
-                DateTimeRange(start: DateTime.now(), end: DateTime.now()));
-          },
-          child: const Text(
-            "Restart Date",
-            style: TextStyle(
-              decoration: TextDecoration.underline,
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: GestureDetector(
+            onTap: () {
+              controller.onChangedSelectedDate(
+                  DateTimeRange(start: DateTime.now(), end: DateTime.now()));
+            },
+            child: Text(
+              "Restart Date",
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontSize: AppConstants.fontSizeM),
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -763,7 +776,10 @@ Widget topBoxShadow(bool xSeeMoreClick, void Function()? onTap) {
                       ],
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20))),
-                  child: const Text("See More"),
+                  child: Text(
+                    "See More",
+                    style: TextStyle(fontSize: AppConstants.fontSizeM),
+                  ),
                 ),
               ),
             ],
@@ -800,7 +816,7 @@ class _AboutPlaceWidgetState extends State<AboutPlaceWidget> {
               : null,
           child: Text(
             widget.listing.description,
-            style: const TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: AppConstants.fontSizeL),
           ),
         ),
         10.heightBox(),
@@ -915,13 +931,18 @@ class _LocationWidgetState extends State<LocationWidget> {
           (Get.height * 0.02).heightBox(),
           Text(
             widget.listing.listingLocation.fullAddress,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            style: TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: AppConstants.fontSizeM,
+            ),
           ),
           (Get.height * 0.01).heightBox(),
           Text(
             widget.listing.listingLocation.remark,
             style: TextStyle(
-                fontWeight: FontWeight.w200, color: AppColors.textGrey),
+                fontSize: AppConstants.fontSizeM,
+                fontWeight: FontWeight.w200,
+                color: AppColors.textGrey),
           ),
           (Get.height * 0.01).heightBox(),
           // topBoxShadow()

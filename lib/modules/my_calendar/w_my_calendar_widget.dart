@@ -215,8 +215,11 @@ class _MyCalendarState extends State<MyCalendar> with TickerProviderStateMixin {
                       Expanded(
                         child: FittedWidget(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          child: Text(DateFormat("MMMM yyyy")
-                              .format(focusedDate.value)),
+                          child: Text(
+                            DateFormat("MMMM yyyy").format(focusedDate.value),
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
                       Expanded(

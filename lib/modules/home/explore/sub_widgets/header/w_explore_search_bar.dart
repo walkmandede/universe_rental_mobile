@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:get/get.dart';
 import 'package:universe_rental/constants/app_assets.dart';
 import 'package:universe_rental/constants/app_colors.dart';
@@ -76,6 +77,22 @@ class ExploreSearchBar extends StatelessWidget {
                     AppAssets.dummyProfile,
                     width: barSize.width * 0.085,
                   ),
+                ),
+              if (!xReadOnly)
+                GestureDetector(
+                  onTap: () {
+                    txtCtrl!.clear();
+                  },
+                  child: Container(
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.iconGrey.withOpacity(0.8)),
+                      child: SvgPicture.string(
+                        AppSvgs.cencel,
+                        width: Get.width * 0.05,
+                        color: Colors.white,
+                      )),
                 ),
             ],
           ),

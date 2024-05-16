@@ -18,7 +18,8 @@ class FavoritePage extends StatelessWidget {
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1)),
       child: SizedBox.expand(
-        child: Padding(
+        child: Container(
+          color: const Color(0xffFAFAFA),
           padding: EdgeInsets.only(
               left: AppConstants.basePadding,
               top: AppConstants.basePadding,
