@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,8 @@ import 'package:universe_rental/constants/app_functions.dart';
 import 'package:universe_rental/modules/_common/widgets/w_fitted_widget.dart';
 import 'package:universe_rental/services/overlays_services/dialog/dialog_service.dart';
 import 'package:universe_rental/web_data_entry/fary_poi/c_fary_poi.dart';
+
+import 'm_fary_poi.dart';
 
 class FaryPoiPage extends StatelessWidget {
   const FaryPoiPage({super.key});
@@ -85,7 +88,7 @@ class FaryPoiPage extends StatelessWidget {
                             point: e.latLng,
                             child: GestureDetector(
                               onTap: () {
-                                DialogService().showSnack(title: "Pick Up Point Name : ${e.nameEn}",message: e.latLng.toString());
+                                DialogService().showSnack(title: "Pick fffUp Point Name : ${e.nameEn}",message: e.latLng.toString());
                               },
                               onDoubleTap: () {
                                 controller.removePickUpPoints(faryPickUpPoint: e);
@@ -208,8 +211,17 @@ class FaryPoiPage extends StatelessWidget {
                                 return Marker(
                                     point: e.latLng,
                                     child: GestureDetector(
-                                      onTap: () {
-                                        DialogService().showSnack(title: "${e.nameEn} (${e.nameMm})", message: e.latLng.toString());
+                                      onTap: () async{
+                                        // DialogService().showSnack(title: "${e.nameEn} (${e.nameMm})", message: e.latLng.toString());
+                                        FaryPoi? faryPoi = controller.shownData.value.where((element) => element.id == e.poiId,).firstOrNull;
+                                        if(faryPoi!=null){
+                                          final result = faryPoi.faryPickUpPoints.map((e) {
+                                            return "'${e.latLng.latitude},${e.latLng.longitude}'";
+                                          },).toList().toString();
+                                          await Clipboard.setData(ClipboardData(text: result));
+                                          DialogService().showSnack(title: "Copied to clipboard", message: e.latLng.toString());
+
+                                        }
                                       },
                                       onDoubleTap: () {
                                         final result = controller.shownData.value.where((element) => element.id == e.poiId).firstOrNull;
