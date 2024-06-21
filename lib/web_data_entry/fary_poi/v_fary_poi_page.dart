@@ -215,10 +215,11 @@ class FaryPoiPage extends StatelessWidget {
                                         // DialogService().showSnack(title: "${e.nameEn} (${e.nameMm})", message: e.latLng.toString());
                                         FaryPoi? faryPoi = controller.shownData.value.where((element) => element.id == e.poiId,).firstOrNull;
                                         if(faryPoi!=null){
-                                          final result = faryPoi.faryPickUpPoints.map((e) {
-                                            return "'${e.latLng.latitude},${e.latLng.longitude}'";
+                                          final result = faryPoi.poiPoints.map((e) {
+                                            return "'${e.latitude},${e.longitude}'";
                                           },).toList().toString();
                                           await Clipboard.setData(ClipboardData(text: result));
+                                          superPrint(faryPoi.faryPickUpPoints,title: faryPoi.nameEn);
                                           DialogService().showSnack(title: "Copied to clipboard", message: e.latLng.toString());
 
                                         }
