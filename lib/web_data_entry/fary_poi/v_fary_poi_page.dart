@@ -76,7 +76,7 @@ class FaryPoiPage extends StatelessWidget {
               ),
               children: [
                 TileLayer(
-                  urlTemplate: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                  urlTemplate: AppConstants.baseRasterTileWhiteUrl,
                 ),
                 //addedPickUpPointsLayer
                 ValueListenableBuilder(
